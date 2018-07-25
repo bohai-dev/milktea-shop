@@ -1,5 +1,6 @@
 package com.milktea.milkteashop.service;
 
+import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.vo.UserLoginRequestVo;
 import com.milktea.milkteashop.vo.UserLoginResponseVo;
 
@@ -10,7 +11,7 @@ public interface UserService {
      * @param requestVo
      * @return
      */
-    public UserLoginResponseVo checkUser(UserLoginRequestVo requestVo);
+    public UserLoginResponseVo checkUser(UserLoginRequestVo requestVo) throws MilkTeaException;
     
     
 }

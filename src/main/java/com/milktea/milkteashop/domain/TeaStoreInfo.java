@@ -36,6 +36,8 @@ public class TeaStoreInfo {
 
     private String storePasswd;
 
+    private String isDefault;
+
     private String isSend;
 
     private String reserveBeginTime;
@@ -172,6 +174,14 @@ public class TeaStoreInfo {
 
     public void setStorePasswd(String storePasswd) {
         this.storePasswd = storePasswd == null ? null : storePasswd.trim();
+    }
+
+    public String getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(String isDefault) {
+        this.isDefault = isDefault == null ? null : isDefault.trim();
     }
 
     public String getIsSend() {

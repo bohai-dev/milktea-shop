@@ -18,6 +18,7 @@
     <result column="STORE_PHONE" jdbcType="VARCHAR" property="storePhone" />
     <result column="STORE_USER_NAME" jdbcType="VARCHAR" property="storeUserName" />
     <result column="STORE_PASSWD" jdbcType="VARCHAR" property="storePasswd" />
+    <result column="IS_DEFAULT" jdbcType="CHAR" property="isDefault" />
     <result column="IS_SEND" jdbcType="CHAR" property="isSend" />
     <result column="RESERVE_BEGIN_TIME" jdbcType="VARCHAR" property="reserveBeginTime" />
     <result column="RESERVE_END_TIME" jdbcType="VARCHAR" property="reserveEndTime" />
@@ -27,8 +28,8 @@
   <sql id="Base_Column_List">
     STORE_NO, CN_STORE_NAME, CN_STORE_CITY, CN_STORE_ADDRESS, CN_STORE_PICTURE, CN_STORE_INTRODUCTION, 
     US_STORE_NAME, US_STORE_CITY, US_STORE_ADDRESS, US_STORE_PICTURE, US_STORE_INTRODUCTION, 
-    LONGITUDE, LATITUDE, STORE_PHONE, STORE_USER_NAME, STORE_PASSWD, IS_SEND, RESERVE_BEGIN_TIME, 
-    RESERVE_END_TIME, DELETE_FLAG, UPDATE_TIME
+    LONGITUDE, LATITUDE, STORE_PHONE, STORE_USER_NAME, STORE_PASSWD, IS_DEFAULT, IS_SEND, 
+    RESERVE_BEGIN_TIME, RESERVE_END_TIME, DELETE_FLAG, UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -46,17 +47,17 @@
       US_STORE_NAME, US_STORE_CITY, US_STORE_ADDRESS, 
       US_STORE_PICTURE, US_STORE_INTRODUCTION, LONGITUDE, 
       LATITUDE, STORE_PHONE, STORE_USER_NAME, 
-      STORE_PASSWD, IS_SEND, RESERVE_BEGIN_TIME, 
-      RESERVE_END_TIME, DELETE_FLAG, UPDATE_TIME
-      )
+      STORE_PASSWD, IS_DEFAULT, IS_SEND, 
+      RESERVE_BEGIN_TIME, RESERVE_END_TIME, DELETE_FLAG, 
+      UPDATE_TIME)
     values (#{storeNo,jdbcType=VARCHAR}, #{cnStoreName,jdbcType=VARCHAR}, #{cnStoreCity,jdbcType=VARCHAR}, 
       #{cnStoreAddress,jdbcType=VARCHAR}, #{cnStorePicture,jdbcType=VARCHAR}, #{cnStoreIntroduction,jdbcType=VARCHAR}, 
       #{usStoreName,jdbcType=VARCHAR}, #{usStoreCity,jdbcType=VARCHAR}, #{usStoreAddress,jdbcType=VARCHAR}, 
       #{usStorePicture,jdbcType=VARCHAR}, #{usStoreIntroduction,jdbcType=VARCHAR}, #{longitude,jdbcType=DECIMAL}, 
       #{latitude,jdbcType=DECIMAL}, #{storePhone,jdbcType=VARCHAR}, #{storeUserName,jdbcType=VARCHAR}, 
-      #{storePasswd,jdbcType=VARCHAR}, #{isSend,jdbcType=CHAR}, #{reserveBeginTime,jdbcType=VARCHAR}, 
-      #{reserveEndTime,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{storePasswd,jdbcType=VARCHAR}, #{isDefault,jdbcType=CHAR}, #{isSend,jdbcType=CHAR}, 
+      #{reserveBeginTime,jdbcType=VARCHAR}, #{reserveEndTime,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.milktea.milkteashop.domain.TeaStoreInfo">
     insert into TEA_STORE_INFO
@@ -108,6 +109,9 @@
       </if>
       <if test="storePasswd != null">
         STORE_PASSWD,
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT,
       </if>
       <if test="isSend != null">
         IS_SEND,
@@ -174,6 +178,9 @@
       <if test="storePasswd != null">
         #{storePasswd,jdbcType=VARCHAR},
       </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=CHAR},
+      </if>
       <if test="isSend != null">
         #{isSend,jdbcType=CHAR},
       </if>
@@ -239,6 +246,9 @@
       <if test="storePasswd != null">
         STORE_PASSWD = #{storePasswd,jdbcType=VARCHAR},
       </if>
+      <if test="isDefault != null">
+        IS_DEFAULT = #{isDefault,jdbcType=CHAR},
+      </if>
       <if test="isSend != null">
         IS_SEND = #{isSend,jdbcType=CHAR},
       </if>
@@ -274,6 +284,7 @@
       STORE_PHONE = #{storePhone,jdbcType=VARCHAR},
       STORE_USER_NAME = #{storeUserName,jdbcType=VARCHAR},
       STORE_PASSWD = #{storePasswd,jdbcType=VARCHAR},
+      IS_DEFAULT = #{isDefault,jdbcType=CHAR},
       IS_SEND = #{isSend,jdbcType=CHAR},
       RESERVE_BEGIN_TIME = #{reserveBeginTime,jdbcType=VARCHAR},
       RESERVE_END_TIME = #{reserveEndTime,jdbcType=VARCHAR},
