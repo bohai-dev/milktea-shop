@@ -21,54 +21,30 @@ public class AttributeController {
     private AttributeService attributeService;
     
     @RequestMapping(value="saveAttribute", method=RequestMethod.POST)
-    public ResponseHeader saveAttribute(TeaAttributesInfo attributesInfo){
+    public ResponseHeader saveAttribute(TeaAttributesInfo attributesInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.attributeService.addAttribute(attributesInfo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.attributeService.addAttribute(attributesInfo);
         return header;
     }
     
     @RequestMapping(value="modifyAttribute", method=RequestMethod.POST)
-    public ResponseHeader modifyAttribute(TeaAttributesInfo attributesInfo){
+    public ResponseHeader modifyAttribute(TeaAttributesInfo attributesInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.attributeService.modifyAttribute(attributesInfo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.attributeService.modifyAttribute(attributesInfo);
         return header;
     }
     
     @RequestMapping(value="removeAttribute/{attrId}", method=RequestMethod.DELETE)
-    public ResponseHeader removeAttribute(@PathVariable String attrId){
+    public ResponseHeader removeAttribute(@PathVariable String attrId) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.attributeService.removeAttribute(attrId);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.attributeService.removeAttribute(attrId);
         return header;
     }
     
     @RequestMapping(value="queryAttributes", method=RequestMethod.GET)
-    public ResponseBody<List<TeaAttributesInfo>> queryAttributes(){
+    public ResponseBody<List<TeaAttributesInfo>> queryAttributes() throws MilkTeaException{
         ResponseBody<List<TeaAttributesInfo>> responseBody = new ResponseBody<>();
-        try {
-            responseBody.setData(this.attributeService.queryAttributesInfo());
-        } catch (MilkTeaException e) {
-            responseBody.setRspCode(e.getErrorCode());
-            responseBody.setCnErrorMsg(e.getCnErrorMsg());
-            responseBody.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        responseBody.setData(this.attributeService.queryAttributesInfo());
         return responseBody;
     }
 }

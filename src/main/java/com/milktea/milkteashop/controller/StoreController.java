@@ -21,57 +21,33 @@ public class StoreController {
     private StoreService storeService;
     
     @RequestMapping(value="saveStoreInfo", method=RequestMethod.POST)
-    public ResponseHeader saveStoreInfo(TeaStoreInfo storeInfo){
+    public ResponseHeader saveStoreInfo(TeaStoreInfo storeInfo) throws MilkTeaException{
         
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.storeService.addStoreInfo(storeInfo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.storeService.addStoreInfo(storeInfo);
         return header;
     }
     
     @RequestMapping(value="removeStoreInfo/{storeNo}", method=RequestMethod.DELETE)
-    public ResponseHeader removeStoreInfo(@PathVariable String storeNo){
+    public ResponseHeader removeStoreInfo(@PathVariable String storeNo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.storeService.removeStore(storeNo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.storeService.removeStore(storeNo);
         return header;
     }
     
     @RequestMapping(value="modifyStoreInfo", method=RequestMethod.POST)
-    public ResponseHeader modifyStoreInfo(TeaStoreInfo storeInfo){
+    public ResponseHeader modifyStoreInfo(TeaStoreInfo storeInfo) throws MilkTeaException{
         
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.storeService.modifyStoreInfo(storeInfo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.storeService.modifyStoreInfo(storeInfo);
         return header;
     }
     
     @RequestMapping(value="queryStores" ,method=RequestMethod.GET)
-    public ResponseBody<List<TeaStoreInfo>> queryStores(TeaStoreInfo storeInfo){
+    public ResponseBody<List<TeaStoreInfo>> queryStores(TeaStoreInfo storeInfo) throws MilkTeaException{
         
         ResponseBody<List<TeaStoreInfo>> responseBody = new ResponseBody<>();
-        try {
-            responseBody.setData(this.storeService.queryStoreInfo());
-        } catch (MilkTeaException e) {
-            responseBody.setRspCode(e.getErrorCode());
-            responseBody.setCnErrorMsg(e.getCnErrorMsg());
-            responseBody.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        responseBody.setData(this.storeService.queryStoreInfo());
         return responseBody;
         
     }

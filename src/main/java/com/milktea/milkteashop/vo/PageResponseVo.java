@@ -7,7 +7,7 @@ import java.util.List;
  * @author caojia
  *
  */
-public class PageResponseVo<T> {
+public class PageResponseVo<T> extends ResponseHeader{
 
     private Long total;
     

@@ -21,54 +21,30 @@ public class ClassController {
     private GoodsClassService classService;
     
     @RequestMapping(value="saveClass", method=RequestMethod.POST)
-    public ResponseHeader saveClass(TeaClassInfo classInfo){
+    public ResponseHeader saveClass(TeaClassInfo classInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.classService.addClass(classInfo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.classService.addClass(classInfo);
         return header;
     }
     
     @RequestMapping(value="modifyClass", method=RequestMethod.POST)
-    public ResponseHeader modifyClass(TeaClassInfo classInfo){
+    public ResponseHeader modifyClass(TeaClassInfo classInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.classService.modifyClass(classInfo);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.classService.modifyClass(classInfo);
         return header;
     }
     
     @RequestMapping(value="removeClass/{classId}", method=RequestMethod.DELETE)
-    public ResponseHeader removeClass(@PathVariable String classId){
+    public ResponseHeader removeClass(@PathVariable String classId) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
-        try {
-            this.classService.removeClass(classId);
-        } catch (MilkTeaException e) {
-            header.setRspCode(e.getErrorCode());
-            header.setCnErrorMsg(e.getCnErrorMsg());
-            header.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        this.classService.removeClass(classId);
         return header;
     }
     
     @RequestMapping(value="queryClasses", method=RequestMethod.GET)
-    public ResponseBody<List<TeaClassInfo>> queryClasses(){
+    public ResponseBody<List<TeaClassInfo>> queryClasses() throws MilkTeaException{
         ResponseBody<List<TeaClassInfo>> responseBody = new ResponseBody<>();
-        try {
-            responseBody.setData(this.classService.queryClassInfo());
-        } catch (MilkTeaException e) {
-            responseBody.setRspCode(e.getErrorCode());
-            responseBody.setCnErrorMsg(e.getCnErrorMsg());
-            responseBody.setUsErrorMsg(e.getUsErrorMsg());
-        }
+        responseBody.setData(this.classService.queryClassInfo());
         return responseBody;
     }
 

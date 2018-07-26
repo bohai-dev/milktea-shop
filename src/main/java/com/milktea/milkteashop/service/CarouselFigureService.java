@@ -1,5 +1,7 @@
 package com.milktea.milkteashop.service;
 
+import java.util.List;
+
 import com.milktea.milkteashop.domain.TeaCarouselFigure;
 import com.milktea.milkteashop.exception.MilkTeaException;
 
@@ -15,7 +17,7 @@ public interface CarouselFigureService {
      * @param figureVo
      * @throws MilkTeaException
      */
-    public void addCarouselFigure(TeaCarouselFigure figureVo) throws MilkTeaException;
+    public void addCarouselFigure(TeaCarouselFigure figure) throws MilkTeaException;
     
     /**
      * 删除轮播图
@@ -29,13 +31,13 @@ public interface CarouselFigureService {
      * @param figureVo
      * @throws MilkTeaException
      */
-    public void modifyCarouselFigure(TeaCarouselFigure figureVo) throws MilkTeaException;
+    public void modifyCarouselFigure(TeaCarouselFigure figure) throws MilkTeaException;
     
     /**
      * 查询轮播图
      * @throws MilkTeaException
      */
-    public void queryCarouselFigures() throws MilkTeaException;
+    public List<TeaCarouselFigure> queryCarouselFigures(TeaCarouselFigure figure) throws MilkTeaException;
     
     
 }
