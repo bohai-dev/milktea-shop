@@ -1,5 +1,9 @@
 package com.milktea.milkteashop.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
+
 import com.milktea.milkteashop.domain.TeaStoreInfo;
 
 public interface TeaStoreInfoMapper {
@@ -14,4 +18,7 @@ public interface TeaStoreInfoMapper {
     int updateByPrimaryKeySelective(TeaStoreInfo record);
 
     int updateByPrimaryKey(TeaStoreInfo record);
+    
+    @Select(value="select * from TEA_STORE_INFO")
+    List<TeaStoreInfo> selectAll();
 }

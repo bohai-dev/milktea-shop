@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
+import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
+import com.milktea.milkteashop.vo.ClassInfoVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.PageRequestVo;
 import com.milktea.milkteashop.vo.PageResponseVo;
@@ -61,6 +63,17 @@ public class GoodsController {
      */
     @RequestMapping(value="queryGoodsInfo", method=RequestMethod.GET)
     public ResponseBody<List<GoodsInfoVo>> queryGoodsInfo(GoodsInfoVo infoVo) throws MilkTeaException{
+        
+        return null;
+    }
+    
+    /**
+     * 查询分类商品
+     * @param requestVo
+     * @return
+     * @throws MilkTeaException
+     */
+    public ResponseBody<List<ClassInfoVo>> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException{
         
         return null;
     }
