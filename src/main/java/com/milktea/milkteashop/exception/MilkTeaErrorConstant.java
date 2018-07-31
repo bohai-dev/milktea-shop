@@ -41,9 +41,23 @@ public enum MilkTeaErrorConstant {
     
     GOODS_CLASS_REQUIRED("00016", "商品分类不能为空", "Goods class required"),
     
-    GOODS_ATTR_REQUIRED("00016", "商品属性不能为空", "Goods attribute required"),
+    GOODS_ATTR_REQUIRED("00017", "商品属性不能为空", "Goods attribute required"),
     
-    STORE_NO_REQUIRED("00017","店铺编号不能为空","StoreNo required"),
+    STORE_NO_REQUIRED("00018", "店铺编号不能为空", "StoreNo required"),
+    
+    CN_PROMOTION_NAME_REQUIRED("00019", "活动名称（中文）不能为空", "Promotion name required"),
+    
+    US_PROMOTION_NAME_REQUIRED("00020", "活动名称（英文）不能为空", "Promotion name required"),
+    
+    PROMOTION_ID_REQUIRED("00021", "活动ID不能为空", "Promotion id required"),
+    
+    CN_FIGURE_ADDRESS_REQUIRED("00022", "轮播图地址（中文）不能为空", "Figure address required"),
+    
+    US_FIGURE_ADDRESS_REQUIRED("00023", "轮播图地址（英文）不能为空", "Figure address required"),
+    
+    FIGURE_ID_REQUIRED("00024", "轮播图ID不能为空", "Figure id required"),
+    
+    
     
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     

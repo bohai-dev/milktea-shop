@@ -21,4 +21,6 @@ public interface TeaAttributesInfoMapper {
     
     @Select(value="select * from TEA_ATTRIBUTES_INFO")
     List<TeaAttributesInfo> selectAll();
+    
+    List<TeaAttributesInfo> selectByGoodsId(String goodsId);
 }

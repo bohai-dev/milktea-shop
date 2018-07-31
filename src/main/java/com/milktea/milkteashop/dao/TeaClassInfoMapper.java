@@ -21,4 +21,6 @@ public interface TeaClassInfoMapper {
     
     @Select(value="select * from TEA_CLASS_INFO order by INDEX_NO")
     List<TeaClassInfo> selectAll();
+    
+    List<TeaClassInfo> selectByCondition(TeaClassInfo classInfo);
 }

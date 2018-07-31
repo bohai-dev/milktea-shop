@@ -199,4 +199,24 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" parameterType="com.milktea.milkteashop.domain.TeaGoodsInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_GOODS_INFO
+    <where>
+        DELETE_FLAG = '0'
+        <if test="STORE_NO != null">
+            and STORE_NO = #{storeNo,jdbcType=VARCHAR} 
+        </if>
+        <if test="cnGoodsName != null">
+            and CN_GOODS_NAME = #{cnGoodsName,jdbcType=VARCHAR}
+        </if>
+        <if test="classId != null">
+            and exists (select 1 from TEA_GOODS_CLASS 
+                        where TEA_GOODS_INFO.GOODS_ID = TEA_GOODS_CLASS.GOODS_ID
+                        and TEA_GOODS_CLASS = #{classId,jdbcType=VARCHAR})
+        </if>
+    </where>
+  </select>
 </mapper>

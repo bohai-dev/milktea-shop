@@ -1,5 +1,9 @@
 package com.milktea.milkteashop.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
+
 import com.milktea.milkteashop.domain.TeaCarouselFigure;
 
 public interface TeaCarouselFigureMapper {
@@ -14,4 +18,6 @@ public interface TeaCarouselFigureMapper {
     int updateByPrimaryKeySelective(TeaCarouselFigure record);
 
     int updateByPrimaryKey(TeaCarouselFigure record);
+    
+    List<TeaCarouselFigure> selectByCondition(TeaCarouselFigure figure);
 }
