@@ -139,4 +139,17 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where CLASS_ID = #{classId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition"  parameterType="com.milktea.milkteashop.domain.TeaClassInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_CLASS_INFO
+    <where>
+        DELETE_FLAG = '0'
+        <if test="classType != null">
+            and CLASS_TYPE = #{classType,jdbcType=CHAR},
+        </if>
+    </where>
+    order by INDEX_NO
+  </select>
 </mapper>

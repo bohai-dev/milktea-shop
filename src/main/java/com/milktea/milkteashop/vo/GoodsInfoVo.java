@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.milktea.milkteashop.domain.TeaAttributesInfo;
 import com.milktea.milkteashop.domain.TeaClassInfo;
-import com.milktea.milkteashop.domain.TeaGoodsAttr;
 
 /**
  * 商品信息

@@ -114,4 +114,15 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where ATTR_ID = #{attrId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByGoodsId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_ATTRIBUTES_INFO 
+    where DELETE_FLAG = '0' 
+    and exists (select 1 
+                from TEA_GOODS_ATTR 
+                where TEA_ATTRIBUTES_INFO.ATTR_ID = TEA_GOODS_ATTR.ATTR_ID
+                and TEA_GOODS_ATTR.GOODS_ID = #{goodsId,jdbcType=VARCHAR})
+  </select>
 </mapper>

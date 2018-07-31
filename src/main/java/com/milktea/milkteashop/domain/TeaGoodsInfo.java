@@ -31,6 +31,9 @@ public class TeaGoodsInfo {
     private BigDecimal goodsStock;
 
     private Date updateTime;
+    
+    //逻辑字段
+    private String classId;
 
     public String getGoodsId() {
         return goodsId;
@@ -143,4 +146,13 @@ public class TeaGoodsInfo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+    
 }

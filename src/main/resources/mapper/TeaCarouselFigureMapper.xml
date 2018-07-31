@@ -126,4 +126,15 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where FIGURE_ID = #{figureId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" parameterType="com.milktea.milkteashop.domain.TeaCarouselFigure" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_CAROUSEL_FIGURE
+    <where>
+        <if test="STORE_NO != null">
+            STORE_NO = #{storeNo,jdbcType=VARCHAR}
+        </if>
+    </where>
+  </select>
 </mapper>
