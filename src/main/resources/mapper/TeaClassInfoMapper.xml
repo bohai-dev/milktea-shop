@@ -152,4 +152,17 @@
     </where>
     order by INDEX_NO
   </select>
+  
+  <select id="selectByGoodsId"  parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_CLASS_INFO
+    <where>
+        DELETE_FLAG = '0'
+        and exists (select 1 from TEA_GOODS_CLASS 
+                    where TEA_CLASS_INFO.CLASS_ID = TEA_GOODS_CLASS.CLASS_ID
+                    and TEA_GOODS_CLASS.GOODS_ID = #{goodsId,jdbcType=VARCHAR})
+    </where>
+    order by INDEX_NO
+  </select>
 </mapper>
