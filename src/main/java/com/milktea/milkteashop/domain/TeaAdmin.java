@@ -1,5 +1,7 @@
 package com.milktea.milkteashop.domain;
 
+import java.util.Map;
+
 public class TeaAdmin {
     private String userName;
 
@@ -20,4 +22,6 @@ public class TeaAdmin {
     public void setPasswd(String passwd) {
         this.passwd = passwd == null ? null : passwd.trim();
     }
+
+
 }

@@ -3,61 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>websocket测试</title>
-</head>
-<body>
-    <form>
-        <button onclick="connectSocket()">连接websocket</button>
 
-    </form>
-    <div id="message"></div>
     <script>
-        var websocket = null;
-        //判断当前浏览器是否支持WebSocket
-        if ('WebSocket' in window) {
-            websocket = new WebSocket("ws://localhost:8080/shop/websocket?userId=50");
-        }
-        else {
-            alert('当前浏览器 Not support websocket')
-        }
+        function WebSocketTest()
+        {
+            var shopId=document.getElementById("shopId").value;
+            console.log(shopId);
+            if ("WebSocket" in window)
+            {
+                alert("您的浏览器支持 WebSocket!");
 
+                // 打开一个 web socket
+                var ws = new WebSocket("ws://localhost:8080/shop/websocket");
 
+                ws.onopen = function()
+                {
+                    // Web Socket 已连接上，使用 send() 方法发送数据
+                    ws.send(shopId);
+                    alert("数据发送中：...");
+                };
 
-        //连接成功建立的回调方法
-        websocket.onopen = function () {
-            setMessageInnerHTML("WebSocket连接成功");
-        }
-        //连接发生错误的回调方法
-        websocket.onerror = function () {
-            setMessageInnerHTML("WebSocket连接发生错误");
-        };
-        //接收到消息的回调方法
-        websocket.onmessage = function (event) {
-            setMessageInnerHTML(event.data);
-        }
+                ws.onmessage = function (evt)
+                {
+                    var received_msg = evt.data;
+                    alert("数据已接收:"+received_msg);
+                };
 
-        //连接关闭的回调方法
-        websocket.onclose = function () {
-            setMessageInnerHTML("WebSocket连接关闭");
-        }
+                ws.onclose = function()
+                {
+                    // 关闭 websocket
+                    alert("连接已关闭...");
+                };
+            }
 
-        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-        window.onbeforeunload = function () {
-            closeWebSocket();
-        }
-
-        //将消息显示在网页上
-        function setMessageInnerHTML(innerHTML) {
-            document.getElementById('message').innerHTML += innerHTML + '<br/>';
-        }
-        function connectSocket() {
-
-        }
-        //关闭WebSocket连接
-        function closeWebSocket() {
-            websocket.close();
+            else
+            {
+                // 浏览器不支持 WebSocket
+                alert("您的浏览器不支持 WebSocket!");
+            }
         }
 
 
     </script>
+</head>
+<body>
+
+    <div id="sse">
+        <input type="number" width="50" height="40" id="shopId" placeholder="请输入要发送的shopId">
+        <a href="javascript:WebSocketTest()">运行 WebSocket</a>
+    </div>
 </body>
 </html>

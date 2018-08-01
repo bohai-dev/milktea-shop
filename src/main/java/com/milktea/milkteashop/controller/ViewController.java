@@ -9,6 +9,6 @@ public class ViewController {
 
    @RequestMapping("/sockettest")
    public String socketTest(){
-       return "shopWebsocket";
+       return "websocketTest";
    }
 }

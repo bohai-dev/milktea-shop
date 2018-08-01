@@ -92,7 +92,7 @@ public class GoodsServiceImpl implements GoodsService {
             TeaGoodsClass goodsClass = new TeaGoodsClass();
             goodsClass.setClassId(classInfo.getClassId());
             //TODO
-            goodsClass.setGoodsId();
+           // goodsClass.setGoodsId();
             try {
                 this.goodsClassMapper.insert(goodsClass);
             } catch (Exception e) {
@@ -110,7 +110,7 @@ public class GoodsServiceImpl implements GoodsService {
                 TeaGoodsAttr goodsAttr = new TeaGoodsAttr();
                 goodsAttr.setAttrId(attributesInfo.getAttrId());
                 //TODO
-                goodsAttr.setGoodsId();
+               // goodsAttr.setGoodsId();
                 try {
                     this.goodsAttrMapper.insert(goodsAttr);
                 } catch (Exception e) {
