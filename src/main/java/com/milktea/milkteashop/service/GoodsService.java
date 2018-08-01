@@ -40,7 +40,7 @@ public interface GoodsService {
      * @return
      * @throws MilkTeaException
      */
-    public List<GoodsInfoVo> queryGoodsInfoByStoreNo(String storeNo) throws MilkTeaException;
+    public List<GoodsInfoVo> queryGoodsInfo(GoodsInfoVo infoVo) throws MilkTeaException;
     
     /**
      * 查询商品详情

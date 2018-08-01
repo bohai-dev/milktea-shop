@@ -23,4 +23,6 @@ public interface TeaClassInfoMapper {
     List<TeaClassInfo> selectAll();
     
     List<TeaClassInfo> selectByCondition(TeaClassInfo classInfo);
+    
+    List<TeaClassInfo> selectByGoodsId(String goodsId);
 }

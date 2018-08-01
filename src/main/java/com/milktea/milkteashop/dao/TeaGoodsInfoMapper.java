@@ -26,4 +26,8 @@ public interface TeaGoodsInfoMapper {
     int logicalDeleteByPrimaryKey(String goodsId);
     
     List<TeaGoodsInfo> selectByCondition(TeaGoodsInfo goodsInfo);
+    
+    //TODO
+    @Select(value="")
+    String generateStoreNo();
 }
