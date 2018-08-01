@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket测试</title>
+
+    <script>
+        function WebSocketTest()
+        {
+            var shopId=document.getElementById("shopId").value;
+            console.log(shopId);
+            if ("WebSocket" in window)
+            {
+                alert("您的浏览器支持 WebSocket!");
+
+                // 打开一个 web socket
+                var ws = new WebSocket("ws://localhost:8080/shop/websocket");
+
+                ws.onopen = function()
+                {
+                    // Web Socket 已连接上，使用 send() 方法发送数据
+                    ws.send(shopId);
+                    alert("数据发送中：...");
+                };
+
+                ws.onmessage = function (evt)
+                {
+                    var received_msg = evt.data;
+                    alert("数据已接收:"+received_msg);
+                };
+
+                ws.onclose = function()
+                {
+                    // 关闭 websocket
+                    alert("连接已关闭...");
+                };
+            }
+
+            else
+            {
+                // 浏览器不支持 WebSocket
+                alert("您的浏览器不支持 WebSocket!");
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+
+    <div id="sse">
+        <input type="number" width="50" height="40" id="shopId" placeholder="请输入要发送的shopId">
+        <a href="javascript:WebSocketTest()">运行 WebSocket</a>
+    </div>
+</body>
+</html>

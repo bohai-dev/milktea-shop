@@ -10,6 +10,7 @@
 .springBeans
 .sts4-cache
 
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -24,3 +25,5 @@
 /nbdist/
 /.nb-gradle/
 /.mvn/
+
+/src/main/resources/generatorConfig.xml
