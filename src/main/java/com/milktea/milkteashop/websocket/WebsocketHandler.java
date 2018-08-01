@@ -67,7 +67,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
     }
     /**
      * 给指定店铺发送消息
-     * @param shopId  用户id
+     * @param shopId  店铺id
      * @param message 发送数据，可定义为一个类
      * @throws IOException
      */
