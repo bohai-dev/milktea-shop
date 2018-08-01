@@ -28,6 +28,7 @@ import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
+import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 
 @Service("goodsService")
 public class GoodsServiceImpl implements GoodsService {
@@ -414,6 +415,35 @@ public class GoodsServiceImpl implements GoodsService {
         }
         
         return list;
+    }
+
+    @Override
+    public void updateGoodsStockAndStatus(GoodsStockAndStatusRequestVo requestVo) throws MilkTeaException {
+
+        //参数非空检验
+        if(requestVo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getGoodsId())){
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_ID_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getGoodsStatus()) && requestVo.getGoodsStock() == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        TeaGoodsInfo record = new TeaGoodsInfo();
+        record.setGoodsId(requestVo.getGoodsId());
+        record.setGoodsStatus(requestVo.getGoodsStatus());
+        record.setGoodsStock(requestVo.getGoodsStock());
+        try {
+            this.goodsInfoMapper.updateByPrimaryKeySelective(record);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
     }
 
 }
