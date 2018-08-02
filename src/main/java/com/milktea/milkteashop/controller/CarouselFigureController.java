@@ -41,7 +41,7 @@ public class CarouselFigureController {
         return header;
     }
     
-    @RequestMapping(value="queryCarouselFigure", method=RequestMethod.GET)
+    @RequestMapping(value="queryCarouselFigure", method=RequestMethod.POST)
     public ResponseBody<List<TeaCarouselFigure>> queryCarouselFigure(TeaCarouselFigure figure) 
             throws MilkTeaException{
         ResponseBody<List<TeaCarouselFigure>> responseBody = new ResponseBody<>();

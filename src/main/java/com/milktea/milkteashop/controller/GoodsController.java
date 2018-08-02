@@ -51,7 +51,7 @@ public class GoodsController {
      * @param requestVo
      * @return
      */
-    @RequestMapping(value="queryPagedGoodsInfo", method=RequestMethod.GET)
+    @RequestMapping(value="queryPagedGoodsInfo", method=RequestMethod.POST)
     public PageResponseVo<GoodsInfoVo> queryPagedGoodsInfo(PageRequestVo<GoodsInfoVo> requestVo) throws MilkTeaException{
         
         return null;
@@ -62,7 +62,7 @@ public class GoodsController {
      * @param infoVo
      * @return
      */
-    @RequestMapping(value="queryGoodsInfo", method=RequestMethod.GET)
+    @RequestMapping(value="queryGoodsInfo", method=RequestMethod.POST)
     public ResponseBody<List<GoodsInfoVo>> queryGoodsInfo(GoodsInfoVo infoVo) throws MilkTeaException{
         ResponseBody<List<GoodsInfoVo>> responseBody = new ResponseBody<>();
         List<GoodsInfoVo> data = this.goodsService.queryGoodsInfo(infoVo);
@@ -76,7 +76,7 @@ public class GoodsController {
      * @return
      * @throws MilkTeaException
      */
-    @RequestMapping(value="queryClassGoods", method=RequestMethod.GET)
+    @RequestMapping(value="queryClassGoods", method=RequestMethod.POST)
     public ResponseBody<List<ClassInfoVo>> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException{
         ResponseBody<List<ClassInfoVo>> responseBody = new ResponseBody<>();
         List<ClassInfoVo> data = this.goodsService.queryClassGoods(requestVo);
