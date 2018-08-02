@@ -61,6 +61,8 @@ public enum MilkTeaErrorConstant {
     
     PASSWORD_REQUIRED("00026", "密码不能为空", "Password required"),
     
+    USER_NAME_OR_PASSWORD_WRONG("00027", "用户名或密码错误", "User name or password wrong"),
+    
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
     final String errorCode;

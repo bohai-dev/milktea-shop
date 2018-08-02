@@ -28,4 +28,10 @@
       </if>
     </trim>
   </insert>
+  
+  <select id="selectByUserNameAndPasswd" parameterType="com.milktea.milkteashop.vo.UserLoginRequestVo" resultMap="BaseResultMap">
+    select * from TEA_ADMIN
+    where USER_NAME = #{userName,jdbcType=VARCHAR}
+    and PASSWD = #{password,jdbcType=VARCHAR}
+  </select>
 </mapper>

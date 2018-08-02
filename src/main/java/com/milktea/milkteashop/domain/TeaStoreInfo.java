@@ -36,8 +36,10 @@ public class TeaStoreInfo {
 
     private String storePasswd;
 
+    //是否默认店铺 0：否 1：是
     private String isDefault;
-
+    
+    //是否外送 0：不支持 1：支持
     private String isSend;
 
     private String reserveBeginTime;
