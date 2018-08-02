@@ -289,7 +289,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public GoodsInfoVo queryGoodsInfo(String goodsId) throws MilkTeaException {
+    public GoodsInfoVo queryGoodsDetail(String goodsId) throws MilkTeaException {
         if(StringUtils.isBlank(goodsId)){
             throw new MilkTeaException(MilkTeaErrorConstant.GOODS_ID_REQUIRED);
         }

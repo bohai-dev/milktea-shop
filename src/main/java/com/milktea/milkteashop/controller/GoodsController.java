@@ -85,6 +85,19 @@ public class GoodsController {
     }
     
     /**
+     * 查询商品详情
+     * @param goodsId
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="queryGoodsDetail/{goodsId}", method=RequestMethod.GET)
+    public ResponseBody<GoodsInfoVo> queryGoodsDetail(@PathVariable String goodsId) throws MilkTeaException{
+        ResponseBody<GoodsInfoVo> responseBody = new ResponseBody<>(); 
+        responseBody.setData(this.goodsService.queryGoodsDetail(goodsId));
+        return responseBody;
+    }
+    
+    /**
      * 更新商品库存和状态
      * @param requestVo
      * @return

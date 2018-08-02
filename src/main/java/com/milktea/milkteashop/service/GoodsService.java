@@ -49,7 +49,7 @@ public interface GoodsService {
      * @return
      * @throws MilkTeaException
      */
-    public GoodsInfoVo queryGoodsInfo(String goodsId) throws MilkTeaException;
+    public GoodsInfoVo queryGoodsDetail(String goodsId) throws MilkTeaException;
     
     /**
      * 查询分类商品信息
