@@ -69,7 +69,7 @@ public class StoreServiceImpl implements StoreService {
         
         try {
             storeInfo.setStoreNo(this.storeInfoMapper.generateStoreNo());
-            this.storeInfoMapper.insert(storeInfo);
+            this.storeInfoMapper.insertSelective(storeInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
