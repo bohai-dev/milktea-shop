@@ -23,4 +23,7 @@ public interface TeaAttributesInfoMapper {
     List<TeaAttributesInfo> selectAll();
     
     List<TeaAttributesInfo> selectByGoodsId(String goodsId);
+    
+    @Select(value="select TEA_ATTR_ID_SEQ.NEXTVAL from dual")
+    String generateAttrId();
 }

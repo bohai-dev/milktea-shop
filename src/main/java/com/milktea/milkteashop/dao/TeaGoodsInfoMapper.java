@@ -25,7 +25,6 @@ public interface TeaGoodsInfoMapper {
     
     List<TeaGoodsInfo> selectByCondition(TeaGoodsInfo goodsInfo);
     
-    //TODO 生成店铺编号
-    @Select(value="")
-    String generateStoreNo();
+    @Select(value="select TEA_GOODS_ID_SEQ.NEXTVAL from dual")
+    String generateGoodsId();
 }

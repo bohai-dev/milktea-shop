@@ -63,6 +63,7 @@ public class PromotionServiceImpl implements PromotionService {
         dest.setStoreNos(sb.toString());
 
         try {
+            dest.setPromotionId(this.promotionInfoMapper.generatePromotionId());
             this.promotionInfoMapper.insert(dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
