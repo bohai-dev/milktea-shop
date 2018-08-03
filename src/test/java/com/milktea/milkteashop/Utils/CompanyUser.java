@@ -2,9 +2,10 @@ package com.milktea.milkteashop.Utils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CompanyUser {
+public class CompanyUser implements Serializable {
     private Integer id;
 
     private String userName;

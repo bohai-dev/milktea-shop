@@ -28,16 +28,15 @@ public class HttpUtilsTest {
 
     @Test
     public void  jsonToListTest(){
-        JsonArray jsonArray=new JsonArray();
-        for (int i = 0; i < 3; i++) {
-            CompanyUser user=new CompanyUser("Tom","123456");
-            jsonArray.add(user.toString());
-        }
 
-        String arrayStr=jsonArray.toString();
-        //String转为list
-        List<CompanyUser> list=JsonUtil.parseStrToList(arrayStr,CompanyUser.class);
-        Assert.assertEquals(3L,list.size());
+        String url="http://localhost:8080/contactUs/findList";  //返回jsonArray   List<CompanyUser> findList()
+        try {
+            String content=HttpUtil.get(url);
+            List<CompanyUser> userList=JsonUtil.parseStrToList(content,CompanyUser.class);
+            userList.forEach(user->System.out.println(user.getUserName()+":"+user.getPassword()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
    }
 }
