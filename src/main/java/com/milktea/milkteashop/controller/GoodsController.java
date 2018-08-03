@@ -3,10 +3,7 @@ package com.milktea.milkteashop.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
@@ -77,4 +74,6 @@ public class GoodsController {
         
         return null;
     }
+
+
 }
