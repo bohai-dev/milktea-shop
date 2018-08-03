@@ -2,12 +2,10 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteashop.domain.TeaGoodsInfo;
-import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 
 public interface TeaGoodsInfoMapper {
     int deleteByPrimaryKey(String goodsId);
@@ -27,7 +25,7 @@ public interface TeaGoodsInfoMapper {
     
     List<TeaGoodsInfo> selectByCondition(TeaGoodsInfo goodsInfo);
     
-    //TODO
+    //TODO 生成店铺编号
     @Select(value="")
     String generateStoreNo();
 }

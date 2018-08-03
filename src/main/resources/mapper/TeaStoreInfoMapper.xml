@@ -292,4 +292,23 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where STORE_NO = #{storeNo,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByUserNameAndPasswd" parameterType="com.milktea.milkteashop.vo.UserLoginRequestVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_STORE_INFO
+    where STORE_USER_NAME = #{userName,jdbcType=VARCHAR}
+    and STORE_PASSWD = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByCondition" parameterType="com.milktea.milkteashop.domain.TeaStoreInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_STORE_INFO
+    <where>
+        <if test="IS_DEFAULT != null">
+            IS_DEFAULT = #{isDefault,jdbcType=CHAR}
+        </if>
+    </where>
+  </select>
 </mapper>

@@ -41,7 +41,7 @@ public class PromotionController {
         return header;
     }
     
-    @RequestMapping(value="queryPromotion", method=RequestMethod.GET)
+    @RequestMapping(value="queryPromotion", method=RequestMethod.POST)
     public ResponseBody<List<PromotionVo>> queryPromotion(PromotionVo promotionVo) throws MilkTeaException{
         ResponseBody<List<PromotionVo>> responseBody = new ResponseBody<>();
         responseBody.setData(this.promotionService.queryPromotions());

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 
 import com.milktea.milkteashop.domain.TeaStoreInfo;
+import com.milktea.milkteashop.vo.UserLoginRequestVo;
 
 public interface TeaStoreInfoMapper {
     int deleteByPrimaryKey(String storeNo);
@@ -21,4 +22,8 @@ public interface TeaStoreInfoMapper {
     
     @Select(value="select * from TEA_STORE_INFO")
     List<TeaStoreInfo> selectAll();
+    
+    List<TeaStoreInfo> selectByCondition(TeaStoreInfo storeInfo);
+    
+    TeaStoreInfo selectByUserNameAndPasswd(UserLoginRequestVo requestVo);
 }

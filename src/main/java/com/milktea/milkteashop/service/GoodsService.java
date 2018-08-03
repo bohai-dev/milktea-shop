@@ -6,6 +6,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
+import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 
 /**
  * 商品信息接口
@@ -48,7 +49,7 @@ public interface GoodsService {
      * @return
      * @throws MilkTeaException
      */
-    public GoodsInfoVo queryGoodsInfo(String goodsId) throws MilkTeaException;
+    public GoodsInfoVo queryGoodsDetail(String goodsId) throws MilkTeaException;
     
     /**
      * 查询分类商品信息
@@ -57,4 +58,11 @@ public interface GoodsService {
      * @throws MilkTeaException
      */
     public List<ClassInfoVo> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException;
+    
+    /**
+     * 更新商品状态和库存
+     * @param infoVo
+     * @throws MilkTeaException
+     */
+    public void updateGoodsStockAndStatus(GoodsStockAndStatusRequestVo requestVo) throws MilkTeaException;
 }

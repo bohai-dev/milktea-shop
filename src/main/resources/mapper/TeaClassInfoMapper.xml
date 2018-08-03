@@ -147,7 +147,7 @@
     <where>
         DELETE_FLAG = '0'
         <if test="classType != null">
-            and CLASS_TYPE = #{classType,jdbcType=CHAR},
+            and CLASS_TYPE = #{classType,jdbcType=CHAR}
         </if>
     </where>
     order by INDEX_NO

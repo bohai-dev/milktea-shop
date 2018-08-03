@@ -10,6 +10,7 @@ import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
+import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 import com.milktea.milkteashop.vo.PageRequestVo;
 import com.milktea.milkteashop.vo.PageResponseVo;
 import com.milktea.milkteashop.vo.ResponseBody;
@@ -47,7 +48,7 @@ public class GoodsController {
      * @param requestVo
      * @return
      */
-    @RequestMapping(value="queryPagedGoodsInfo", method=RequestMethod.GET)
+    @RequestMapping(value="queryPagedGoodsInfo", method=RequestMethod.POST)
     public PageResponseVo<GoodsInfoVo> queryPagedGoodsInfo(PageRequestVo<GoodsInfoVo> requestVo) throws MilkTeaException{
         
         return null;
@@ -58,9 +59,11 @@ public class GoodsController {
      * @param infoVo
      * @return
      */
-    @RequestMapping(value="queryGoodsInfo", method=RequestMethod.GET)
+    @RequestMapping(value="queryGoodsInfo", method=RequestMethod.POST)
     public ResponseBody<List<GoodsInfoVo>> queryGoodsInfo(GoodsInfoVo infoVo) throws MilkTeaException{
-        
+        ResponseBody<List<GoodsInfoVo>> responseBody = new ResponseBody<>();
+        List<GoodsInfoVo> data = this.goodsService.queryGoodsInfo(infoVo);
+        responseBody.setData(data);
         return null;
     }
     
@@ -70,9 +73,38 @@ public class GoodsController {
      * @return
      * @throws MilkTeaException
      */
+    @RequestMapping(value="queryClassGoods", method=RequestMethod.POST)
     public ResponseBody<List<ClassInfoVo>> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException{
-        
-        return null;
+        ResponseBody<List<ClassInfoVo>> responseBody = new ResponseBody<>();
+        List<ClassInfoVo> data = this.goodsService.queryClassGoods(requestVo);
+        responseBody.setData(data);
+        return responseBody;
+    }
+    
+    /**
+     * 查询商品详情
+     * @param goodsId
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="queryGoodsDetail/{goodsId}", method=RequestMethod.GET)
+    public ResponseBody<GoodsInfoVo> queryGoodsDetail(@PathVariable String goodsId) throws MilkTeaException{
+        ResponseBody<GoodsInfoVo> responseBody = new ResponseBody<>(); 
+        responseBody.setData(this.goodsService.queryGoodsDetail(goodsId));
+        return responseBody;
+    }
+    
+    /**
+     * 更新商品库存和状态
+     * @param requestVo
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="updateGoodsStockAndStatus", method=RequestMethod.POST)
+    public ResponseHeader updateGoodsStockAndStatus(GoodsStockAndStatusRequestVo requestVo) throws MilkTeaException{
+        ResponseHeader header = new ResponseHeader();
+        this.goodsService.updateGoodsStockAndStatus(requestVo);
+        return header;
     }
 
 

@@ -57,7 +57,11 @@ public enum MilkTeaErrorConstant {
     
     FIGURE_ID_REQUIRED("00024", "轮播图ID不能为空", "Figure id required"),
     
+    USER_NAME_REQUIRED("00025", "用户名不能为空", "User name required"),
     
+    PASSWORD_REQUIRED("00026", "密码不能为空", "Password required"),
+    
+    USER_NAME_OR_PASSWORD_WRONG("00027", "用户名或密码错误", "User name or password wrong"),
     
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
