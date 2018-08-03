@@ -6,8 +6,6 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
-import javax.websocket.Session;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,13 +18,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static AtomicInteger  onlineCount=new AtomicInteger(0);
 
-    //concurrent包的线程安全Set
+    //concurrent包的线程安全List
     private static CopyOnWriteArrayList<Map<String,Object>> webSocketList = new CopyOnWriteArrayList<Map<String,Object>>();
 
-    //与某个客户端的连接会话，需要通过它来给客户端发送数据
-   //  private WebSocketSession session=null;
-    //店铺id
-    //private String shopId=null;
     /** logger */
     private static final Logger LOGGER = LoggerFactory.getLogger(WebsocketHandler.class);
 
@@ -39,14 +33,13 @@ public class WebsocketHandler extends TextWebSocketHandler {
         //LOGGER.info(session.toString());
     }
 
+    //接收客户端发送的消息，这里接收店铺的id
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
         //接收店铺信息：这里只模拟发送id
         LOGGER.info("接收到店铺消息(id)：" + message.getPayload());
         String shopId=message.getPayload();
-        /*this.shopId=shopId;
-        this.session = session;*/
         Map<String,Object> map=new HashMap<>();
         map.put("shopId",shopId);
         map.put("session",session);
