@@ -216,7 +216,7 @@
         <if test="classId != null">
             and exists (select 1 from TEA_GOODS_CLASS 
                         where TEA_GOODS_INFO.GOODS_ID = TEA_GOODS_CLASS.GOODS_ID
-                        and TEA_GOODS_CLASS = #{classId,jdbcType=VARCHAR})
+                        and TEA_GOODS_CLASS.CLASS_ID = #{classId,jdbcType=VARCHAR})
         </if>
     </where>
   </select>

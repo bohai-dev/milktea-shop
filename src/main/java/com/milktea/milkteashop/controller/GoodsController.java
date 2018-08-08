@@ -75,7 +75,7 @@ public class GoodsController {
      * @throws MilkTeaException
      */
     @RequestMapping(value="queryClassGoods", method=RequestMethod.POST)
-    public ResponseBody<List<ClassInfoVo>> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException{
+    public ResponseBody<List<ClassInfoVo>> queryClassGoods(@RequestBody ClassGoodsRequestVo requestVo) throws MilkTeaException{
         ResponseBody<List<ClassInfoVo>> responseBody = new ResponseBody<>();
         List<ClassInfoVo> data = this.goodsService.queryClassGoods(requestVo);
         responseBody.setData(data);
