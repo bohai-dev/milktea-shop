@@ -1,15 +1,13 @@
 package com.milktea.milkteashop.Utils;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 import com.milktea.milkteashop.utils.HttpUtil;
 import com.milktea.milkteashop.utils.JsonUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HttpUtilsTest {
 
@@ -28,16 +26,31 @@ public class HttpUtilsTest {
 
     @Test
     public void  jsonToListTest(){
-        JsonArray jsonArray=new JsonArray();
-        for (int i = 0; i < 3; i++) {
-            CompanyUser user=new CompanyUser("Tom","123456");
-            jsonArray.add(user.toString());
+
+        String url="http://localhost:8080/contactUs/findList";  //返回jsonArray   List<CompanyUser> findList()
+        try {
+            String content=HttpUtil.get(url);
+            List<CompanyUser> userList=JsonUtil.parseStrToList(content,CompanyUser.class);
+            userList.forEach(user->System.out.println(user.getUserName()+":"+user.getPassword()));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        String arrayStr=jsonArray.toString();
-        //String转为list
-        List<CompanyUser> list=JsonUtil.parseStrToList(arrayStr,CompanyUser.class);
-        Assert.assertEquals(3L,list.size());
+   }
+
+   @Test
+    public void postTest(){
+
+       String url="http://47.89.247.54:8081/queryClassGoods";
+       Map<String,String> map=new HashMap<>();
+       map.put("storeNo", "5");
+       map.put("classType", "5");
+       try {
+           String res=HttpUtil.post(url,map);
+           System.out.println(res);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
 
    }
 }
