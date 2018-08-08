@@ -83,8 +83,8 @@ public class GoodsServiceImpl implements GoodsService {
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
         }
         
-        //生成店铺编号
-        String storeNo = this.goodsInfoMapper.generateStoreNo();
+        //生成商品ID
+        String goodsId = this.goodsInfoMapper.generateGoodsId();
         
         //添加商品分类
         for (TeaClassInfo classInfo : infoVo.getClassInfos()) {
@@ -94,7 +94,7 @@ public class GoodsServiceImpl implements GoodsService {
             
             TeaGoodsClass goodsClass = new TeaGoodsClass();
             goodsClass.setClassId(classInfo.getClassId());
-            goodsClass.setGoodsId(storeNo);
+            goodsClass.setGoodsId(goodsId);
             try {
                 this.goodsClassMapper.insert(goodsClass);
             } catch (Exception e) {
@@ -111,7 +111,7 @@ public class GoodsServiceImpl implements GoodsService {
                 }
                 TeaGoodsAttr goodsAttr = new TeaGoodsAttr();
                 goodsAttr.setAttrId(attributesInfo.getAttrId());
-                goodsAttr.setGoodsId(storeNo);
+                goodsAttr.setGoodsId(goodsId);
                 try {
                     this.goodsAttrMapper.insert(goodsAttr);
                 } catch (Exception e) {

@@ -26,4 +26,7 @@ public interface TeaStoreInfoMapper {
     List<TeaStoreInfo> selectByCondition(TeaStoreInfo storeInfo);
     
     TeaStoreInfo selectByUserNameAndPasswd(UserLoginRequestVo requestVo);
+    
+    @Select(value="select 'D'||lpad(TEA_STORE_NO_SEQ.NEXTVAL,5,'0') from dual")
+    String generateStoreNo();
 }

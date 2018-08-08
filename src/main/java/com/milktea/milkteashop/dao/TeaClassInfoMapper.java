@@ -25,4 +25,7 @@ public interface TeaClassInfoMapper {
     List<TeaClassInfo> selectByCondition(TeaClassInfo classInfo);
     
     List<TeaClassInfo> selectByGoodsId(String goodsId);
+    
+    @Select(value="select TEA_CLASS_ID_SEQ.NEXTVAL from dual")
+    String generateClassId();
 }

@@ -25,4 +25,7 @@ public interface TeaPromotionInfoMapper {
     
     @Select(value="select * from TEA_PROMOTION_INFO where DELETE_FLAG = '0'")
     List<TeaPromotionInfo> selectAll();
+    
+    @Select(value="select TEA_PROMOTION_ID_SEQ.NEXTVAL from dual")
+    String generatePromotionId();
 }

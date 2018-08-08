@@ -2,6 +2,7 @@ package com.milktea.milkteashop.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +54,22 @@ public class StoreServiceImpl implements StoreService {
         if(storeInfo == null){
             throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
         }
+        
+        if(StringUtils.isBlank(storeInfo.getCnStoreName())){
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_STORE_NAME_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getUsStoreName())){
+            throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getStorePasswd())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_PASSWORD_REQUIRED);
+        }
+        
         try {
-            this.storeInfoMapper.insert(storeInfo);
+            storeInfo.setStoreNo(this.storeInfoMapper.generateStoreNo());
+            this.storeInfoMapper.insertSelective(storeInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);

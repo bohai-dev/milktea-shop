@@ -38,6 +38,7 @@ public class CarouselFigureServiceImpl implements CarouselFigureService {
         }
         
         try {
+            figure.setFigureId(this.carouselFigureMapper.generateFigureId());
             this.carouselFigureMapper.insert(figure);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);

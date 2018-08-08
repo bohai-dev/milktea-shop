@@ -20,4 +20,7 @@ public interface TeaCarouselFigureMapper {
     int updateByPrimaryKey(TeaCarouselFigure record);
     
     List<TeaCarouselFigure> selectByCondition(TeaCarouselFigure figure);
+    
+    @Select(value="select TEA_FIGURE_ID_SEQ.NEXTVAL from dual")
+    String generateFigureId();
 }

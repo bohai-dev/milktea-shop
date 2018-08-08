@@ -42,6 +42,7 @@ public class AttributeServiceImpl implements AttributeService {
         }
         
         try {
+            attributesInfo.setAttrId(this.attributesInfoMapper.generateAttrId());
             this.attributesInfoMapper.insert(attributesInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
