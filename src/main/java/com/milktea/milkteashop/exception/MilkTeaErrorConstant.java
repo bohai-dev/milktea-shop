@@ -93,9 +93,11 @@ public enum MilkTeaErrorConstant {
     
     CN_ATTR_NAME_EXISTS("00042", "属性名称(中文)重复", "Attr name already exists"),
     
-    LANG_REQUIRED("00044", "请输入语言", "Lang required"),
-    
     US_ATTR_NAME_EXISTS("00043", "属性名称(英文)重复", "Attr name already exists"),
+    
+    LANG_REQUIRED("00044", "请输入语言", "Lang required"),
+
+    IS_DEFAULT_REQUIRED("00045", "是否默认店铺不能为空", "Is default required"),
     
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     

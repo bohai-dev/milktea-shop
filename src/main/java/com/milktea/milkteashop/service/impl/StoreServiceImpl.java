@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.milktea.milkteashop.dao.TeaStoreInfoMapper;
 import com.milktea.milkteashop.domain.TeaStoreInfo;
@@ -56,6 +57,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional
     public void addStoreInfo(TeaStoreInfo storeInfo) throws MilkTeaException {
 
         if(storeInfo == null){
@@ -76,6 +78,10 @@ public class StoreServiceImpl implements StoreService {
         
         if(StringUtils.isBlank(storeInfo.getStorePasswd())){
             throw new MilkTeaException(MilkTeaErrorConstant.STORE_PASSWORD_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getIsDefault())){
+            throw new MilkTeaException(MilkTeaErrorConstant.IS_DEFAULT_REQUIRED);
         }
         
         TeaStoreInfo info = null;
@@ -101,8 +107,26 @@ public class StoreServiceImpl implements StoreService {
             throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_EXISTS);
         }
         
+        
+        String storeNo = "";
         try {
-            storeInfo.setStoreNo(this.storeInfoMapper.generateStoreNo());
+            storeNo = this.storeInfoMapper.generateStoreNo();
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(storeInfo.getIsDefault().equals("1")){
+            try {
+                this.storeInfoMapper.updateDefaultByStoreNo(storeNo);
+            } catch (Exception e) {
+                logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+            }
+        }
+        
+        try {
+            storeInfo.setStoreNo(storeNo);
             this.storeInfoMapper.insertSelective(storeInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
@@ -133,6 +157,19 @@ public class StoreServiceImpl implements StoreService {
         
         if(StringUtils.isBlank(storeInfo.getStorePasswd())){
             throw new MilkTeaException(MilkTeaErrorConstant.STORE_PASSWORD_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getIsDefault())){
+            throw new MilkTeaException(MilkTeaErrorConstant.IS_DEFAULT_REQUIRED);
+        }
+        
+        if(storeInfo.getIsDefault().equals("1")){
+            try {
+                this.storeInfoMapper.updateDefaultByStoreNo(storeInfo.getStoreNo());
+            } catch (Exception e) {
+                logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+            }
         }
         
         try {

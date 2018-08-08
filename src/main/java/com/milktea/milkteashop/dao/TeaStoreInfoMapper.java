@@ -3,6 +3,7 @@ package com.milktea.milkteashop.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteashop.domain.TeaStoreInfo;
 import com.milktea.milkteashop.vo.UserLoginRequestVo;
@@ -35,4 +36,7 @@ public interface TeaStoreInfoMapper {
     
     @Select(value="select * from TEA_STORE_INFO where US_STORE_NAME = #{storeName} and DELETE_FLAG = '0'")
     TeaStoreInfo selectByUsStoreName(String storeName);
+    
+    @Update(value="update TEA_STORE_INFO set IS_DEFAULT = '0' where STORE_NO != #{storeNo} and DELETE_FLAG = '0'")
+    int updateDefaultByStoreNo(String storeNo);
 }
