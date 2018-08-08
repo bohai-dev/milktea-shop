@@ -3,7 +3,7 @@ package com.milktea.milkteashop.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class PromotionServiceImpl implements PromotionService {
         
         TeaPromotionInfo dest = new TeaPromotionInfo();
         try {
-            BeanUtils.copyProperties(dest, promotionInfo);
+            BeanUtils.copyProperties(promotionInfo, dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -108,7 +108,7 @@ public class PromotionServiceImpl implements PromotionService {
 
         TeaPromotionInfo dest = new TeaPromotionInfo();
         try {
-            BeanUtils.copyProperties(dest, promotionInfo);
+            BeanUtils.copyProperties(promotionInfo, dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -151,7 +151,7 @@ public class PromotionServiceImpl implements PromotionService {
             for (TeaPromotionInfo info : list) {
                 PromotionVo dest = new PromotionVo();
                 try {
-                    BeanUtils.copyProperties(dest, info);
+                    BeanUtils.copyProperties(info, dest);
                 } catch (Exception e) {
                     logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                     throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -189,7 +189,7 @@ public class PromotionServiceImpl implements PromotionService {
             for (TeaPromotionInfo info : list) {
                 PromotionVo dest = new PromotionVo();
                 try {
-                    BeanUtils.copyProperties(dest, info);
+                    BeanUtils.copyProperties(info, dest);
                 } catch (Exception e) {
                     logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                     throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -232,7 +232,7 @@ public class PromotionServiceImpl implements PromotionService {
         if(info != null){
             dest = new PromotionVo();
             try {
-                BeanUtils.copyProperties(dest, info);
+                BeanUtils.copyProperties(info, dest);
             } catch (Exception e) {
                 logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);

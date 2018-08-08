@@ -1,6 +1,5 @@
 package com.milktea.milkteashop.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +26,13 @@ import com.milktea.milkteashop.exception.MilkTeaErrorConstant;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
+import com.milktea.milkteashop.vo.ClassInfoNationVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
 import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
+import com.milktea.milkteashop.vo.GoodsInfoNationVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
+import com.milktea.milkteashop.vo.TeaAttributesInfoNationVo;
 
 @Service("goodsService")
 public class GoodsServiceImpl implements GoodsService {
@@ -535,6 +537,124 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
         
+    }
+
+    @Override
+    public List<ClassInfoNationVo> queryClassGoodsNation(ClassGoodsRequestVo requestVo) throws MilkTeaException {
+        //参数非空校验
+        if(requestVo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        //店铺编号非空校验
+        if(StringUtils.isBlank(requestVo.getStoreNo())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getLang())){
+            throw new MilkTeaException(MilkTeaErrorConstant.LANG_REQUIRED);
+        }
+        
+        List<TeaClassInfo> classInfos = null;
+        TeaClassInfo classInfo = new TeaClassInfo();
+        classInfo.setClassType(requestVo.getClassType());
+        try {
+            classInfos = this.classInfoMapper.selectByCondition(classInfo);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        List<ClassInfoNationVo> list = null;
+        
+        if(classInfos != null){
+            list = new ArrayList<ClassInfoNationVo>();
+            for (TeaClassInfo teaClassInfo : classInfos) {
+                ClassInfoNationVo classInfoVo = new ClassInfoNationVo();
+                try {
+                    BeanUtils.copyProperties(teaClassInfo, classInfoVo);
+                } catch (Exception e) {
+                    logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+                    throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+                }
+                if(requestVo.getLang().equals("zh")){
+                    classInfoVo.setClassName(teaClassInfo.getCnClassName());
+                    classInfoVo.setClassLogo(teaClassInfo.getCnClassLogo());
+                }else if (requestVo.getLang().equals("en")) {
+                    classInfoVo.setClassName(teaClassInfo.getUsClassName());
+                    classInfoVo.setClassLogo(teaClassInfo.getUsClassLogo());
+                }
+                
+                //根据商品分类查询商品信息
+                List<TeaGoodsInfo> goodsList = null;
+                TeaGoodsInfo goodsInfo = new TeaGoodsInfo();
+                goodsInfo.setStoreNo(requestVo.getStoreNo());
+                goodsInfo.setClassId(teaClassInfo.getClassId());
+                try {
+                    goodsList = this.goodsInfoMapper.selectByCondition(goodsInfo);
+                } catch (Exception e) {
+                    logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                    throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+                }
+                
+                //查询商品属性
+                List<GoodsInfoNationVo> goodsInfoVos = null;
+                if(goodsList != null){
+                    goodsInfoVos = new ArrayList<GoodsInfoNationVo>();
+                    for (TeaGoodsInfo info : goodsList) {
+                        GoodsInfoNationVo goodsInfoVo = new GoodsInfoNationVo();
+                        try {
+                            BeanUtils.copyProperties(info, goodsInfoVo);
+                        } catch (Exception e) {
+                            logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+                            throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+                        }
+                        
+                        if(requestVo.getLang().equals("zh")){
+                            goodsInfoVo.setGoodsName(info.getCnGoodsName());
+                            goodsInfoVo.setGoodsIntroduction(info.getCnGoodsIntroduction());
+                            goodsInfoVo.setGoodsPictureBig(info.getCnGoodsPictureBig());
+                            goodsInfoVo.setGoodsPictureRound(info.getCnGoodsPictureRound());
+                        }else if (requestVo.getLang().equals("en")) {
+                            goodsInfoVo.setGoodsName(info.getUsGoodsName());
+                            goodsInfoVo.setGoodsIntroduction(info.getUsGoodsIntroduction());
+                            goodsInfoVo.setGoodsPictureBig(info.getUsGoodsPictureBig());
+                            goodsInfoVo.setGoodsPictureRound(info.getUsGoodsPictureRound());
+                        }
+                        
+                        List<TeaAttributesInfo> attributesInfos = null;
+                        try {
+                            attributesInfos = this.attributesInfoMapper.selectByGoodsId(info.getGoodsId());
+                        } catch (Exception e) {
+                            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+                        }
+                        
+                        if(attributesInfos != null && attributesInfos.size() > 0){
+                            List<TeaAttributesInfoNationVo> nationVos = new ArrayList<>();
+                            for (TeaAttributesInfo attributesInfo : attributesInfos) {
+                                TeaAttributesInfoNationVo target = new TeaAttributesInfoNationVo();
+                                BeanUtils.copyProperties(attributesInfo, target);
+                                if(requestVo.getLang().equals("zh")){
+                                    target.setAttrName(attributesInfo.getCnAttrName());
+                                }else if (requestVo.getLang().equals("en")) {
+                                    target.setAttrName(attributesInfo.getUsAttrName());
+                                }
+                                nationVos.add(target);
+                            }
+                            goodsInfoVo.setGoodsAttrs(nationVos);
+                        }
+                        goodsInfoVos.add(goodsInfoVo);
+                    }
+                    
+                }
+                
+                classInfoVo.setGoods(goodsInfoVos);
+                list.add(classInfoVo);
+            }
+        }
+        
+        return list;
     }
     
     

@@ -16,6 +16,11 @@ public class ClassGoodsRequestVo {
      * 分类类型 0：普通分类 1：特色分类
      */
     private String classType;
+    
+    /**
+     * 语言 zh:中文  en:英文
+     */
+    private String lang;
 
     public String getStoreNo() {
         return storeNo;
@@ -32,7 +37,13 @@ public class ClassGoodsRequestVo {
     public void setClassType(String classType) {
         this.classType = classType;
     }
-    
-    
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
 
 }

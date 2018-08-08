@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,14 +22,14 @@ public class ClassController {
     private GoodsClassService classService;
     
     @RequestMapping(value="saveClass", method=RequestMethod.POST)
-    public ResponseHeader saveClass(TeaClassInfo classInfo) throws MilkTeaException{
+    public ResponseHeader saveClass(@RequestBody TeaClassInfo classInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.classService.addClass(classInfo);
         return header;
     }
     
     @RequestMapping(value="modifyClass", method=RequestMethod.POST)
-    public ResponseHeader modifyClass(TeaClassInfo classInfo) throws MilkTeaException{
+    public ResponseHeader modifyClass(@RequestBody TeaClassInfo classInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.classService.modifyClass(classInfo);
         return header;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.milktea.milkteashop.domain.TeaStoreInfo;
 import com.milktea.milkteashop.exception.MilkTeaException;
+import com.milktea.milkteashop.vo.TeaStoreInfoNationVo;
 
 /**
  * 店铺接口
@@ -17,7 +18,15 @@ public interface StoreService {
      * @return
      * @throws MilkTeaException
      */
-    public List<TeaStoreInfo> queryStoreInfo() throws MilkTeaException;
+    public List<TeaStoreInfo> queryStoreInfo(TeaStoreInfo storeInfo) throws MilkTeaException;
+    
+    /**
+     * 查询所有店铺信息（国际化）
+     * @param lang
+     * @return
+     * @throws MilkTeaException
+     */
+    public List<TeaStoreInfoNationVo> queryStoreInfoByLang(String lang) throws MilkTeaException;
     
     /**
      * 根据店铺名查询店铺详情

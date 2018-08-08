@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.PromotionService;
 import com.milktea.milkteashop.vo.PromotionVo;
+import com.milktea.milkteashop.vo.QueryEffectPromotionRequstVo;
 import com.milktea.milkteashop.vo.ResponseBody;
 import com.milktea.milkteashop.vo.ResponseHeader;
 
@@ -21,7 +23,7 @@ public class PromotionController {
     private PromotionService promotionService;
     
     @RequestMapping(value="savePromotion", method=RequestMethod.POST)
-    public ResponseHeader savePromotion(PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseHeader savePromotion(@RequestBody PromotionVo promotionVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.promotionService.addPromotion(promotionVo);
         return header;
@@ -35,14 +37,14 @@ public class PromotionController {
     }
     
     @RequestMapping(value="modifyPromotion", method=RequestMethod.POST)
-    public ResponseHeader modifyPromotion(PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseHeader modifyPromotion(@RequestBody PromotionVo promotionVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.promotionService.modifyPromotion(promotionVo);
         return header;
     }
     
     @RequestMapping(value="queryPromotion", method=RequestMethod.POST)
-    public ResponseBody<List<PromotionVo>> queryPromotion(PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseBody<List<PromotionVo>> queryPromotion(@RequestBody PromotionVo promotionVo) throws MilkTeaException{
         ResponseBody<List<PromotionVo>> responseBody = new ResponseBody<>();
         responseBody.setData(this.promotionService.queryPromotions());
         return responseBody;
@@ -69,9 +71,9 @@ public class PromotionController {
      * @throws MilkTeaException
      */
     @RequestMapping(value="queryEffectPromotion", method=RequestMethod.POST)
-    public ResponseBody<PromotionVo> queryEffectPromotion(String promotionId, String storeNo) throws MilkTeaException{
+    public ResponseBody<PromotionVo> queryEffectPromotion(@RequestBody QueryEffectPromotionRequstVo requstVo) throws MilkTeaException{
         ResponseBody<PromotionVo> responseBody = new ResponseBody<>();
-        responseBody.setData(this.promotionService.queryPromotion(promotionId, storeNo));
+        responseBody.setData(this.promotionService.queryPromotion(requstVo.getPromotionId(), requstVo.getStoreNo()));
         return responseBody;
     }
 }

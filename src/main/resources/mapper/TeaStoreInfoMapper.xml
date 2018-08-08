@@ -317,8 +317,20 @@
     <include refid="Base_Column_List" />
     from TEA_STORE_INFO
     <where>
-        <if test="IS_DEFAULT != null">
+        <if test="isDefault != null">
             IS_DEFAULT = #{isDefault,jdbcType=CHAR}
+        </if>
+        <if test="cnStoreName != null">
+            and CN_STORE_NAME like '%'||#{cnStoreName,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="cnStoreCity != null">
+            and CN_STORE_CITY like '%'|| #{cnStoreCity,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="cnStoreAddress != null">
+            and CN_STORE_ADDRESS like '%'|| #{cnStoreAddress,jdbcType=VARCHAR}||'%'
+        </if>
+        <if test="storeNo  != null">
+            and STORE_NO = #{storeNo,jdbcType=VARCHAR}
         </if>
     </where>
   </select>

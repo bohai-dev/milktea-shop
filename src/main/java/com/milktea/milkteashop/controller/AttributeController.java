@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,14 +22,14 @@ public class AttributeController {
     private AttributeService attributeService;
     
     @RequestMapping(value="saveAttribute", method=RequestMethod.POST)
-    public ResponseHeader saveAttribute(TeaAttributesInfo attributesInfo) throws MilkTeaException{
+    public ResponseHeader saveAttribute(@RequestBody TeaAttributesInfo attributesInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.attributeService.addAttribute(attributesInfo);
         return header;
     }
     
     @RequestMapping(value="modifyAttribute", method=RequestMethod.POST)
-    public ResponseHeader modifyAttribute(TeaAttributesInfo attributesInfo) throws MilkTeaException{
+    public ResponseHeader modifyAttribute(@RequestBody TeaAttributesInfo attributesInfo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.attributeService.modifyAttribute(attributesInfo);
         return header;

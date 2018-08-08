@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
+import com.milktea.milkteashop.vo.ClassInfoNationVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
 import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
@@ -59,6 +60,14 @@ public interface GoodsService {
      * @throws MilkTeaException
      */
     public List<ClassInfoVo> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException;
+    
+    /**
+     * 查询分类商品信息（支持国际化）
+     * @param requestVo
+     * @return
+     * @throws MilkTeaException
+     */
+    public List<ClassInfoNationVo> queryClassGoodsNation(ClassGoodsRequestVo requestVo) throws MilkTeaException;
     
     /**
      * 更新商品状态和库存

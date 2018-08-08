@@ -1,10 +1,12 @@
 package com.milktea.milkteashop.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.milktea.milkteashop.domain.TeaStoreInfo;
 import com.milktea.milkteashop.exception.MilkTeaErrorConstant;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.StoreService;
+import com.milktea.milkteashop.vo.TeaStoreInfoNationVo;
 
 @Service("storeService")
 public class StoreServiceImpl implements StoreService {
@@ -23,11 +26,11 @@ public class StoreServiceImpl implements StoreService {
     private TeaStoreInfoMapper storeInfoMapper;
     
     @Override
-    public List<TeaStoreInfo> queryStoreInfo() throws MilkTeaException {
+    public List<TeaStoreInfo> queryStoreInfo(TeaStoreInfo storeInfo) throws MilkTeaException {
         
         List<TeaStoreInfo> stores = null;
         try {
-            stores = this.storeInfoMapper.selectAll();
+            stores = this.storeInfoMapper.selectByCondition(storeInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
@@ -153,6 +156,47 @@ public class StoreServiceImpl implements StoreService {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
+    }
+
+    @Override
+    public List<TeaStoreInfoNationVo> queryStoreInfoByLang(String lang) throws MilkTeaException {
+        
+        if(StringUtils.isBlank(lang)){
+            throw new MilkTeaException(MilkTeaErrorConstant.LANG_REQUIRED);
+        }
+        List<TeaStoreInfoNationVo> vos = null;
+        
+        List<TeaStoreInfo> stores = null;
+        try {
+            stores = this.storeInfoMapper.selectAll();
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        if(stores != null && stores.size() > 0){
+            vos = new ArrayList<>();
+            for (TeaStoreInfo teaStoreInfo : stores) {
+                TeaStoreInfoNationVo target = new TeaStoreInfoNationVo();
+                BeanUtils.copyProperties(teaStoreInfo, target);
+                if(lang.equals("zh")){
+                    target.setStoreName(teaStoreInfo.getCnStoreName());
+                    target.setStoreCity(teaStoreInfo.getCnStoreCity());
+                    target.setStoreAddress(teaStoreInfo.getCnStoreAddress());
+                    target.setStoreIntroduction(teaStoreInfo.getCnStoreIntroduction());
+                    target.setStorePicture(teaStoreInfo.getCnStorePicture());
+                }else if (lang.equals("en")) {
+                    target.setStoreName(teaStoreInfo.getUsStoreName());
+                    target.setStoreCity(teaStoreInfo.getUsStoreCity());
+                    target.setStoreAddress(teaStoreInfo.getUsStoreAddress());
+                    target.setStoreIntroduction(teaStoreInfo.getUsStoreIntroduction());
+                    target.setStorePicture(teaStoreInfo.getUsStorePicture());
+                }
+                vos.add(target);
+            }
+        }
+        
+        
+        return vos;
     }
 
 }
