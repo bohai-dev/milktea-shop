@@ -18,6 +18,7 @@
     <result column="STORE_PHONE" jdbcType="VARCHAR" property="storePhone" />
     <result column="STORE_USER_NAME" jdbcType="VARCHAR" property="storeUserName" />
     <result column="STORE_PASSWD" jdbcType="VARCHAR" property="storePasswd" />
+    <result column="STORE_STATUS" jdbcType="CHAR" property="storeStatus" />
     <result column="IS_DEFAULT" jdbcType="CHAR" property="isDefault" />
     <result column="IS_SEND" jdbcType="CHAR" property="isSend" />
     <result column="RESERVE_BEGIN_TIME" jdbcType="VARCHAR" property="reserveBeginTime" />
@@ -28,7 +29,7 @@
   <sql id="Base_Column_List">
     STORE_NO, CN_STORE_NAME, CN_STORE_CITY, CN_STORE_ADDRESS, CN_STORE_PICTURE, CN_STORE_INTRODUCTION, 
     US_STORE_NAME, US_STORE_CITY, US_STORE_ADDRESS, US_STORE_PICTURE, US_STORE_INTRODUCTION, 
-    LONGITUDE, LATITUDE, STORE_PHONE, STORE_USER_NAME, STORE_PASSWD, IS_DEFAULT, IS_SEND, 
+    LONGITUDE, LATITUDE, STORE_PHONE, STORE_USER_NAME, STORE_PASSWD, STORE_STATUS, IS_DEFAULT, IS_SEND, 
     RESERVE_BEGIN_TIME, RESERVE_END_TIME, DELETE_FLAG, UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -47,7 +48,7 @@
       US_STORE_NAME, US_STORE_CITY, US_STORE_ADDRESS, 
       US_STORE_PICTURE, US_STORE_INTRODUCTION, LONGITUDE, 
       LATITUDE, STORE_PHONE, STORE_USER_NAME, 
-      STORE_PASSWD, IS_DEFAULT, IS_SEND, 
+      STORE_PASSWD, STORE_STATUS, IS_DEFAULT, IS_SEND, 
       RESERVE_BEGIN_TIME, RESERVE_END_TIME, DELETE_FLAG, 
       UPDATE_TIME)
     values (#{storeNo,jdbcType=VARCHAR}, #{cnStoreName,jdbcType=VARCHAR}, #{cnStoreCity,jdbcType=VARCHAR}, 
@@ -55,7 +56,7 @@
       #{usStoreName,jdbcType=VARCHAR}, #{usStoreCity,jdbcType=VARCHAR}, #{usStoreAddress,jdbcType=VARCHAR}, 
       #{usStorePicture,jdbcType=VARCHAR}, #{usStoreIntroduction,jdbcType=VARCHAR}, #{longitude,jdbcType=DECIMAL}, 
       #{latitude,jdbcType=DECIMAL}, #{storePhone,jdbcType=VARCHAR}, #{storeUserName,jdbcType=VARCHAR}, 
-      #{storePasswd,jdbcType=VARCHAR}, #{isDefault,jdbcType=CHAR}, #{isSend,jdbcType=CHAR}, 
+      #{storePasswd,jdbcType=VARCHAR}, #{storeStatus,jdbcType=CHAR}, #{isDefault,jdbcType=CHAR}, #{isSend,jdbcType=CHAR}, 
       #{reserveBeginTime,jdbcType=VARCHAR}, #{reserveEndTime,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -109,6 +110,9 @@
       </if>
       <if test="storePasswd != null">
         STORE_PASSWD,
+      </if>
+      <if test="storeStatus != null">
+        STORE_STATUS,
       </if>
       <if test="isDefault != null">
         IS_DEFAULT,
@@ -178,6 +182,9 @@
       <if test="storePasswd != null">
         #{storePasswd,jdbcType=VARCHAR},
       </if>
+      <if test="storeStatus != null">
+        #{storeStatus,jdbcType=CHAR},
+      </if>
       <if test="isDefault != null">
         #{isDefault,jdbcType=CHAR},
       </if>
@@ -246,6 +253,9 @@
       <if test="storePasswd != null">
         STORE_PASSWD = #{storePasswd,jdbcType=VARCHAR},
       </if>
+      <if test="storeStatus != null">
+        STORE_STATUS = #{storeStatus,jdbcType=CHAR},
+      </if>
       <if test="isDefault != null">
         IS_DEFAULT = #{isDefault,jdbcType=CHAR},
       </if>
@@ -284,6 +294,7 @@
       STORE_PHONE = #{storePhone,jdbcType=VARCHAR},
       STORE_USER_NAME = #{storeUserName,jdbcType=VARCHAR},
       STORE_PASSWD = #{storePasswd,jdbcType=VARCHAR},
+      STORE_STATUS = #{storeStatus,jdbcType=CHAR},
       IS_DEFAULT = #{isDefault,jdbcType=CHAR},
       IS_SEND = #{isSend,jdbcType=CHAR},
       RESERVE_BEGIN_TIME = #{reserveBeginTime,jdbcType=VARCHAR},

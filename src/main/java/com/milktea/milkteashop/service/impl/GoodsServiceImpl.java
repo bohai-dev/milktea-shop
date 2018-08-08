@@ -1,6 +1,7 @@
 package com.milktea.milkteashop.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
+import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 
@@ -72,6 +74,27 @@ public class GoodsServiceImpl implements GoodsService {
         
         if(infoVo.getClassInfos() == null){
             throw new MilkTeaException(MilkTeaErrorConstant.GOODS_CLASS_REQUIRED);
+        }
+        
+        TeaGoodsInfo info = null;
+        try {
+            info = this.goodsInfoMapper.selectByCnName(infoVo.getCnGoodsName());
+            if(info != null){
+                throw new MilkTeaException(MilkTeaErrorConstant.CN_GOODS_NAME_EXISTS);
+            }
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        try {
+            info = this.goodsInfoMapper.selectByUsName(infoVo.getUsGoodsName());
+            if(info != null){
+                throw new MilkTeaException(MilkTeaErrorConstant.US_GOODS_NAME_EXISTS);
+            }
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
@@ -124,6 +147,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @Transactional
     public void modifyGoodsInfo(GoodsInfoVo infoVo) throws MilkTeaException {
         
         if(infoVo == null){
@@ -156,6 +180,14 @@ public class GoodsServiceImpl implements GoodsService {
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+        }
+        
+        //先修改商品主信息
+        try {
+            this.goodsInfoMapper.updateByPrimaryKey(dest);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
         
         //修改商品分类（先删除后保存）
@@ -445,5 +477,60 @@ public class GoodsServiceImpl implements GoodsService {
         }
         
     }
+
+    @Override
+    public synchronized void deductGoodsStock(DeductGoodsStockRequestVo requestVo) throws MilkTeaException {
+        
+        if(requestVo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getGoodsId())){
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_ID_REQUIRED);
+        }
+        
+        if(requestVo.getVolume() == null || requestVo.getVolume().compareTo(BigDecimal.ZERO) < 1){
+            throw new MilkTeaException(MilkTeaErrorConstant.VOLUME_ILLEGAL);
+        }
+        
+        TeaGoodsInfo goodsInfo = null;
+        
+        try {
+            goodsInfo = this.goodsInfoMapper.selectByPrimaryKey(requestVo.getGoodsId());
+            if(goodsInfo == null){
+                logger.warn(MilkTeaErrorConstant.GOODS_NOT_EXISTS.getCnErrorMsg());
+                throw new MilkTeaException(MilkTeaErrorConstant.GOODS_NOT_EXISTS);
+            }
+            
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        //非在售商品
+        if(goodsInfo.getGoodsStatus() != null && !goodsInfo.getGoodsStatus().equals("1")){
+            logger.warn(MilkTeaErrorConstant.GOODS_NOT_ON_SALE.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_NOT_ON_SALE);
+        }
+        
+        //商品库存未维护
+        if(goodsInfo.getGoodsStock() == null){
+            logger.warn(MilkTeaErrorConstant.GOODS_STOCK_UNMAINTAINED.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_STOCK_UNMAINTAINED);
+        }
+        
+        //扣减商品库存
+        if(goodsInfo.getGoodsStock().compareTo(requestVo.getVolume()) > -1){
+            try {
+                this.goodsInfoMapper.updateStockByGoodsId(requestVo.getGoodsId(), requestVo.getVolume());
+            } catch (Exception e) {
+                logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+            }
+        }
+        
+    }
+    
+    
 
 }

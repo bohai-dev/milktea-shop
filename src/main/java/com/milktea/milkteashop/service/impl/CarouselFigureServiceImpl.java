@@ -92,6 +92,15 @@ public class CarouselFigureServiceImpl implements CarouselFigureService {
 
     @Override
     public List<TeaCarouselFigure> queryCarouselFigures(TeaCarouselFigure figure) throws MilkTeaException {
+        
+        if(figure == null ){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(figure.getStoreNo())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
         List<TeaCarouselFigure> list = null;
         try {
             list = this.carouselFigureMapper.selectByCondition(figure);

@@ -39,4 +39,20 @@ public interface PromotionService {
      * @throws MilkTeaException
      */
     public List<PromotionVo> queryPromotions() throws MilkTeaException;
+    
+    /**
+     * 查询有效活动信息
+     * @return
+     * @throws MilkTeaException
+     */
+    public List<PromotionVo> queryPromotions(String storeNo) throws MilkTeaException;
+    
+    /**
+     * 查询活动详情
+     * @param promotionId
+     * @param storeNo
+     * @return
+     * @throws MilkTeaException
+     */
+    public PromotionVo queryPromotion(String promotionId, String storeNo) throws MilkTeaException;
 }

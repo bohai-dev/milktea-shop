@@ -41,6 +41,31 @@ public class AttributeServiceImpl implements AttributeService {
             throw new MilkTeaException(MilkTeaErrorConstant.ATTR_TYPE_REQUIRED);
         }
         
+        //属性名称校验
+        TeaAttributesInfo info = null;
+        try {
+            info = this.attributesInfoMapper.selectByCnAttrName(attributesInfo.getCnAttrName());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(info != null){
+            logger.warn(MilkTeaErrorConstant.CN_ATTR_NAME_EXISTS.getCnErrorMsg());
+        }
+        
+        try {
+            info = this.attributesInfoMapper.selectByUsAttrName(attributesInfo.getUsAttrName());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(info != null){
+            logger.warn(MilkTeaErrorConstant.US_ATTR_NAME_EXISTS.getCnErrorMsg());
+        }
+        
+        
         try {
             attributesInfo.setAttrId(this.attributesInfoMapper.generateAttrId());
             this.attributesInfoMapper.insert(attributesInfo);
@@ -59,7 +84,7 @@ public class AttributeServiceImpl implements AttributeService {
         }
         
         try {
-            this.attributesInfoMapper.deleteByPrimaryKey(attrId);
+            this.attributesInfoMapper.logicDeleteByPrimaryKey(attrId);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);

@@ -9,6 +9,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
+import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 import com.milktea.milkteashop.vo.PageRequestVo;
@@ -104,6 +105,19 @@ public class GoodsController {
     public ResponseHeader updateGoodsStockAndStatus(GoodsStockAndStatusRequestVo requestVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.goodsService.updateGoodsStockAndStatus(requestVo);
+        return header;
+    }
+    
+    /**
+     * 扣减商品库存
+     * @param requestVo
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="deductGoodsStock", method=RequestMethod.POST)
+    public ResponseHeader deductGoodsStock(DeductGoodsStockRequestVo requestVo) throws MilkTeaException{
+        ResponseHeader header = new ResponseHeader();
+        this.goodsService.deductGoodsStock(requestVo);
         return header;
     }
 

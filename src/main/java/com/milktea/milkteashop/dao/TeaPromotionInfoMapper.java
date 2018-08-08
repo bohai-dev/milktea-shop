@@ -2,6 +2,7 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -25,6 +26,17 @@ public interface TeaPromotionInfoMapper {
     
     @Select(value="select * from TEA_PROMOTION_INFO where DELETE_FLAG = '0'")
     List<TeaPromotionInfo> selectAll();
+    
+    @Select(value="select * from TEA_PROMOTION_INFO where DELETE_FLAG = '0' "
+            + "and STORE_NOS like '%'|| #{storeNo} ||'%'"
+            + "and sysdate between BEGIN_TIME and END_TIME")
+    List<TeaPromotionInfo> selectByStoreNo(String storeNo);
+    
+    @Select(value="select * from TEA_PROMOTION_INFO where DELETE_FLAG = '0' "
+            + "and STORE_NOS like '%'|| #{storeNo} ||'%'"
+            + "and PROMOTION_ID = #{promotionId}"
+            + "and sysdate between BEGIN_TIME and END_TIME")
+    TeaPromotionInfo selectByStoreNoAndId(@Param("storeNo") String storeNo, @Param("promotionId") String promotionId);
     
     @Select(value="select TEA_PROMOTION_ID_SEQ.NEXTVAL from dual")
     String generatePromotionId();

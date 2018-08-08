@@ -27,6 +27,7 @@
     <include refid="Base_Column_List" />
     from TEA_GOODS_INFO
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+    and DELETE_FLAG = '0'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from TEA_GOODS_INFO

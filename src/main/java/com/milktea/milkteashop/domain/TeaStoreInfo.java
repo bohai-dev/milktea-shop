@@ -35,6 +35,9 @@ public class TeaStoreInfo {
     private String storeUserName;
 
     private String storePasswd;
+    
+    //店铺状态 0：非营业  1：营业
+    private String storeStatus;
 
     //是否默认店铺 0：否 1：是
     private String isDefault;
@@ -225,4 +228,14 @@ public class TeaStoreInfo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getStoreStatus() {
+        return storeStatus;
+    }
+
+    public void setStoreStatus(String storeStatus) {
+        this.storeStatus = storeStatus;
+    }
+    
+    
 }
