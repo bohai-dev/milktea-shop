@@ -207,7 +207,7 @@
     from TEA_GOODS_INFO
     <where>
         DELETE_FLAG = '0'
-        <if test="STORE_NO != null">
+        <if test="storeNo != null">
             and STORE_NO = #{storeNo,jdbcType=VARCHAR} 
         </if>
         <if test="cnGoodsName != null">

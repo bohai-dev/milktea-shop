@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,8 +99,7 @@ public class GoodsServiceImpl implements GoodsService {
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
         try {
-            BeanUtils.copyProperties(dest, infoVo);
-            this.goodsInfoMapper.insert(dest);
+            BeanUtils.copyProperties(infoVo, dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -108,6 +107,13 @@ public class GoodsServiceImpl implements GoodsService {
         
         //生成商品ID
         String goodsId = this.goodsInfoMapper.generateGoodsId();
+        dest.setGoodsId(goodsId);
+        try {
+            this.goodsInfoMapper.insert(dest);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
         
         //添加商品分类
         for (TeaClassInfo classInfo : infoVo.getClassInfos()) {
@@ -176,7 +182,7 @@ public class GoodsServiceImpl implements GoodsService {
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
         try {
-            BeanUtils.copyProperties(dest, infoVo);
+            BeanUtils.copyProperties(infoVo, dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -272,8 +278,8 @@ public class GoodsServiceImpl implements GoodsService {
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
         try {
-            BeanUtils.copyProperties(dest, infoVo);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+            BeanUtils.copyProperties(infoVo, dest);
+        } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
         }
@@ -290,8 +296,8 @@ public class GoodsServiceImpl implements GoodsService {
             for (TeaGoodsInfo goodsInfo : goodsInfos) {
                 GoodsInfoVo vo = new GoodsInfoVo();
                 try {
-                    BeanUtils.copyProperties(vo, goodsInfo);
-                } catch (IllegalAccessException | InvocationTargetException e) {
+                    BeanUtils.copyProperties(goodsInfo, vo);
+                } catch (Exception e) {
                     logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                     throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
                 }
@@ -336,7 +342,7 @@ public class GoodsServiceImpl implements GoodsService {
         
         if(goodsInfo != null){
             try {
-                BeanUtils.copyProperties(goodsInfoVo, goodsInfo);
+                BeanUtils.copyProperties(goodsInfo, goodsInfoVo);
             } catch (Exception e) {
                 logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -395,7 +401,7 @@ public class GoodsServiceImpl implements GoodsService {
             for (TeaClassInfo teaClassInfo : classInfos) {
                 ClassInfoVo classInfoVo = new ClassInfoVo();
                 try {
-                    BeanUtils.copyProperties(classInfoVo, teaClassInfo);
+                    BeanUtils.copyProperties(teaClassInfo, classInfoVo);
                 } catch (Exception e) {
                     logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                     throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -421,7 +427,7 @@ public class GoodsServiceImpl implements GoodsService {
                     for (TeaGoodsInfo info : goodsList) {
                         GoodsInfoVo goodsInfoVo = new GoodsInfoVo();
                         try {
-                            BeanUtils.copyProperties(goodsInfoVo, info);
+                            BeanUtils.copyProperties(info, goodsInfoVo);
                         } catch (Exception e) {
                             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);

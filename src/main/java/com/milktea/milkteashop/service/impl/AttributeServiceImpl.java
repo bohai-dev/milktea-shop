@@ -52,6 +52,7 @@ public class AttributeServiceImpl implements AttributeService {
         
         if(info != null){
             logger.warn(MilkTeaErrorConstant.CN_ATTR_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_ATTR_NAME_EXISTS);
         }
         
         try {
@@ -63,12 +64,13 @@ public class AttributeServiceImpl implements AttributeService {
         
         if(info != null){
             logger.warn(MilkTeaErrorConstant.US_ATTR_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.US_ATTR_NAME_EXISTS);
         }
         
         
         try {
             attributesInfo.setAttrId(this.attributesInfoMapper.generateAttrId());
-            this.attributesInfoMapper.insert(attributesInfo);
+            this.attributesInfoMapper.insertSelective(attributesInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);

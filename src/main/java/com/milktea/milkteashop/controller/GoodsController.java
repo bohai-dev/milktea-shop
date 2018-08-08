@@ -24,7 +24,7 @@ public class GoodsController {
     private GoodsService goodsService;
     
     @RequestMapping(value="saveGoods", method=RequestMethod.POST)
-    public ResponseHeader saveGoods(GoodsInfoVo infoVo) throws MilkTeaException{
+    public ResponseHeader saveGoods(@RequestBody GoodsInfoVo infoVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.goodsService.addGoodsInfo(infoVo);
         return header;
@@ -65,7 +65,7 @@ public class GoodsController {
         ResponseBody<List<GoodsInfoVo>> responseBody = new ResponseBody<>();
         List<GoodsInfoVo> data = this.goodsService.queryGoodsInfo(infoVo);
         responseBody.setData(data);
-        return null;
+        return responseBody;
     }
     
     /**

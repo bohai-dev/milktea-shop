@@ -49,7 +49,6 @@ public class StoreController {
         ResponseBody<List<TeaStoreInfo>> responseBody = new ResponseBody<>();
         responseBody.setData(this.storeService.queryStoreInfo());
         return responseBody;
-        
     }
     
     @RequestMapping(value="queryStoreInfo/{storeNo}",method=RequestMethod.GET)
