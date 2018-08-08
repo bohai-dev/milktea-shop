@@ -8,11 +8,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 基于Gson封装的json工具类，支持泛型
+ */
 public class JsonUtil {
 
     /**
-     *json字符串转换为指定类类型,该类类型必须包含无参构造函数
-      * @param jsonStr   json字符串
+     *json字符串转换为指定类对象,该类必须包含无参构造函数
+     * @param jsonStr   json字符串
      * @param classOfT   类类型
      * @param <T>   泛型
      * @return
