@@ -169,4 +169,83 @@ public class PromotionServiceImpl implements PromotionService {
         return list2;
     }
 
+    @Override
+    public List<PromotionVo> queryPromotions(String storeNo) throws MilkTeaException {
+        
+        if(StringUtils.isBlank(storeNo)){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
+        List<TeaPromotionInfo> list = null;
+        try {
+            list = this.promotionInfoMapper.selectByStoreNo(storeNo);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        List<PromotionVo> list2 = new ArrayList<PromotionVo>();
+        if(list != null){
+            for (TeaPromotionInfo info : list) {
+                PromotionVo dest = new PromotionVo();
+                try {
+                    BeanUtils.copyProperties(dest, info);
+                } catch (Exception e) {
+                    logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+                    throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+                }
+                
+                if(StringUtils.isNotBlank(info.getStoreNos())){
+                    String[] s = info.getStoreNos().split(",");
+                    List<String> storeList = java.util.Arrays.asList(s);
+                    dest.setStoreNos(storeList);
+                }
+                list2.add(dest);
+            }
+        }
+        
+        return list2;
+    }
+
+    @Override
+    public PromotionVo queryPromotion(String promotionId, String storeNo) throws MilkTeaException {
+        
+        
+        if(StringUtils.isBlank(promotionId)){
+            throw new MilkTeaException(MilkTeaErrorConstant.PROMOTION_ID_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeNo)){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
+        TeaPromotionInfo info = null;
+        try {
+            info = this.promotionInfoMapper.selectByStoreNoAndId(storeNo, promotionId);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        PromotionVo dest = null;
+        
+        if(info != null){
+            dest = new PromotionVo();
+            try {
+                BeanUtils.copyProperties(dest, info);
+            } catch (Exception e) {
+                logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+                throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+            }
+            
+            if(StringUtils.isNotBlank(info.getStoreNos())){
+                String[] s = info.getStoreNos().split(",");
+                List<String> storeList = java.util.Arrays.asList(s);
+                dest.setStoreNos(storeList);
+            }
+        }
+        
+        return dest;
+    }
+
 }

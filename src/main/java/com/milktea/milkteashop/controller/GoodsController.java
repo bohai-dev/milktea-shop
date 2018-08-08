@@ -9,6 +9,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
+import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 import com.milktea.milkteashop.vo.PageRequestVo;
@@ -23,7 +24,7 @@ public class GoodsController {
     private GoodsService goodsService;
     
     @RequestMapping(value="saveGoods", method=RequestMethod.POST)
-    public ResponseHeader saveGoods(GoodsInfoVo infoVo) throws MilkTeaException{
+    public ResponseHeader saveGoods(@RequestBody GoodsInfoVo infoVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.goodsService.addGoodsInfo(infoVo);
         return header;
@@ -64,7 +65,7 @@ public class GoodsController {
         ResponseBody<List<GoodsInfoVo>> responseBody = new ResponseBody<>();
         List<GoodsInfoVo> data = this.goodsService.queryGoodsInfo(infoVo);
         responseBody.setData(data);
-        return null;
+        return responseBody;
     }
     
     /**
@@ -74,7 +75,7 @@ public class GoodsController {
      * @throws MilkTeaException
      */
     @RequestMapping(value="queryClassGoods", method=RequestMethod.POST)
-    public ResponseBody<List<ClassInfoVo>> queryClassGoods(ClassGoodsRequestVo requestVo) throws MilkTeaException{
+    public ResponseBody<List<ClassInfoVo>> queryClassGoods(@RequestBody ClassGoodsRequestVo requestVo) throws MilkTeaException{
         ResponseBody<List<ClassInfoVo>> responseBody = new ResponseBody<>();
         List<ClassInfoVo> data = this.goodsService.queryClassGoods(requestVo);
         responseBody.setData(data);
@@ -104,6 +105,19 @@ public class GoodsController {
     public ResponseHeader updateGoodsStockAndStatus(GoodsStockAndStatusRequestVo requestVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.goodsService.updateGoodsStockAndStatus(requestVo);
+        return header;
+    }
+    
+    /**
+     * 扣减商品库存
+     * @param requestVo
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="deductGoodsStock", method=RequestMethod.POST)
+    public ResponseHeader deductGoodsStock(DeductGoodsStockRequestVo requestVo) throws MilkTeaException{
+        ResponseHeader header = new ResponseHeader();
+        this.goodsService.deductGoodsStock(requestVo);
         return header;
     }
 

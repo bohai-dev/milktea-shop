@@ -49,7 +49,13 @@ public class StoreController {
         ResponseBody<List<TeaStoreInfo>> responseBody = new ResponseBody<>();
         responseBody.setData(this.storeService.queryStoreInfo());
         return responseBody;
-        
+    }
+    
+    @RequestMapping(value="queryStoreInfo/{storeNo}",method=RequestMethod.GET)
+    public ResponseBody<TeaStoreInfo> queryStoreInfo(@PathVariable String storeNo)  throws MilkTeaException{
+        ResponseBody<TeaStoreInfo> responseBody = new ResponseBody<>();
+        responseBody.setData(this.storeService.queryStoreInfo(storeNo));
+        return responseBody;
     }
 
 }

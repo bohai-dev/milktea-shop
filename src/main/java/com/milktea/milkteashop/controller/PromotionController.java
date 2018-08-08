@@ -47,5 +47,31 @@ public class PromotionController {
         responseBody.setData(this.promotionService.queryPromotions());
         return responseBody;
     }
-
+    
+    /**
+     * 根据店铺编号查询有效的活动
+     * @param storeNo
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="queryPromotionByStoreNo/{storeNo}", method=RequestMethod.GET)
+    public ResponseBody<List<PromotionVo>> queryPromotionByStoreNo(@PathVariable String storeNo) throws MilkTeaException{
+        ResponseBody<List<PromotionVo>> responseBody = new ResponseBody<>();
+        responseBody.setData(this.promotionService.queryPromotions(storeNo));
+        return responseBody;
+    }
+    
+    /**
+     * 根据店铺编号和活动ID查询有效活动详情
+     * @param promotionId
+     * @param storeNo
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="queryEffectPromotion", method=RequestMethod.POST)
+    public ResponseBody<PromotionVo> queryEffectPromotion(String promotionId, String storeNo) throws MilkTeaException{
+        ResponseBody<PromotionVo> responseBody = new ResponseBody<>();
+        responseBody.setData(this.promotionService.queryPromotion(promotionId, storeNo));
+        return responseBody;
+    }
 }

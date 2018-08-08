@@ -38,6 +38,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public TeaStoreInfo queryStoreInfo(String storeNo) throws MilkTeaException {
 
+        if(storeNo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
         TeaStoreInfo storeInfo = null;
         try {
             storeInfo = this.storeInfoMapper.selectByPrimaryKey(storeNo);
@@ -55,6 +59,10 @@ public class StoreServiceImpl implements StoreService {
             throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
         }
         
+        if(StringUtils.isBlank(storeInfo.getStoreStatus())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_STATUS_REQUIRED);
+        }
+        
         if(StringUtils.isBlank(storeInfo.getCnStoreName())){
             throw new MilkTeaException(MilkTeaErrorConstant.CN_STORE_NAME_REQUIRED);
         }
@@ -65,6 +73,29 @@ public class StoreServiceImpl implements StoreService {
         
         if(StringUtils.isBlank(storeInfo.getStorePasswd())){
             throw new MilkTeaException(MilkTeaErrorConstant.STORE_PASSWORD_REQUIRED);
+        }
+        
+        TeaStoreInfo info = null;
+        try {
+            info = this.storeInfoMapper.selectByCnStoreName(storeInfo.getCnStoreName());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        if(info != null){
+            logger.warn(MilkTeaErrorConstant.CN_STORE_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_STORE_NAME_EXISTS);
+        }
+        
+        try {
+            info = this.storeInfoMapper.selectByUsStoreName(storeInfo.getUsStoreName());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        if(info != null){
+            logger.warn(MilkTeaErrorConstant.US_STORE_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_EXISTS);
         }
         
         try {
@@ -83,6 +114,22 @@ public class StoreServiceImpl implements StoreService {
         
         if(storeInfo == null || storeInfo.getStoreNo() == null){
             throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getStoreStatus())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_STATUS_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getCnStoreName())){
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_STORE_NAME_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getUsStoreName())){
+            throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(storeInfo.getStorePasswd())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_PASSWORD_REQUIRED);
         }
         
         try {

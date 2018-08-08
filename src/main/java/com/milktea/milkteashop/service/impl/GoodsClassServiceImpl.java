@@ -51,7 +51,7 @@ public class GoodsClassServiceImpl implements GoodsClassService {
         
         try {
             classInfo.setClassId(this.classInfoMapper.generateClassId());
-            this.classInfoMapper.insert(classInfo);
+            this.classInfoMapper.insertSelective(classInfo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);

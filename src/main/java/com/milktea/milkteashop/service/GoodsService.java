@@ -5,6 +5,7 @@ import java.util.List;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
+import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 
@@ -65,4 +66,11 @@ public interface GoodsService {
      * @throws MilkTeaException
      */
     public void updateGoodsStockAndStatus(GoodsStockAndStatusRequestVo requestVo) throws MilkTeaException;
+    
+    /**
+     * 扣减商品库存
+     * @param requestVo
+     * @throws MilkTeaException
+     */
+    public void deductGoodsStock(DeductGoodsStockRequestVo requestVo) throws MilkTeaException;
 }

@@ -1,13 +1,14 @@
 package com.milktea.milkteashop.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.GoodsService;
 import com.milktea.milkteashop.vo.ClassGoodsRequestVo;
 import com.milktea.milkteashop.vo.ClassInfoVo;
+import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.GoodsInfoVo;
 import com.milktea.milkteashop.vo.GoodsStockAndStatusRequestVo;
 
@@ -74,10 +76,30 @@ public class GoodsServiceImpl implements GoodsService {
             throw new MilkTeaException(MilkTeaErrorConstant.GOODS_CLASS_REQUIRED);
         }
         
+        TeaGoodsInfo info = null;
+        try {
+            info = this.goodsInfoMapper.selectByCnName(infoVo.getCnGoodsName());
+            if(info != null){
+                throw new MilkTeaException(MilkTeaErrorConstant.CN_GOODS_NAME_EXISTS);
+            }
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        try {
+            info = this.goodsInfoMapper.selectByUsName(infoVo.getUsGoodsName());
+            if(info != null){
+                throw new MilkTeaException(MilkTeaErrorConstant.US_GOODS_NAME_EXISTS);
+            }
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
         TeaGoodsInfo dest = new TeaGoodsInfo();
         try {
-            BeanUtils.copyProperties(dest, infoVo);
-            this.goodsInfoMapper.insert(dest);
+            BeanUtils.copyProperties(infoVo, dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -85,6 +107,13 @@ public class GoodsServiceImpl implements GoodsService {
         
         //生成商品ID
         String goodsId = this.goodsInfoMapper.generateGoodsId();
+        dest.setGoodsId(goodsId);
+        try {
+            this.goodsInfoMapper.insert(dest);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
         
         //添加商品分类
         for (TeaClassInfo classInfo : infoVo.getClassInfos()) {
@@ -124,6 +153,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @Transactional
     public void modifyGoodsInfo(GoodsInfoVo infoVo) throws MilkTeaException {
         
         if(infoVo == null){
@@ -152,10 +182,18 @@ public class GoodsServiceImpl implements GoodsService {
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
         try {
-            BeanUtils.copyProperties(dest, infoVo);
+            BeanUtils.copyProperties(infoVo, dest);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+        }
+        
+        //先修改商品主信息
+        try {
+            this.goodsInfoMapper.updateByPrimaryKey(dest);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
         
         //修改商品分类（先删除后保存）
@@ -240,8 +278,8 @@ public class GoodsServiceImpl implements GoodsService {
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
         try {
-            BeanUtils.copyProperties(dest, infoVo);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+            BeanUtils.copyProperties(infoVo, dest);
+        } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
         }
@@ -258,8 +296,8 @@ public class GoodsServiceImpl implements GoodsService {
             for (TeaGoodsInfo goodsInfo : goodsInfos) {
                 GoodsInfoVo vo = new GoodsInfoVo();
                 try {
-                    BeanUtils.copyProperties(vo, goodsInfo);
-                } catch (IllegalAccessException | InvocationTargetException e) {
+                    BeanUtils.copyProperties(goodsInfo, vo);
+                } catch (Exception e) {
                     logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                     throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
                 }
@@ -304,7 +342,7 @@ public class GoodsServiceImpl implements GoodsService {
         
         if(goodsInfo != null){
             try {
-                BeanUtils.copyProperties(goodsInfoVo, goodsInfo);
+                BeanUtils.copyProperties(goodsInfo, goodsInfoVo);
             } catch (Exception e) {
                 logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -363,7 +401,7 @@ public class GoodsServiceImpl implements GoodsService {
             for (TeaClassInfo teaClassInfo : classInfos) {
                 ClassInfoVo classInfoVo = new ClassInfoVo();
                 try {
-                    BeanUtils.copyProperties(classInfoVo, teaClassInfo);
+                    BeanUtils.copyProperties(teaClassInfo, classInfoVo);
                 } catch (Exception e) {
                     logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                     throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -389,7 +427,7 @@ public class GoodsServiceImpl implements GoodsService {
                     for (TeaGoodsInfo info : goodsList) {
                         GoodsInfoVo goodsInfoVo = new GoodsInfoVo();
                         try {
-                            BeanUtils.copyProperties(goodsInfoVo, info);
+                            BeanUtils.copyProperties(info, goodsInfoVo);
                         } catch (Exception e) {
                             logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
                             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -445,5 +483,60 @@ public class GoodsServiceImpl implements GoodsService {
         }
         
     }
+
+    @Override
+    public synchronized void deductGoodsStock(DeductGoodsStockRequestVo requestVo) throws MilkTeaException {
+        
+        if(requestVo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getGoodsId())){
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_ID_REQUIRED);
+        }
+        
+        if(requestVo.getVolume() == null || requestVo.getVolume().compareTo(BigDecimal.ZERO) < 1){
+            throw new MilkTeaException(MilkTeaErrorConstant.VOLUME_ILLEGAL);
+        }
+        
+        TeaGoodsInfo goodsInfo = null;
+        
+        try {
+            goodsInfo = this.goodsInfoMapper.selectByPrimaryKey(requestVo.getGoodsId());
+            if(goodsInfo == null){
+                logger.warn(MilkTeaErrorConstant.GOODS_NOT_EXISTS.getCnErrorMsg());
+                throw new MilkTeaException(MilkTeaErrorConstant.GOODS_NOT_EXISTS);
+            }
+            
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        //非在售商品
+        if(goodsInfo.getGoodsStatus() != null && !goodsInfo.getGoodsStatus().equals("1")){
+            logger.warn(MilkTeaErrorConstant.GOODS_NOT_ON_SALE.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_NOT_ON_SALE);
+        }
+        
+        //商品库存未维护
+        if(goodsInfo.getGoodsStock() == null){
+            logger.warn(MilkTeaErrorConstant.GOODS_STOCK_UNMAINTAINED.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_STOCK_UNMAINTAINED);
+        }
+        
+        //扣减商品库存
+        if(goodsInfo.getGoodsStock().compareTo(requestVo.getVolume()) > -1){
+            try {
+                this.goodsInfoMapper.updateStockByGoodsId(requestVo.getGoodsId(), requestVo.getVolume());
+            } catch (Exception e) {
+                logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+            }
+        }
+        
+    }
+    
+    
 
 }

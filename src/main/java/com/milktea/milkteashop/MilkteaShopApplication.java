@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @MapperScan("com.milktea.milkteashop.dao")
-@ComponentScan("com.milktea.milkteashop.job")
+//@ComponentScan("com.milktea.milkteashop.job")
 public class MilkteaShopApplication {
 
     public static void main(String[] args) {

@@ -71,6 +71,30 @@ public enum MilkTeaErrorConstant {
     
     STORE_PASSWORD_REQUIRED("00031", "店铺管理员密码不能为空", "Store password required"),
     
+    STORE_STATUS_REQUIRED("00032", "店铺状态不能为空", "Store status required"),
+    
+    CN_GOODS_NAME_EXISTS("00033", "商品名称(中文)重复", "Goods name already exists"),
+    
+    US_GOODS_NAME_EXISTS("00034", "商品名称(英文)重复", "Goods name already exists"),
+    
+    VOLUME_ILLEGAL("00035", "非法的数量", "Volume illegal"),
+    
+    LACK_OF_STOCK("00036", "库存不足", "Lack of stock"),
+    
+    GOODS_NOT_EXISTS("00037", "商品不存在", "Goods not exists"),
+    
+    GOODS_NOT_ON_SALE("00038", "商品不在售", "Goods not on sale"),
+    
+    GOODS_STOCK_UNMAINTAINED("00039", "商品库存未维护", "Goods stock unmaintained"),
+    
+    CN_STORE_NAME_EXISTS("00040", "店铺名称(中文)重复", "Store name already exists"),
+    
+    US_STORE_NAME_EXISTS("00041", "店铺名称(英文)重复", "Store name already exists"),
+    
+    CN_ATTR_NAME_EXISTS("00042", "属性名称(中文)重复", "Attr name already exists"),
+    
+    US_ATTR_NAME_EXISTS("00043", "属性名称(英文)重复", "Attr name already exists"),
+    
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
     final String errorCode;

@@ -29,4 +29,10 @@ public interface TeaStoreInfoMapper {
     
     @Select(value="select 'D'||lpad(TEA_STORE_NO_SEQ.NEXTVAL,5,'0') from dual")
     String generateStoreNo();
+    
+    @Select(value="select * from TEA_STORE_INFO where CN_STORE_NAME = #{storeName} and DELETE_FLAG = '0'")
+    TeaStoreInfo selectByCnStoreName(String storeName);
+    
+    @Select(value="select * from TEA_STORE_INFO where US_STORE_NAME = #{storeName} and DELETE_FLAG = '0'")
+    TeaStoreInfo selectByUsStoreName(String storeName);
 }
