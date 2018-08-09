@@ -132,7 +132,7 @@
     <include refid="Base_Column_List" />
     from TEA_CAROUSEL_FIGURE
     <where>
-        <if test="STORE_NO != null">
+        <if test="storeNo != null">
             STORE_NO = #{storeNo,jdbcType=VARCHAR}
         </if>
     </where>
