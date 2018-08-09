@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.milktea.milkteashop.domain.TeaCarouselFigure;
 import com.milktea.milkteashop.exception.MilkTeaException;
+import com.milktea.milkteashop.vo.TeaCarouselFigureNationVo;
 
 /**
  * 轮播图接口
@@ -39,5 +40,10 @@ public interface CarouselFigureService {
      */
     public List<TeaCarouselFigure> queryCarouselFigures(TeaCarouselFigure figure) throws MilkTeaException;
     
+    /**
+     * 查询轮播图(支持国际化)
+     * @throws MilkTeaException
+     */
+    public List<TeaCarouselFigureNationVo> queryCarouselFigureNation(TeaCarouselFigureNationVo figure) throws MilkTeaException;
     
 }

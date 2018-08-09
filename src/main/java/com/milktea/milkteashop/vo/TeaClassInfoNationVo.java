@@ -5,9 +5,9 @@ import java.util.Date;
 public class TeaClassInfoNationVo {
     private String classId;
 
-    private String ClassName;
+    private String className;
 
-    private String ClassLogo;
+    private String classLogo;
 
     private String classType;
 
@@ -26,19 +26,19 @@ public class TeaClassInfoNationVo {
     }
 
     public String getClassName() {
-        return ClassName;
+        return className;
     }
 
     public void setClassName(String className) {
-        ClassName = className;
+        this.className = className;
     }
 
     public String getClassLogo() {
-        return ClassLogo;
+        return classLogo;
     }
 
     public void setClassLogo(String classLogo) {
-        ClassLogo = classLogo;
+        this.classLogo = classLogo;
     }
 
     public String getClassType() {

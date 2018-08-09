@@ -6,7 +6,7 @@ import java.util.Date;
 public class TeaAttributesInfoNationVo {
     private String attrId;
 
-    private String AttrName;
+    private String attrName;
 
     private String attrType;
 
@@ -24,12 +24,13 @@ public class TeaAttributesInfoNationVo {
         this.attrId = attrId == null ? null : attrId.trim();
     }
 
+
     public String getAttrName() {
-        return AttrName;
+        return attrName;
     }
 
     public void setAttrName(String attrName) {
-        AttrName = attrName;
+        this.attrName = attrName;
     }
 
     public String getAttrType() {

@@ -14,6 +14,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.CarouselFigureService;
 import com.milktea.milkteashop.vo.ResponseBody;
 import com.milktea.milkteashop.vo.ResponseHeader;
+import com.milktea.milkteashop.vo.TeaCarouselFigureNationVo;
 
 @RestController
 public class CarouselFigureController {
@@ -47,6 +48,14 @@ public class CarouselFigureController {
             throws MilkTeaException{
         ResponseBody<List<TeaCarouselFigure>> responseBody = new ResponseBody<>();
         responseBody.setData(this.figureService.queryCarouselFigures(figure));
+        return responseBody;
+    }
+    
+    @RequestMapping(value="queryCarouselFigureNation", method=RequestMethod.POST)
+    public ResponseBody<List<TeaCarouselFigureNationVo>> queryCarouselFigureNation(@RequestBody TeaCarouselFigureNationVo figure) 
+            throws MilkTeaException{
+        ResponseBody<List<TeaCarouselFigureNationVo>> responseBody = new ResponseBody<>();
+        responseBody.setData(this.figureService.queryCarouselFigureNation(figure));
         return responseBody;
     }
 }

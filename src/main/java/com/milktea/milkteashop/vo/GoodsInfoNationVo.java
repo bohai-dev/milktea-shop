@@ -23,22 +23,22 @@ public class GoodsInfoNationVo {
     /**
      * 商品名称
      */
-    private String GoodsName;
+    private String goodsName;
 
     /**
      * 商品介绍
      */
-    private String GoodsIntroduction;
+    private String goodsIntroduction;
 
     /**
      * 商品图片路径
      */
-    private String GoodsPictureBig;
+    private String goodsPictureBig;
 
     /**
      * 商品图片路径
      */
-    private String GoodsPictureRound;
+    private String goodsPictureRound;
 
     /**
      * 商品价格
@@ -107,35 +107,35 @@ public class GoodsInfoNationVo {
     }
 
     public String getGoodsName() {
-        return GoodsName;
+        return goodsName;
     }
 
     public void setGoodsName(String goodsName) {
-        GoodsName = goodsName;
+        this.goodsName = goodsName;
     }
 
     public String getGoodsIntroduction() {
-        return GoodsIntroduction;
+        return goodsIntroduction;
     }
 
     public void setGoodsIntroduction(String goodsIntroduction) {
-        GoodsIntroduction = goodsIntroduction;
+        this.goodsIntroduction = goodsIntroduction;
     }
 
     public String getGoodsPictureBig() {
-        return GoodsPictureBig;
+        return goodsPictureBig;
     }
 
     public void setGoodsPictureBig(String goodsPictureBig) {
-        GoodsPictureBig = goodsPictureBig;
+        this.goodsPictureBig = goodsPictureBig;
     }
 
     public String getGoodsPictureRound() {
-        return GoodsPictureRound;
+        return goodsPictureRound;
     }
 
     public void setGoodsPictureRound(String goodsPictureRound) {
-        GoodsPictureRound = goodsPictureRound;
+        this.goodsPictureRound = goodsPictureRound;
     }
 
     public List<TeaAttributesInfoNationVo> getGoodsAttrs() {

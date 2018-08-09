@@ -7,15 +7,15 @@ public class TeaStoreInfoNationVo {
 
     private String storeNo;
 
-    private String StoreName;
+    private String storeName;
 
-    private String StoreCity;
+    private String storeCity;
 
-    private String StoreAddress;
+    private String storeAddress;
 
-    private String StorePicture;
+    private String storePicture;
 
-    private String StoreIntroduction;
+    private String storeIntroduction;
 
     private BigDecimal longitude;
 
@@ -52,44 +52,45 @@ public class TeaStoreInfoNationVo {
         this.storeNo = storeNo;
     }
 
+
     public String getStoreName() {
-        return StoreName;
+        return storeName;
     }
 
     public void setStoreName(String storeName) {
-        StoreName = storeName;
+        this.storeName = storeName;
     }
 
     public String getStoreCity() {
-        return StoreCity;
+        return storeCity;
     }
 
     public void setStoreCity(String storeCity) {
-        StoreCity = storeCity;
+        this.storeCity = storeCity;
     }
 
     public String getStoreAddress() {
-        return StoreAddress;
+        return storeAddress;
     }
 
     public void setStoreAddress(String storeAddress) {
-        StoreAddress = storeAddress;
+        this.storeAddress = storeAddress;
     }
 
     public String getStorePicture() {
-        return StorePicture;
+        return storePicture;
     }
 
     public void setStorePicture(String storePicture) {
-        StorePicture = storePicture;
+        this.storePicture = storePicture;
     }
 
     public String getStoreIntroduction() {
-        return StoreIntroduction;
+        return storeIntroduction;
     }
 
     public void setStoreIntroduction(String storeIntroduction) {
-        StoreIntroduction = storeIntroduction;
+        this.storeIntroduction = storeIntroduction;
     }
 
     public BigDecimal getLongitude() {
