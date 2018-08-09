@@ -3,6 +3,10 @@ package com.milktea.milkteashop.vo;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 促销活动
  * @author caojia
@@ -20,8 +24,11 @@ public class PromotionVo {
 
     private String usPromotionIntroduction;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date beginTime;
 
+    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     private String promotionStatus;

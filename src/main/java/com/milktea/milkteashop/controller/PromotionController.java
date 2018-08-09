@@ -23,7 +23,7 @@ public class PromotionController {
     private PromotionService promotionService;
     
     @RequestMapping(value="savePromotion", method=RequestMethod.POST)
-    public ResponseHeader savePromotion(@RequestBody PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseHeader savePromotion(@RequestBody(required=false) PromotionVo promotionVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.promotionService.addPromotion(promotionVo);
         return header;
@@ -37,14 +37,14 @@ public class PromotionController {
     }
     
     @RequestMapping(value="modifyPromotion", method=RequestMethod.POST)
-    public ResponseHeader modifyPromotion(@RequestBody PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseHeader modifyPromotion(@RequestBody(required=false) PromotionVo promotionVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.promotionService.modifyPromotion(promotionVo);
         return header;
     }
     
     @RequestMapping(value="queryPromotion", method=RequestMethod.POST)
-    public ResponseBody<List<PromotionVo>> queryPromotion(@RequestBody PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseBody<List<PromotionVo>> queryPromotion(@RequestBody(required=false) PromotionVo promotionVo) throws MilkTeaException{
         ResponseBody<List<PromotionVo>> responseBody = new ResponseBody<>();
         responseBody.setData(this.promotionService.queryPromotions());
         return responseBody;
