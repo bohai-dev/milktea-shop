@@ -3,10 +3,10 @@ package com.milktea.milkteashop.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,9 @@ import com.milktea.milkteashop.domain.TeaPromotionInfo;
 import com.milktea.milkteashop.exception.MilkTeaErrorConstant;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.PromotionService;
+import com.milktea.milkteashop.vo.PromotionNationVo;
 import com.milktea.milkteashop.vo.PromotionVo;
+import com.milktea.milkteashop.vo.QueryPromotionByStoreNoNationRequestVo;
 
 @Service("promotionService")
 public class PromotionServiceImpl implements PromotionService {
@@ -246,6 +248,60 @@ public class PromotionServiceImpl implements PromotionService {
         }
         
         return dest;
+    }
+
+    @Override
+    public List<PromotionNationVo> queryPromotionsNation(QueryPromotionByStoreNoNationRequestVo requestVo) throws MilkTeaException {
+        
+        if(requestVo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getStoreNo())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getLang())){
+            throw new MilkTeaException(MilkTeaErrorConstant.LANG_REQUIRED);
+        }
+        
+        List<TeaPromotionInfo> list = null;
+        try {
+            list = this.promotionInfoMapper.selectByStoreNo(requestVo.getStoreNo());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        List<PromotionNationVo> list2 = new ArrayList<PromotionNationVo>();
+        if(list != null){
+            for (TeaPromotionInfo info : list) {
+                PromotionNationVo dest = new PromotionNationVo();
+                try {
+                    BeanUtils.copyProperties(info, dest);
+                } catch (Exception e) {
+                    logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+                    throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+                }
+                
+                if(requestVo.getLang().equals("zh")){
+                    dest.setPromotionName(info.getCnPromotionName());
+                    dest.setPromotionIntroduction(info.getCnPromotionIntroduction());
+                }else if (requestVo.getLang().equals("en")) {
+                    dest.setPromotionName(info.getUsPromotionName());
+                    dest.setPromotionIntroduction(info.getUsPromotionIntroduction());
+                }
+                
+                if(StringUtils.isNotBlank(info.getStoreNos())){
+                    String[] s = info.getStoreNos().split(",");
+                    List<String> storeList = java.util.Arrays.asList(s);
+                    dest.setStoreNos(storeList);
+                }
+                list2.add(dest);
+            }
+        }
+        
+        return list2;
     }
 
 }

@@ -3,7 +3,9 @@ package com.milktea.milkteashop.service;
 import java.util.List;
 
 import com.milktea.milkteashop.exception.MilkTeaException;
+import com.milktea.milkteashop.vo.PromotionNationVo;
 import com.milktea.milkteashop.vo.PromotionVo;
+import com.milktea.milkteashop.vo.QueryPromotionByStoreNoNationRequestVo;
 
 /**
  * 活动接口
@@ -46,6 +48,13 @@ public interface PromotionService {
      * @throws MilkTeaException
      */
     public List<PromotionVo> queryPromotions(String storeNo) throws MilkTeaException;
+    
+    /**
+     * 查询有效活动信息(支持国际化)
+     * @return
+     * @throws MilkTeaException
+     */
+    public List<PromotionNationVo> queryPromotionsNation(QueryPromotionByStoreNoNationRequestVo requestVo) throws MilkTeaException;
     
     /**
      * 查询活动详情

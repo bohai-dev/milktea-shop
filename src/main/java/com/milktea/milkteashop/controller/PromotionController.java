@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.PromotionService;
+import com.milktea.milkteashop.vo.PromotionNationVo;
 import com.milktea.milkteashop.vo.PromotionVo;
 import com.milktea.milkteashop.vo.QueryEffectPromotionRequstVo;
+import com.milktea.milkteashop.vo.QueryPromotionByStoreNoNationRequestVo;
 import com.milktea.milkteashop.vo.ResponseBody;
 import com.milktea.milkteashop.vo.ResponseHeader;
 
@@ -64,6 +66,19 @@ public class PromotionController {
     }
     
     /**
+     * 根据店铺编号查询有效的活动(支持国际化)
+     * @param storeNo
+     * @return
+     * @throws MilkTeaException
+     */
+    @RequestMapping(value="queryPromotionByStoreNoNation", method=RequestMethod.POST)
+    public ResponseBody<List<PromotionNationVo>> queryPromotionByStoreNoNation(@RequestBody(required=false) QueryPromotionByStoreNoNationRequestVo requestVo) throws MilkTeaException{
+        ResponseBody<List<PromotionNationVo>> responseBody = new ResponseBody<>();
+        responseBody.setData(this.promotionService.queryPromotionsNation(requestVo));
+        return responseBody;
+    }
+    
+    /**
      * 根据店铺编号和活动ID查询有效活动详情
      * @param promotionId
      * @param storeNo
@@ -71,7 +86,7 @@ public class PromotionController {
      * @throws MilkTeaException
      */
     @RequestMapping(value="queryEffectPromotion", method=RequestMethod.POST)
-    public ResponseBody<PromotionVo> queryEffectPromotion(@RequestBody QueryEffectPromotionRequstVo requstVo) throws MilkTeaException{
+    public ResponseBody<PromotionVo> queryEffectPromotion(@RequestBody(required=false) QueryEffectPromotionRequstVo requstVo) throws MilkTeaException{
         ResponseBody<PromotionVo> responseBody = new ResponseBody<>();
         responseBody.setData(this.promotionService.queryPromotion(requstVo.getPromotionId(), requstVo.getStoreNo()));
         return responseBody;
