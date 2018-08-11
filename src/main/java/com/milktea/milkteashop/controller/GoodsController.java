@@ -19,6 +19,7 @@ import com.milktea.milkteashop.vo.ResponseBody;
 import com.milktea.milkteashop.vo.ResponseHeader;
 
 @RestController
+@CrossOrigin
 public class GoodsController {
 
     @Autowired

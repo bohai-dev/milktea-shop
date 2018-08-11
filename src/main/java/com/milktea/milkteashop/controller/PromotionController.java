@@ -3,12 +3,15 @@ package com.milktea.milkteashop.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.PromotionService;
 import com.milktea.milkteashop.vo.PromotionNationVo;
@@ -19,6 +22,7 @@ import com.milktea.milkteashop.vo.ResponseBody;
 import com.milktea.milkteashop.vo.ResponseHeader;
 
 @RestController
+@CrossOrigin
 public class PromotionController {
     
     @Autowired

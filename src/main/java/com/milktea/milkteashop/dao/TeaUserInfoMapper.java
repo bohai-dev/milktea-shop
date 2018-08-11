@@ -1,6 +1,8 @@
 package com.milktea.milkteashop.dao;
 
-import com.milktea.milkteashop.domain.TeaUserInfo;
+import java.util.List;
+
+import com.milktea.milkteashop.domain.TeaUserInfo;import com.milktea.milkteashop.exception.MilkTeaException;
 
 public interface TeaUserInfoMapper {
     int deleteByPrimaryKey(String userNo);
@@ -14,4 +16,6 @@ public interface TeaUserInfoMapper {
     int updateByPrimaryKeySelective(TeaUserInfo record);
 
     int updateByPrimaryKey(TeaUserInfo record);
+    
+    List<TeaUserInfo> selectByCondition(TeaUserInfo record);
 }

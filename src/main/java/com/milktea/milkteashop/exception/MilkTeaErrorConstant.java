@@ -99,6 +99,10 @@ public enum MilkTeaErrorConstant {
 
     IS_DEFAULT_REQUIRED("00045", "是否默认店铺不能为空", "Is default required"),
     
+    PAGE_NUMBER_REQUIRED("00046", "页码不能为空", "Page number required"),
+    
+    PAGE_SIZE_REQUIRED("00046", "页大小不能为空", "Page size required"),
+    
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
     final String errorCode;

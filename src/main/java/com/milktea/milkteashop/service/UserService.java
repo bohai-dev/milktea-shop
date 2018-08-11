@@ -1,6 +1,9 @@
 package com.milktea.milkteashop.service;
 
+import com.milktea.milkteashop.domain.TeaUserInfo;
 import com.milktea.milkteashop.exception.MilkTeaException;
+import com.milktea.milkteashop.vo.PageRequestVo;
+import com.milktea.milkteashop.vo.PageResponseVo;
 import com.milktea.milkteashop.vo.UserLoginRequestVo;
 import com.milktea.milkteashop.vo.UserLoginResponseVo;
 
@@ -13,5 +16,11 @@ public interface UserService {
      */
     public UserLoginResponseVo checkUser(UserLoginRequestVo requestVo) throws MilkTeaException;
     
-    
+    /**
+     * 查询用户信息
+     * @param requestVo
+     * @return
+     * @throws MilkTeaException
+     */
+    public PageResponseVo<TeaUserInfo> queryUsersPage(PageRequestVo<TeaUserInfo> requestVo) throws MilkTeaException;
 }
