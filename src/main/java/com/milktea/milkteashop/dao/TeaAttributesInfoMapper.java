@@ -36,4 +36,6 @@ public interface TeaAttributesInfoMapper {
     
     @Update(value="update TEA_ATTRIBUTES_INFO set DELETE_FLAG = '1' where ATTR_ID = #{attrId}")
     int logicDeleteByPrimaryKey(String attrId);
+    
+    List<TeaAttributesInfo> selectByOrderDetailId(String orderDetailId);
 }

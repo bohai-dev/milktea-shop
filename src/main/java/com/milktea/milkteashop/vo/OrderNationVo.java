@@ -1,9 +1,16 @@
-package com.milktea.milkteashop.domain;
+package com.milktea.milkteashop.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-public class TeaOrderInfo {
+/**
+ * 订单信息
+ * @author caojia
+ *
+ */
+public class OrderNationVo {
+    
     private String orderNo;
 
     private String userNo;
@@ -38,16 +45,14 @@ public class TeaOrderInfo {
 
     private Date bookTime;
 
-    private String deleteFlag;
-
-    private Date updateTime;
+    List<OrderDetailsNationVo> orderDetails;
 
     public String getOrderNo() {
         return orderNo;
     }
 
     public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo == null ? null : orderNo.trim();
+        this.orderNo = orderNo;
     }
 
     public String getUserNo() {
@@ -55,7 +60,7 @@ public class TeaOrderInfo {
     }
 
     public void setUserNo(String userNo) {
-        this.userNo = userNo == null ? null : userNo.trim();
+        this.userNo = userNo;
     }
 
     public String getTelephone() {
@@ -63,7 +68,7 @@ public class TeaOrderInfo {
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone == null ? null : telephone.trim();
+        this.telephone = telephone;
     }
 
     public String getWeixinId() {
@@ -71,7 +76,7 @@ public class TeaOrderInfo {
     }
 
     public void setWeixinId(String weixinId) {
-        this.weixinId = weixinId == null ? null : weixinId.trim();
+        this.weixinId = weixinId;
     }
 
     public String getPromotionId() {
@@ -79,7 +84,7 @@ public class TeaOrderInfo {
     }
 
     public void setPromotionId(String promotionId) {
-        this.promotionId = promotionId == null ? null : promotionId.trim();
+        this.promotionId = promotionId;
     }
 
     public String getRemark() {
@@ -87,7 +92,7 @@ public class TeaOrderInfo {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+        this.remark = remark;
     }
 
     public BigDecimal getOrigPrice() {
@@ -119,7 +124,7 @@ public class TeaOrderInfo {
     }
 
     public void setStoreNo(String storeNo) {
-        this.storeNo = storeNo == null ? null : storeNo.trim();
+        this.storeNo = storeNo;
     }
 
     public String getTakeNo() {
@@ -127,7 +132,7 @@ public class TeaOrderInfo {
     }
 
     public void setTakeNo(String takeNo) {
-        this.takeNo = takeNo == null ? null : takeNo.trim();
+        this.takeNo = takeNo;
     }
 
     public Date getOrderTime() {
@@ -143,7 +148,7 @@ public class TeaOrderInfo {
     }
 
     public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus == null ? null : orderStatus.trim();
+        this.orderStatus = orderStatus;
     }
 
     public String getPayStatus() {
@@ -151,7 +156,7 @@ public class TeaOrderInfo {
     }
 
     public void setPayStatus(String payStatus) {
-        this.payStatus = payStatus == null ? null : payStatus.trim();
+        this.payStatus = payStatus;
     }
 
     public String getOrderType() {
@@ -159,7 +164,7 @@ public class TeaOrderInfo {
     }
 
     public void setOrderType(String orderType) {
-        this.orderType = orderType == null ? null : orderType.trim();
+        this.orderType = orderType;
     }
 
     public Date getMakeFinishTime() {
@@ -178,19 +183,12 @@ public class TeaOrderInfo {
         this.bookTime = bookTime;
     }
 
-    public String getDeleteFlag() {
-        return deleteFlag;
+    public List<OrderDetailsNationVo> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
+    public void setOrderDetails(List<OrderDetailsNationVo> orderDetails) {
+        this.orderDetails = orderDetails;
     }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+    
 }

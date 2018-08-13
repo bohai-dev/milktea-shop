@@ -29,6 +29,14 @@
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
     and DELETE_FLAG = '0'
   </select>
+  
+  <select id="selectByGoodsId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_GOODS_INFO
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from TEA_GOODS_INFO
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}

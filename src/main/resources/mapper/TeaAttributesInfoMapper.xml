@@ -125,4 +125,14 @@
                 where TEA_ATTRIBUTES_INFO.ATTR_ID = TEA_GOODS_ATTR.ATTR_ID
                 and TEA_GOODS_ATTR.GOODS_ID = #{goodsId,jdbcType=VARCHAR})
   </select>
+  
+  <select id="selectByOrderDetailId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_ATTRIBUTES_INFO 
+    where exists (select 1 
+                from TEA_ORDER_DETAILS_ATTR 
+                where TEA_ATTRIBUTES_INFO.ATTR_ID = TEA_ORDER_DETAILS_ATTR.ATTR_ID
+                and TEA_ORDER_DETAILS_ATTR.ORDER_DETAIL_ID = #{orderDetailId,jdbcType=VARCHAR})
+  </select>
 </mapper>

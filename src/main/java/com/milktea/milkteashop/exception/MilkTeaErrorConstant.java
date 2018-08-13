@@ -101,7 +101,11 @@ public enum MilkTeaErrorConstant {
     
     PAGE_NUMBER_REQUIRED("00046", "页码不能为空", "Page number required"),
     
-    PAGE_SIZE_REQUIRED("00046", "页大小不能为空", "Page size required"),
+    PAGE_SIZE_REQUIRED("00047", "页大小不能为空", "Page size required"),
+    
+    USER_NO_REQUIRED("00048", "用户编号不能为空", "User no required"),
+    
+    ORDER_NO_REQUIRED("00049", "订单编号不能为空", "Order no required"),
     
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     

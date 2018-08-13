@@ -17,6 +17,8 @@ public interface TeaGoodsInfoMapper {
     int insertSelective(TeaGoodsInfo record);
 
     TeaGoodsInfo selectByPrimaryKey(String goodsId);
+    
+    TeaGoodsInfo selectByGoodsId(String goodsId);
 
     int updateByPrimaryKeySelective(TeaGoodsInfo record);
 

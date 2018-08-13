@@ -1,8 +1,10 @@
-package com.milktea.milkteashop.domain;
+package com.milktea.milkteashop.vo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-public class TeaOrderDetails {
+public class OrderDetailsNationVo {
+    
     private String orderDetailId;
 
     private String orderNo;
@@ -16,15 +18,19 @@ public class TeaOrderDetails {
     private BigDecimal discount;
 
     private BigDecimal orderPrice;
-
-    private String updateTime;
+    
+    private String goodsName;
+    
+    private String goodsPictureBig;
+    
+    private List<TeaAttributesInfoNationVo> attrs;
 
     public String getOrderDetailId() {
         return orderDetailId;
     }
 
     public void setOrderDetailId(String orderDetailId) {
-        this.orderDetailId = orderDetailId == null ? null : orderDetailId.trim();
+        this.orderDetailId = orderDetailId;
     }
 
     public String getOrderNo() {
@@ -32,7 +38,7 @@ public class TeaOrderDetails {
     }
 
     public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo == null ? null : orderNo.trim();
+        this.orderNo = orderNo;
     }
 
     public String getGoodsId() {
@@ -40,7 +46,7 @@ public class TeaOrderDetails {
     }
 
     public void setGoodsId(String goodsId) {
-        this.goodsId = goodsId == null ? null : goodsId.trim();
+        this.goodsId = goodsId;
     }
 
     public BigDecimal getOrigPrice() {
@@ -75,11 +81,29 @@ public class TeaOrderDetails {
         this.orderPrice = orderPrice;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime == null ? null : updateTime.trim();
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
+
+    public String getGoodsPictureBig() {
+        return goodsPictureBig;
+    }
+
+    public void setGoodsPictureBig(String goodsPictureBig) {
+        this.goodsPictureBig = goodsPictureBig;
+    }
+
+    public List<TeaAttributesInfoNationVo> getAttrs() {
+        return attrs;
+    }
+
+    public void setAttrs(List<TeaAttributesInfoNationVo> attrs) {
+        this.attrs = attrs;
+    }
+    
+    
 }
