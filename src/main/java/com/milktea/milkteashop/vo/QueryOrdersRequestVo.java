@@ -6,6 +6,8 @@ public class QueryOrdersRequestVo {
     
     private String userNo;
     
+    private String telephone;
+    
     private String orderNo;
     
     private String lang;
@@ -18,6 +20,14 @@ public class QueryOrdersRequestVo {
     private Date beginDate;
     
     private Date endDate;
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
     public String getOrderType() {
         return orderType;

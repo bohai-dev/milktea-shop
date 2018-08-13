@@ -9,7 +9,7 @@ import java.util.List;
  * @author caojia
  *
  */
-public class OrderNationVo {
+public class OrderNationVo extends MessageType{
     
     private String orderNo;
 

@@ -72,8 +72,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
             if (shopId.equals(saveShopId)){
                 session.sendMessage(new TextMessage(message));
             }
-
-
+            
+            
+            
         }
 
     }
