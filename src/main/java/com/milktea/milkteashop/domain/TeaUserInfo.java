@@ -3,6 +3,9 @@ package com.milktea.milkteashop.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TeaUserInfo {
     private String userNo;
 
@@ -18,6 +21,7 @@ public class TeaUserInfo {
 
     private BigDecimal points;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date registerDate;
 
     private String identifyCode;

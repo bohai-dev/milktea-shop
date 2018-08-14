@@ -205,6 +205,9 @@
         <if test="telephone != null">
             TELEPHONE = #{telephone,jdbcType=VARCHAR}
         </if>
+        <if test="userNo != null">
+            and USER_NO = #{userNo,jdbcType=VARCHAR}
+        </if>
     </where>
   
   </select>

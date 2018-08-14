@@ -35,7 +35,8 @@ public class JsonGenerate {
         l.add(nationVo);
         requestVo.setData(nationVo);
         //TeaCarouselFigure responseBody = new TeaCarouselFigure();
-        System.out.println(JSON.toJSONString(requestVo,SerializerFeature.WriteMapNullValue));
+        
+        System.out.println(JSON.toJSONString(nationVo,SerializerFeature.WriteMapNullValue));
     }
 
 }

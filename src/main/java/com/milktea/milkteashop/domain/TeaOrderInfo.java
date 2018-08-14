@@ -3,6 +3,8 @@ package com.milktea.milkteashop.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TeaOrderInfo {
     private String orderNo;
 
@@ -26,6 +28,7 @@ public class TeaOrderInfo {
 
     private String takeNo;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date orderTime;
 
     private String orderStatus;
@@ -34,8 +37,10 @@ public class TeaOrderInfo {
 
     private String orderType;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date makeFinishTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date bookTime;
 
     private String deleteFlag;
