@@ -12,6 +12,7 @@ import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.UserService;
 import com.milktea.milkteashop.vo.PageRequestVo;
 import com.milktea.milkteashop.vo.PageResponseVo;
+import com.milktea.milkteashop.vo.ResponseHeader;
 
 @RestController
 @CrossOrigin
@@ -25,5 +26,11 @@ public class UserController {
         
         return this.userService.queryUsersPage(requestVo);
         
+    }
+    
+    @RequestMapping(value="modifyUserInfo", method=RequestMethod.POST)
+    private ResponseHeader modifyUserInfo(TeaUserInfo info) throws MilkTeaException{
+        
+        return new ResponseHeader();
     }
 }

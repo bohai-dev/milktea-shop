@@ -2,12 +2,20 @@ package com.milktea.milkteashop.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.alibaba.fastjson.JSON;
+import com.milktea.milkteashop.service.OrderService;
+import com.milktea.milkteashop.vo.OrderNationVo;
+import com.milktea.milkteashop.vo.QueryOrdersRequestVo;
+
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,6 +31,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
     /** logger */
     private static final Logger LOGGER = LoggerFactory.getLogger(WebsocketHandler.class);
+    
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -44,9 +55,16 @@ public class WebsocketHandler extends TextWebSocketHandler {
         map.put("shopId",shopId);
         map.put("session",session);
         webSocketList.add(map);     //加入set中
-
-
-
+        
+        QueryOrdersRequestVo requestVo = new QueryOrdersRequestVo();
+        requestVo.setStoreNo(shopId);
+        List<OrderNationVo> list = this.orderService.queryOrder(requestVo);
+        if(list != null && list.size() > 0){
+            for (OrderNationVo orderNationVo : list) {
+                orderNationVo.setMessageType("0");
+                this.sendMessage(shopId, JSON.toJSONString(orderNationVo));
+            }
+        }
         //session.sendMessage(new TextMessage("我收到你发的消息了"));
     }
 
@@ -72,8 +90,6 @@ public class WebsocketHandler extends TextWebSocketHandler {
             if (shopId.equals(saveShopId)){
                 session.sendMessage(new TextMessage(message));
             }
-            
-            
             
         }
 

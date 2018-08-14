@@ -268,11 +268,20 @@
         <if test="storeNo != null">
             and STORE_NO = #{storeNo,jdbcType=VARCHAR}
         </if>
+        <if test="promotionId != null">
+            and PROMOTION_ID = #{promotionId,jdbcType=VARCHAR}
+        </if>
         <if test="telephone">
             and TELEPHONE = #{telephone,jdbcType=VARCHAR}
         </if>
         <if test="orderType != null">
             and ORDER_TYPE = #{orderType,jdbcType=CHAR}
+        </if>
+        <if test="orderStatus != null">
+            and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+        </if>
+        <if test="payStatus != null">
+            and PAY_STATUS = #{payStatus,jdbcType=CHAR}
         </if>
         <if test="beginDate != null">
             and ORDER_TIME <![CDATA[ >= ]]> beginDate

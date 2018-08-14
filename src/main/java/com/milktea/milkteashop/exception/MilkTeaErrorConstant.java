@@ -107,6 +107,8 @@ public enum MilkTeaErrorConstant {
     
     ORDER_NO_REQUIRED("00049", "订单编号不能为空", "Order no required"),
     
+    ORDER_STATUS_REQUIRED("00050", "订单状态不能为空", "Order status required"),
+    
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
     final String errorCode;

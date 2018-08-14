@@ -14,12 +14,44 @@ public class QueryOrdersRequestVo {
     
     private String storeNo;
     
+    private String promotionId;
+    
     //订单类型 0:预约 1:堂吃
     private String orderType;
+    
+    //订单状态 0:已下单 1：制作完成 2:取货完成 3:外送 4:撤销
+    private String orderStatus;
+    
+    //支付状态 0:待支付 1:支付成功 2:支付失败
+    private String payStatus;
     
     private Date beginDate;
     
     private Date endDate;
+
+    public String getPromotionId() {
+        return promotionId;
+    }
+
+    public void setPromotionId(String promotionId) {
+        this.promotionId = promotionId;
+    }
+
+    public String getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
     public String getTelephone() {
         return telephone;
