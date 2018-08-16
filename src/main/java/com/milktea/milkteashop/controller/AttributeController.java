@@ -50,4 +50,11 @@ public class AttributeController {
         responseBody.setData(this.attributeService.queryAttributesInfo());
         return responseBody;
     }
+    
+    @RequestMapping(value="queryAttribute/{attrId}", method=RequestMethod.GET)
+    public ResponseBody<TeaAttributesInfo> queryAttribute(@PathVariable String attrId) throws MilkTeaException{
+        ResponseBody<TeaAttributesInfo> responseBody = new ResponseBody<>();
+        responseBody.setData(this.attributeService.queryAttributesByAttrId(attrId));
+        return responseBody;
+    }
 }

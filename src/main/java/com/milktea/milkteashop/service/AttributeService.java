@@ -42,6 +42,14 @@ public interface AttributeService {
     public List<TeaAttributesInfo> queryAttributesByGoodsId(String goodsId) throws MilkTeaException;
     
     /**
+     * 根据属性ID查询属性详情
+     * @param attrId
+     * @return
+     * @throws MilkTeaException
+     */
+    public TeaAttributesInfo queryAttributesByAttrId(String attrId) throws MilkTeaException;
+    
+    /**
      * 查询所有属性
      * @return
      * @throws MilkTeaException

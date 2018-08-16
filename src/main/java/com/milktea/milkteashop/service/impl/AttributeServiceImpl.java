@@ -131,6 +131,8 @@ public class AttributeServiceImpl implements AttributeService {
         // TODO Auto-generated method stub
         return null;
     }
+    
+    
 
     @Override
     public List<TeaAttributesInfo> queryAttributesInfo() throws MilkTeaException {
@@ -143,6 +145,18 @@ public class AttributeServiceImpl implements AttributeService {
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
         return list;
+    }
+
+    @Override
+    public TeaAttributesInfo queryAttributesByAttrId(String attrId) throws MilkTeaException {
+        TeaAttributesInfo attributesInfo = new TeaAttributesInfo();
+        try {
+            attributesInfo = this.attributesInfoMapper.selectByPrimaryKey(attrId);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        return attributesInfo;
     }
 
 }
