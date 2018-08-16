@@ -81,22 +81,26 @@ public class GoodsServiceImpl implements GoodsService {
         TeaGoodsInfo info = null;
         try {
             info = this.goodsInfoMapper.selectByCnName(infoVo.getCnGoodsName());
-            if(info != null){
-                throw new MilkTeaException(MilkTeaErrorConstant.CN_GOODS_NAME_EXISTS);
-            }
+            
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
         
+        if(info != null){
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_GOODS_NAME_EXISTS);
+        }
+        
         try {
             info = this.goodsInfoMapper.selectByUsName(infoVo.getUsGoodsName());
-            if(info != null){
-                throw new MilkTeaException(MilkTeaErrorConstant.US_GOODS_NAME_EXISTS);
-            }
+            
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(info != null){
+            throw new MilkTeaException(MilkTeaErrorConstant.US_GOODS_NAME_EXISTS);
         }
         
         TeaGoodsInfo dest = new TeaGoodsInfo();
@@ -505,14 +509,15 @@ public class GoodsServiceImpl implements GoodsService {
         
         try {
             goodsInfo = this.goodsInfoMapper.selectByPrimaryKey(requestVo.getGoodsId());
-            if(goodsInfo == null){
-                logger.warn(MilkTeaErrorConstant.GOODS_NOT_EXISTS.getCnErrorMsg());
-                throw new MilkTeaException(MilkTeaErrorConstant.GOODS_NOT_EXISTS);
-            }
             
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(goodsInfo == null){
+            logger.warn(MilkTeaErrorConstant.GOODS_NOT_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.GOODS_NOT_EXISTS);
         }
         
         //非在售商品
