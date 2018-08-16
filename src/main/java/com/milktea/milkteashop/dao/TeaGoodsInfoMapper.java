@@ -40,4 +40,10 @@ public interface TeaGoodsInfoMapper {
     
     @Update(value="update TEA_GOODS_INFO set GOODS_STOCK = GOODS_STOCK - #{volume} where GOODS_ID = #{goodsId}")
     int updateStockByGoodsId(@Param("goodsId") String goodsId,@Param("volume") BigDecimal volume);
+    
+    @Select(value="select count(1) from TEA_GOODS_INFO where DELETE_FLAG = '0' and CN_GOODS_NAME = #{goodsName} and GOODS_ID != #{goodsId}")
+    Long countOthersByCnName(@Param("goodsId") String goodsId,@Param("goodsName") String goodsName);
+    
+    @Select(value="select count(1) from TEA_GOODS_INFO where DELETE_FLAG = '0' and US_GOODS_NAME = #{goodsName} and GOODS_ID != #{goodsId}")
+    Long countOthersByUsName(@Param("goodsId") String goodsId,@Param("goodsName") String goodsName);
 }

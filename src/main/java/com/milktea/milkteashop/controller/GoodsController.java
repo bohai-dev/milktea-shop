@@ -26,14 +26,14 @@ public class GoodsController {
     private GoodsService goodsService;
     
     @RequestMapping(value="saveGoods", method=RequestMethod.POST)
-    public ResponseHeader saveGoods(@RequestBody GoodsInfoVo infoVo) throws MilkTeaException{
+    public ResponseHeader saveGoods(@RequestBody(required=false) GoodsInfoVo infoVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.goodsService.addGoodsInfo(infoVo);
         return header;
     }
     
     @RequestMapping(value="modiftGoods", method=RequestMethod.POST)
-    public ResponseHeader modiftGoods(GoodsInfoVo infoVo) throws MilkTeaException{
+    public ResponseHeader modiftGoods(@RequestBody(required=false) GoodsInfoVo infoVo) throws MilkTeaException{
         ResponseHeader header = new ResponseHeader();
         this.goodsService.modifyGoodsInfo(infoVo);
         return header;

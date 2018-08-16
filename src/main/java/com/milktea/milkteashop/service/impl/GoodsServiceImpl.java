@@ -194,6 +194,32 @@ public class GoodsServiceImpl implements GoodsService {
             throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
         }
         
+        //交易商品名称
+        Long count = null;
+        try {
+            count = this.goodsInfoMapper.countOthersByCnName(dest.getGoodsId(), dest.getCnGoodsName());
+            
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0){
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_GOODS_NAME_EXISTS);
+        }
+        
+        try {
+            count = this.goodsInfoMapper.countOthersByUsName(dest.getGoodsId(), dest.getUsGoodsName());
+            
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0){
+            throw new MilkTeaException(MilkTeaErrorConstant.US_GOODS_NAME_EXISTS);
+        }
+        
         //先修改商品主信息
         try {
             this.goodsInfoMapper.updateByPrimaryKey(dest);
@@ -540,6 +566,8 @@ public class GoodsServiceImpl implements GoodsService {
                 logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
                 throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
             }
+        }else {
+            throw new MilkTeaException(MilkTeaErrorConstant.LACK_OF_STOCK);
         }
         
     }
