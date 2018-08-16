@@ -107,14 +107,18 @@ public class StoreServiceImpl implements StoreService {
             throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_EXISTS);
         }
         
+        Long count = null;
+        
         try {
-            Long count = this.storeInfoMapper.countByStoreUserName(storeInfo.getStoreUserName());
-            if(count > 0){
-                throw new MilkTeaException(MilkTeaErrorConstant.STORE_USER_NAME_EXISTS);
-            }
+            count = this.storeInfoMapper.countByStoreUserName(storeInfo.getStoreUserName());
+            
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_USER_NAME_EXISTS);
         }
         
         String storeNo = "";

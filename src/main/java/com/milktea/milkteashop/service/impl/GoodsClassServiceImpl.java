@@ -53,14 +53,16 @@ public class GoodsClassServiceImpl implements GoodsClassService {
             throw new MilkTeaException(MilkTeaErrorConstant.INDEX_NO_REQUIRED);
         }
         
+        Long count = null;
         try {
-            Long count = this.classInfoMapper.countByIndexNo(classInfo.getIndexNo());
-            if(count > 0){
-                throw new MilkTeaException(MilkTeaErrorConstant.INDEX_NO_EXISTS);
-            }
+            count = this.classInfoMapper.countByIndexNo(classInfo.getIndexNo());
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0){
+            throw new MilkTeaException(MilkTeaErrorConstant.INDEX_NO_EXISTS);
         }
         
         
