@@ -49,6 +49,21 @@ public class GoodsClassServiceImpl implements GoodsClassService {
             throw new MilkTeaException(MilkTeaErrorConstant.CLASS_TYPE_REQUIRED);
         }
         
+        if(classInfo.getIndexNo() == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.INDEX_NO_REQUIRED);
+        }
+        
+        try {
+            Long count = this.classInfoMapper.countByIndexNo(classInfo.getIndexNo());
+            if(count > 0){
+                throw new MilkTeaException(MilkTeaErrorConstant.INDEX_NO_EXISTS);
+            }
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        
         try {
             classInfo.setClassId(this.classInfoMapper.generateClassId());
             this.classInfoMapper.insertSelective(classInfo);
@@ -130,8 +145,15 @@ public class GoodsClassServiceImpl implements GoodsClassService {
 
     @Override
     public TeaClassInfo queryClassInfo(String classId) throws MilkTeaException {
-        // TODO Auto-generated method stub
-        return null;
+
+        TeaClassInfo classInfo = null;
+        try {
+            classInfo = this.classInfoMapper.selectByPrimaryKey(classId);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        return classInfo;
     }
 
 }

@@ -109,6 +109,12 @@ public enum MilkTeaErrorConstant {
     
     ORDER_STATUS_REQUIRED("00050", "订单状态不能为空", "Order status required"),
     
+    INDEX_NO_REQUIRED("00051", "顺序不能为空", "Index no required"),
+    
+    STORE_USER_NAME_EXISTS("00052", "店铺用户名已存在", "Store user name already exists"),
+    
+    INDEX_NO_EXISTS("00053", "顺序已存在", "Index no already exists"),
+    
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
     final String errorCode;

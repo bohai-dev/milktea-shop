@@ -28,4 +28,7 @@ public interface TeaClassInfoMapper {
     
     @Select(value="select TEA_CLASS_ID_SEQ.NEXTVAL from dual")
     String generateClassId();
+    
+    @Select(value="select count(1) from TEA_CLASS_INFO where INDEX_NO = #{indexNo}")
+    Long countByIndexNo(Short indexNo);
 }

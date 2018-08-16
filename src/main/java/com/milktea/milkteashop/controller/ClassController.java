@@ -51,4 +51,10 @@ public class ClassController {
         return responseBody;
     }
 
+    @RequestMapping(value="queryClassInfo/{classId}", method=RequestMethod.GET)
+    public ResponseBody<TeaClassInfo> queryClassInfo(@PathVariable String classId) throws MilkTeaException{
+        ResponseBody<TeaClassInfo> responseBody = new ResponseBody<>();
+        responseBody.setData(this.classService.queryClassInfo(classId));
+        return responseBody;
+    }
 }

@@ -39,4 +39,7 @@ public interface TeaStoreInfoMapper {
     
     @Update(value="update TEA_STORE_INFO set IS_DEFAULT = '0' where STORE_NO != #{storeNo} and DELETE_FLAG = '0'")
     int updateDefaultByStoreNo(String storeNo);
+    
+    @Select(value="select count(1) from TEA_STORE_INFO where STORE_USER_NAME = #{userName}")
+    Long countByStoreUserName(String userName);
 }
