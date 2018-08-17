@@ -80,7 +80,7 @@ public class GoodsServiceImpl implements GoodsService {
         
         TeaGoodsInfo info = null;
         try {
-            info = this.goodsInfoMapper.selectByCnName(infoVo.getCnGoodsName());
+            info = this.goodsInfoMapper.selectByCnName(infoVo.getCnGoodsName(),infoVo.getStoreNo());
             
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
@@ -92,7 +92,7 @@ public class GoodsServiceImpl implements GoodsService {
         }
         
         try {
-            info = this.goodsInfoMapper.selectByUsName(infoVo.getUsGoodsName());
+            info = this.goodsInfoMapper.selectByUsName(infoVo.getUsGoodsName(),infoVo.getStoreNo());
             
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
@@ -197,7 +197,7 @@ public class GoodsServiceImpl implements GoodsService {
         //交易商品名称
         Long count = null;
         try {
-            count = this.goodsInfoMapper.countOthersByCnName(dest.getGoodsId(), dest.getCnGoodsName());
+            count = this.goodsInfoMapper.countOthersByCnName(dest.getGoodsId(), dest.getCnGoodsName(),infoVo.getStoreNo());
             
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
@@ -209,7 +209,7 @@ public class GoodsServiceImpl implements GoodsService {
         }
         
         try {
-            count = this.goodsInfoMapper.countOthersByUsName(dest.getGoodsId(), dest.getUsGoodsName());
+            count = this.goodsInfoMapper.countOthersByUsName(dest.getGoodsId(), dest.getUsGoodsName(),infoVo.getStoreNo());
             
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);

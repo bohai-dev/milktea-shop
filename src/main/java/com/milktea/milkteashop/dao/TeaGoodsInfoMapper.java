@@ -29,11 +29,11 @@ public interface TeaGoodsInfoMapper {
     
     List<TeaGoodsInfo> selectByCondition(TeaGoodsInfo goodsInfo);
     
-    @Select(value="select * from TEA_GOODS_INFO where DELETE_FLAG = '0' and CN_GOODS_NAME = #{goodsName}")
-    TeaGoodsInfo selectByCnName(String goodsName);
+    @Select(value="select * from TEA_GOODS_INFO where DELETE_FLAG = '0' and CN_GOODS_NAME = #{goodsName} and STORE_NO = #{storeNo}")
+    TeaGoodsInfo selectByCnName(@Param("goodsName") String goodsName, @Param("storeNo") String storeNo);
     
-    @Select(value="select * from TEA_GOODS_INFO where DELETE_FLAG = '0' and US_GOODS_NAME = #{goodsName}")
-    TeaGoodsInfo selectByUsName(String goodsName);
+    @Select(value="select * from TEA_GOODS_INFO where DELETE_FLAG = '0' and US_GOODS_NAME = #{goodsName} and STORE_NO = #{storeNo}")
+    TeaGoodsInfo selectByUsName(@Param("goodsName") String goodsName, @Param("storeNo") String storeNo);
     
     @Select(value="select TEA_GOODS_ID_SEQ.NEXTVAL from dual")
     String generateGoodsId();
@@ -41,9 +41,9 @@ public interface TeaGoodsInfoMapper {
     @Update(value="update TEA_GOODS_INFO set GOODS_STOCK = GOODS_STOCK - #{volume} where GOODS_ID = #{goodsId}")
     int updateStockByGoodsId(@Param("goodsId") String goodsId,@Param("volume") BigDecimal volume);
     
-    @Select(value="select count(1) from TEA_GOODS_INFO where DELETE_FLAG = '0' and CN_GOODS_NAME = #{goodsName} and GOODS_ID != #{goodsId}")
-    Long countOthersByCnName(@Param("goodsId") String goodsId,@Param("goodsName") String goodsName);
+    @Select(value="select count(1) from TEA_GOODS_INFO where DELETE_FLAG = '0' and CN_GOODS_NAME = #{goodsName} and GOODS_ID != #{goodsId} and STORE_NO = #{storeNo}")
+    Long countOthersByCnName(@Param("goodsId") String goodsId,@Param("goodsName") String goodsName, @Param("storeNo") String storeNo);
     
-    @Select(value="select count(1) from TEA_GOODS_INFO where DELETE_FLAG = '0' and US_GOODS_NAME = #{goodsName} and GOODS_ID != #{goodsId}")
-    Long countOthersByUsName(@Param("goodsId") String goodsId,@Param("goodsName") String goodsName);
+    @Select(value="select count(1) from TEA_GOODS_INFO where DELETE_FLAG = '0' and US_GOODS_NAME = #{goodsName} and GOODS_ID != #{goodsId} and STORE_NO = #{storeNo}")
+    Long countOthersByUsName(@Param("goodsId") String goodsId,@Param("goodsName") String goodsName, @Param("storeNo") String storeNo);
 }
