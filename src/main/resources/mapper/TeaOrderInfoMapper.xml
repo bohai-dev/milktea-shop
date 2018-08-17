@@ -287,10 +287,10 @@
             and PAY_STATUS = #{payStatus,jdbcType=CHAR}
         </if>
         <if test="beginDate != null">
-            and ORDER_TIME <![CDATA[ >= ]]> beginDate
+            and ORDER_TIME <![CDATA[ >= ]]> #{beginDate,jdbcType=TIMESTAMP}
         </if>
         <if test="endDate != null">
-            and ORDER_TIME <![CDATA[ <= ]]> endDate
+            and ORDER_TIME <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP}
         </if>
     </where>
     order by ORDER_TIME desc
