@@ -90,13 +90,14 @@ public class WebsocketHandler extends TextWebSocketHandler {
             if (shopId.equals(saveShopId)){
 
             	LOGGER.info("发送消息："+message);
-                try {
-                    session.sendMessage(new TextMessage(message));
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                if(session.isOpen()){
+                    try {
+                        session.sendMessage(new TextMessage(message));
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
-
             }
             
         }
