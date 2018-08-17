@@ -58,7 +58,7 @@ public class PromotionController {
     }
     
     @RequestMapping(value="queryPromotionById/{promotionId}", method=RequestMethod.GET)
-    public ResponseBody<PromotionVo> queryPromotionById(String promotionId) throws MilkTeaException{
+    public ResponseBody<PromotionVo> queryPromotionById(@PathVariable String promotionId) throws MilkTeaException{
         ResponseBody<PromotionVo> responseBody = new ResponseBody<>();
         responseBody.setData(this.promotionService.queryPromotionById(promotionId));
         return responseBody;
