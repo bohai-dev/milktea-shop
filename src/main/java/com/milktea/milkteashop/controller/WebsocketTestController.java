@@ -19,11 +19,7 @@ public class WebsocketTestController {
     @RequestMapping("/sendsocket")
     public void sendMessage(){
         LOGGER.info("接收到请求");
-        try {
             websocketHandler.sendMessage("30","新消息");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 }

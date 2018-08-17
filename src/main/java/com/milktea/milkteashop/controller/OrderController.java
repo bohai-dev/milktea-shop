@@ -88,7 +88,7 @@ public class OrderController {
             nationVo.setMessageType("1");
             try {
                 websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION,e);
             }
         }
@@ -119,7 +119,7 @@ public class OrderController {
             }
             try {
                 websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION,e);
             }
         }

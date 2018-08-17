@@ -82,14 +82,21 @@ public class WebsocketHandler extends TextWebSocketHandler {
      * @param message 发送数据，可定义为一个类
      * @throws IOException
      */
-    public  void sendMessage(String shopId,String message) throws IOException{
+    public  void sendMessage(String shopId,String message){
         //群发消息
         for(Map<String,Object> item: webSocketList){
             String  saveShopId=(String) item.get("shopId");
             WebSocketSession session=(WebSocketSession) item.get("session");
             if (shopId.equals(saveShopId)){
+
             	LOGGER.info("发送消息："+message);
-                session.sendMessage(new TextMessage(message));
+                try {
+                    session.sendMessage(new TextMessage(message));
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             }
             
         }
