@@ -24,8 +24,7 @@ public interface TeaPromotionInfoMapper {
     @Update(value="update TEA_PROMOTION_INFO set DELETE_FLAG = '1' where PROMOTION_ID = #{promotionId}")
     int logicalDeleteByPrimaryKey(String promotionId);
     
-    @Select(value="select * from TEA_PROMOTION_INFO where DELETE_FLAG = '0'")
-    List<TeaPromotionInfo> selectAll();
+    List<TeaPromotionInfo> selectByCondition(TeaPromotionInfo record);
     
     @Select(value="select * from TEA_PROMOTION_INFO where DELETE_FLAG = '0' "
             + "and STORE_NOS like '%'|| #{storeNo} ||'%'"

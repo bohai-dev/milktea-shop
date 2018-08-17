@@ -138,11 +138,11 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public List<PromotionVo> queryPromotions() throws MilkTeaException {
+    public List<PromotionVo> queryPromotions(TeaPromotionInfo request) throws MilkTeaException {
 
         List<TeaPromotionInfo> list = null;
         try {
-            list = this.promotionInfoMapper.selectAll();
+            list = this.promotionInfoMapper.selectByCondition(request);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
@@ -302,6 +302,40 @@ public class PromotionServiceImpl implements PromotionService {
         }
         
         return list2;
+    }
+
+    @Override
+    public PromotionVo queryPromotionById(String promotionId) throws MilkTeaException {
+        if(StringUtils.isBlank(promotionId)){
+            throw new MilkTeaException(MilkTeaErrorConstant.PROMOTION_ID_REQUIRED);
+        }
+        
+        TeaPromotionInfo info = null;
+        try {
+            info = this.promotionInfoMapper.selectByPrimaryKey(promotionId);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        PromotionVo vo = null;
+        if(info != null){
+                vo = new PromotionVo();
+                try {
+                    BeanUtils.copyProperties(info, vo);
+                } catch (Exception e) {
+                    logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+                    throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+                }
+                
+                if(StringUtils.isNotBlank(info.getStoreNos())){
+                    String[] s = info.getStoreNos().split(",");
+                    List<String> storeList = java.util.Arrays.asList(s);
+                    vo.setStoreNos(storeList);
+                }
+        }
+        
+        return vo;
     }
 
 }

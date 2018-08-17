@@ -2,6 +2,7 @@ package com.milktea.milkteashop.service;
 
 import java.util.List;
 
+import com.milktea.milkteashop.domain.TeaPromotionInfo;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.vo.PromotionNationVo;
 import com.milktea.milkteashop.vo.PromotionVo;
@@ -40,7 +41,15 @@ public interface PromotionService {
      * @return
      * @throws MilkTeaException
      */
-    public List<PromotionVo> queryPromotions() throws MilkTeaException;
+    public List<PromotionVo> queryPromotions(TeaPromotionInfo info) throws MilkTeaException;
+    
+    /**
+     * 根据ID查询活动详情
+     * @param promotionId
+     * @return
+     * @throws MilkTeaException
+     */
+    public PromotionVo queryPromotionById(String promotionId) throws MilkTeaException;
     
     /**
      * 查询有效活动信息

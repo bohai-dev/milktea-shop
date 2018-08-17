@@ -163,4 +163,19 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where PROMOTION_ID = #{promotionId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectByCondition" parameterType="com.milktea.milkteashop.domain.TeaPromotionInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_PROMOTION_INFO 
+    <where>
+        DELETE_FLAG = '0'
+        <if test="storeNos != null">
+            and STORE_NOS like '%'|| #{storeNos,jdbcType=VARCHAR} ||'%'
+        </if>
+        <if test="cnPromotionName != null">
+            and CN_PROMOTION_NAME like '%'|| #{cnPromotionName,jdbcType=VARCHAR}||'%'
+        </if>
+    </where>
+  </select>
 </mapper>

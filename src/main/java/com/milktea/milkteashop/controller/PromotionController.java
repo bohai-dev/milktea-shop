@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.milktea.milkteashop.domain.TeaPromotionInfo;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.PromotionService;
 import com.milktea.milkteashop.vo.PromotionNationVo;
@@ -50,9 +51,16 @@ public class PromotionController {
     }
     
     @RequestMapping(value="queryPromotion", method=RequestMethod.POST)
-    public ResponseBody<List<PromotionVo>> queryPromotion(@RequestBody(required=false) PromotionVo promotionVo) throws MilkTeaException{
+    public ResponseBody<List<PromotionVo>> queryPromotion(@RequestBody(required=false) TeaPromotionInfo requesst) throws MilkTeaException{
         ResponseBody<List<PromotionVo>> responseBody = new ResponseBody<>();
-        responseBody.setData(this.promotionService.queryPromotions());
+        responseBody.setData(this.promotionService.queryPromotions(requesst));
+        return responseBody;
+    }
+    
+    @RequestMapping(value="queryPromotionById/{promotionId}", method=RequestMethod.GET)
+    public ResponseBody<PromotionVo> queryPromotionById(String promotionId) throws MilkTeaException{
+        ResponseBody<PromotionVo> responseBody = new ResponseBody<>();
+        responseBody.setData(this.promotionService.queryPromotionById(promotionId));
         return responseBody;
     }
     
