@@ -2,6 +2,8 @@ package com.milktea.milkteashop.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class QueryOrdersRequestVo {
     
     private String userNo;
@@ -25,8 +27,10 @@ public class QueryOrdersRequestVo {
     //支付状态 0:待支付 1:支付成功 2:支付失败
     private String payStatus;
     
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date beginDate;
     
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDate;
 
     public String getPromotionId() {
