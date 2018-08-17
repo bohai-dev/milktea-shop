@@ -71,7 +71,13 @@ public class WebsocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
-        webSocketList.remove(this);  //从set中删除
+        webSocketList.forEach(item->{
+            WebSocketSession saveSession=(WebSocketSession) item.get("session");
+              if (session.equals(saveSession)){
+                  webSocketList.remove(item);  //从set中删除
+              }
+
+        });
         int onlineSum=onlineCount.decrementAndGet();//在线数减1
         LOGGER.info("有1连接关闭！当前在线店铺数为：" + onlineSum);
 
