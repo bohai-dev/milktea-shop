@@ -88,6 +88,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
             String  saveShopId=(String) item.get("shopId");
             WebSocketSession session=(WebSocketSession) item.get("session");
             if (shopId.equals(saveShopId)){
+            	LOGGER.info("发送消息："+message);
                 session.sendMessage(new TextMessage(message));
             }
             
