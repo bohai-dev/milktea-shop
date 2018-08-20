@@ -472,4 +472,89 @@ public class OrderServiceImpl implements OrderService {
         
     }
 
+    @Override
+    public List<OrderNationVo> queryDueOrder(QueryOrdersRequestVo requestVo) throws MilkTeaException {
+        
+        if(requestVo == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        List<OrderNationVo> resultList = null;
+        List<TeaOrderInfo> orderInfos = null;
+        try {
+            orderInfos = this.orderInfoMapper.selectDueOrder(requestVo);
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(orderInfos != null && orderInfos.size() > 0){
+            resultList = new ArrayList<>();
+            for (TeaOrderInfo info : orderInfos) {
+                OrderNationVo target = new OrderNationVo();
+                BeanUtils.copyProperties(info, target);
+                
+                //查询订单详情
+                List<TeaOrderDetails> orderDetails = null;
+                try {
+                    orderDetails = this.orderDetailsMapper.selectByOrderNo(info.getOrderNo());
+                } catch (Exception e) {
+                    logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                    throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+                }
+                
+                List<OrderDetailsNationVo> nationVos = null;
+                if(orderDetails != null && orderDetails.size() > 0){
+                    nationVos = new ArrayList<>();
+                    for (TeaOrderDetails details : orderDetails) {
+                        OrderDetailsNationVo detailTarget = new OrderDetailsNationVo();
+                        BeanUtils.copyProperties(details, detailTarget);
+                        
+                        //查询商品名称及图片
+                        TeaGoodsInfo goodsInfo = null;
+                        try {
+                            goodsInfo = this.goodsInfoMapper.selectByGoodsId(details.getGoodsId());
+                        } catch (Exception e) {
+                            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+                        }
+                        if(goodsInfo != null){
+                            detailTarget.setGoodsName(goodsInfo.getCnGoodsName());
+                            detailTarget.setGoodsPictureBig(goodsInfo.getCnGoodsPictureBig());
+                        }
+                        
+                        //查询所购买商品的属性
+                        List<TeaAttributesInfoNationVo> attrsVos = null;
+                        List<TeaAttributesInfo> attributesInfos = null;
+                        try {
+                            attributesInfos = this.attributesInfoMapper.selectByOrderDetailId(details.getOrderDetailId());
+                        } catch (Exception e) { 
+                            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+                            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+                        }
+                        
+                        if(attributesInfos != null && attributesInfos.size() > 0){
+                            attrsVos = new ArrayList<>();
+                            for (TeaAttributesInfo teaAttributesInfo : attributesInfos) {
+                                TeaAttributesInfoNationVo attrTarget = new TeaAttributesInfoNationVo();
+                                BeanUtils.copyProperties(teaAttributesInfo, attrTarget);
+                                attrTarget.setAttrName(teaAttributesInfo.getCnAttrName());
+                                attrsVos.add(attrTarget);
+                            }
+                        }
+                        
+                        detailTarget.setAttrs(attrsVos);
+                        nationVos.add(detailTarget);
+                    }
+                    
+                }
+                target.setOrderDetails(nationVos);
+                resultList.add(target);
+            }
+            
+        }
+        
+        return resultList;
+    }
+
 }

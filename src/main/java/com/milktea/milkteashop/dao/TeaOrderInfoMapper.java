@@ -2,9 +2,11 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.milktea.milkteashop.domain.TeaOrderInfo;
 import com.milktea.milkteashop.vo.QueryOrdersRequestVo;
-
+@Mapper
 public interface TeaOrderInfoMapper {
     int deleteByPrimaryKey(String orderNo);
 
@@ -22,4 +24,5 @@ public interface TeaOrderInfoMapper {
     
     List<TeaOrderInfo> selectNotFinish(QueryOrdersRequestVo requestVo);
     
+    List<TeaOrderInfo> selectDueOrder(QueryOrdersRequestVo requestVo);
 }

@@ -1,7 +1,9 @@
 package com.milktea.milkteashop.dao;
 
-import com.milktea.milkteashop.domain.TeaOrderDetailsAttr;
+import org.apache.ibatis.annotations.Mapper;
 
+import com.milktea.milkteashop.domain.TeaOrderDetailsAttr;
+@Mapper
 public interface TeaOrderDetailsAttrMapper {
     int insert(TeaOrderDetailsAttr record);
 

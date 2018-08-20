@@ -159,7 +159,6 @@
       END_TIME = #{endTime,jdbcType=TIMESTAMP},
       PROMOTION_STATUS = #{promotionStatus,jdbcType=CHAR},
       STORE_NOS = #{storeNos,jdbcType=VARCHAR},
-      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where PROMOTION_ID = #{promotionId,jdbcType=VARCHAR}
   </update>

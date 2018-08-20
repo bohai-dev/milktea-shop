@@ -4,7 +4,6 @@ import com.milktea.milkteashop.domain.TeaAdmin;
 import com.milktea.milkteashop.vo.UserLoginRequestVo;
 
 import org.apache.ibatis.annotations.Mapper;
-
 @Mapper
 public interface TeaAdminMapper {
     int insert(TeaAdmin record);

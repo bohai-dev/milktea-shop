@@ -2,12 +2,13 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteashop.domain.TeaPromotionInfo;
-
+@Mapper
 public interface TeaPromotionInfoMapper {
     int deleteByPrimaryKey(String promotionId);
 

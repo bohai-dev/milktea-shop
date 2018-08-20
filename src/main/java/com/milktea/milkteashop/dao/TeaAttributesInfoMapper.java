@@ -2,11 +2,13 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteashop.domain.TeaAttributesInfo;
+@Mapper
 public interface TeaAttributesInfoMapper {
     int deleteByPrimaryKey(String attrId);
 

@@ -2,10 +2,11 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.milktea.milkteashop.domain.TeaOrderDetails;
-
+@Mapper
 public interface TeaOrderDetailsMapper {
     int deleteByPrimaryKey(String orderDetailId);
 

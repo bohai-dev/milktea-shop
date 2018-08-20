@@ -335,4 +335,39 @@
     </where>
     order by ORDER_TIME
   </select>
+  
+  <!-- 查询即将超时的预约单 -->
+  <select id="selectDueOrder" parameterType="com.milktea.milkteashop.vo.QueryOrdersRequestVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_ORDER_INFO
+    <where>
+        <if test="userNo != null">
+            USER_NO = #{userNo,jdbcType=VARCHAR}
+        </if>
+        <if test="orderNo != null">
+            and ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+        </if>
+        <if test="storeNo != null">
+            and STORE_NO = #{storeNo,jdbcType=VARCHAR}
+        </if>
+        <if test="promotionId != null">
+            and PROMOTION_ID = #{promotionId,jdbcType=VARCHAR}
+        </if>
+        <if test="telephone">
+            and TELEPHONE = #{telephone,jdbcType=VARCHAR}
+        </if>
+        <if test="orderType != null">
+            and ORDER_TYPE = #{orderType,jdbcType=CHAR}
+        </if>
+        <if test="orderStatus != null">
+            and ORDER_STATUS = #{orderStatus,jdbcType=CHAR}
+        </if>
+        <if test="payStatus != null">
+            and PAY_STATUS = #{payStatus,jdbcType=CHAR}
+        </if>
+        and ORDER_TIME - sysdate <![CDATA[ <= ]]> 1/48
+    </where>
+    order by ORDER_TIME
+  </select>
 </mapper>

@@ -2,8 +2,10 @@ package com.milktea.milkteashop.dao;
 
 import java.util.List;
 
-import com.milktea.milkteashop.domain.TeaUserInfo;import com.milktea.milkteashop.exception.MilkTeaException;
+import org.apache.ibatis.annotations.Mapper;
 
+import com.milktea.milkteashop.domain.TeaUserInfo;import com.milktea.milkteashop.exception.MilkTeaException;
+@Mapper
 public interface TeaUserInfoMapper {
     int deleteByPrimaryKey(String userNo);
 

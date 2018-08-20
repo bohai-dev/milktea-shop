@@ -3,12 +3,13 @@ package com.milktea.milkteashop.dao;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteashop.domain.TeaGoodsInfo;
-
+@Mapper
 public interface TeaGoodsInfoMapper {
     int deleteByPrimaryKey(String goodsId);
     

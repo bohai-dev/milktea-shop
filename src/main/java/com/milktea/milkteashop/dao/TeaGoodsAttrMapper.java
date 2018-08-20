@@ -1,10 +1,11 @@
 package com.milktea.milkteashop.dao;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.milktea.milkteashop.domain.TeaGoodsAttr;
 import com.milktea.milkteashop.domain.TeaGoodsAttrKey;
-
+@Mapper
 public interface TeaGoodsAttrMapper {
     int deleteByPrimaryKey(TeaGoodsAttrKey key);
     
