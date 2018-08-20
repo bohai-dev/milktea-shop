@@ -20,4 +20,6 @@ public interface TeaOrderInfoMapper {
     
     List<TeaOrderInfo> selectByCondition(QueryOrdersRequestVo requestVo);
     
+    List<TeaOrderInfo> selectNotFinish(QueryOrdersRequestVo requestVo);
+    
 }

@@ -58,6 +58,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
         
         QueryOrdersRequestVo requestVo = new QueryOrdersRequestVo();
         requestVo.setStoreNo(shopId);
+        requestVo.setPayStatus("1");
         List<OrderNationVo> list = this.orderService.queryOrder(requestVo);
         if(list != null && list.size() > 0){
             for (OrderNationVo orderNationVo : list) {

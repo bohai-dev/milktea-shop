@@ -359,10 +359,14 @@ public class OrderServiceImpl implements OrderService {
             throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
         }
         
+        if(StringUtils.isBlank(requestVo.getStoreNo())){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_NO_REQUIRED);
+        }
+        
         List<OrderNationVo> resultList = null;
         List<TeaOrderInfo> orderInfos = null;
         try {
-            orderInfos = this.orderInfoMapper.selectByCondition(requestVo);
+            orderInfos = this.orderInfoMapper.selectNotFinish(requestVo);
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
