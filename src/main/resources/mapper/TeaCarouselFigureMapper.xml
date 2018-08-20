@@ -135,6 +135,9 @@
         <if test="storeNo != null">
             STORE_NO = #{storeNo,jdbcType=VARCHAR}
         </if>
+        <if test="figureId != null">
+            and FIGURE_ID = #{figureId,jdbcType=VARCHAR}
+        </if>
     </where>
   </select>
 </mapper>
