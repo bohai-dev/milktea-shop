@@ -63,7 +63,15 @@ public class WebsocketHandler extends TextWebSocketHandler {
         if(list != null && list.size() > 0){
             for (OrderNationVo orderNationVo : list) {
                 orderNationVo.setMessageType("0");
-                this.sendMessage(shopId, JSON.toJSONString(orderNationVo));
+                if(session.isOpen()){
+                    try {
+                        session.sendMessage(new TextMessage(JSON.toJSONString(orderNationVo)));
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                //this.sendMessage(shopId, JSON.toJSONString(orderNationVo));
             }
         }
         //session.sendMessage(new TextMessage("我收到你发的消息了"));
