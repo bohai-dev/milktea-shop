@@ -4,9 +4,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-/*@Configuration
+@Configuration
 @EnableScheduling
-@ComponentScan("com.milktea.milkteashop.job")*/
+@ComponentScan("com.milktea.milkteashop")
 public class SchedulingConfig {
 
 }
