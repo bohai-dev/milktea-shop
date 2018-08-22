@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
-@ComponentScan("com.milktea.milkteashop")
+@ComponentScan("com.milktea.milkteashop.job")
 public class SchedulingConfig {
 
 }
