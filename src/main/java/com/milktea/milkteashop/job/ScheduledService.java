@@ -33,6 +33,7 @@ public class ScheduledService {
         QueryOrdersRequestVo requestVo = new QueryOrdersRequestVo();
         requestVo.setOrderType("0");
         requestVo.setPayStatus("1");
+        requestVo.setOrderStatus("0");
         List<OrderNationVo> list = null;
         try {
             list = this.orderService.queryDueOrder(requestVo);

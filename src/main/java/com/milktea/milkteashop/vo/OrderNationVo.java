@@ -47,7 +47,7 @@ public class OrderNationVo extends MessageType{
     private String orderType;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JSONField (format="yyyy-MM-dd HH:mm:ss")  
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
     private Date makeFinishTime;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
