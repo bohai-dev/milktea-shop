@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
@@ -36,6 +37,7 @@ public class OrderNationVo extends MessageType{
     private String takeNo;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")  
     private Date orderTime;
 
     private String orderStatus;
@@ -45,9 +47,11 @@ public class OrderNationVo extends MessageType{
     private String orderType;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")  
     private Date makeFinishTime;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")  
     private Date bookTime;
 
     List<OrderDetailsNationVo> orderDetails;
