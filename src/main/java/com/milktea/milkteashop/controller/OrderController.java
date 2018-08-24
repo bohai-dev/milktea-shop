@@ -112,6 +112,9 @@ public class OrderController {
             }else if ("2".equals(nationVo.getOrderStatus())) {
                 //取货完成，完成订单推送
                 nationVo.setMessageType("3");
+            }else if ("4".equals(nationVo.getOrderStatus())) {
+                //撤单
+                nationVo.setMessageType("5");
             }
             try {
                 websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo,SerializerFeature.WriteMapNullValue));
