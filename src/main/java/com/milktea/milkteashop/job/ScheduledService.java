@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.OrderService;
 import com.milktea.milkteashop.vo.OrderNationVo;
@@ -46,7 +47,7 @@ public class ScheduledService {
         }
         for (OrderNationVo orderNationVo : list) {
             orderNationVo.setMessageType("4");
-            websocketHandler.sendMessage(orderNationVo.getStoreNo(), JSON.toJSONString(orderNationVo));
+            websocketHandler.sendMessage(orderNationVo.getStoreNo(), JSON.toJSONString(orderNationVo,SerializerFeature.WriteMapNullValue));
         }
         log.info("=====>>>>>使用cron  {}{}",System.currentTimeMillis(),"每隔一分钟执行");
     }

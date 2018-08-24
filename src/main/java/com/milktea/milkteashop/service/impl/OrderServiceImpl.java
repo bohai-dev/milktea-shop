@@ -54,23 +54,39 @@ public class OrderServiceImpl implements OrderService {
     WebsocketHandler websocketHandler;
 
     @Override
-    public List<OrderNationVo> queryOrdersByUserNo(QueryOrdersRequestVo requestVo) throws MilkTeaException {
+    public PageResponseVo<OrderNationVo> queryOrdersByUserNo(PageRequestVo<QueryOrdersRequestVo> requestVo) throws MilkTeaException {
         
         if(requestVo == null){
             throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
         }
         
-        if(StringUtils.isBlank(requestVo.getUserNo())){
+        if(requestVo.getPageSize() == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PAGE_SIZE_REQUIRED);
+        }
+        
+        if(requestVo.getPageNumber() == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PAGE_NUMBER_REQUIRED);
+        }
+        
+        if(requestVo.getParams() == null){
+            throw new MilkTeaException(MilkTeaErrorConstant.PARAMETER_REQUIRED);
+        }
+        
+        if(StringUtils.isBlank(requestVo.getParams().getUserNo())){
             throw new MilkTeaException(MilkTeaErrorConstant.USER_NO_REQUIRED);
         }
         
-        if(StringUtils.isBlank(requestVo.getLang())){
+        if(StringUtils.isBlank(requestVo.getParams().getLang())){
             throw new MilkTeaException(MilkTeaErrorConstant.LANG_REQUIRED);
         }
         
+        PageResponseVo<OrderNationVo> pageResponseVo = new PageResponseVo<>();
         List<TeaOrderInfo> orderInfos = null;
         try {
-            orderInfos = this.orderInfoMapper.selectByCondition(requestVo);
+            PageHelper.startPage(requestVo.getPageNumber(), requestVo.getPageSize());
+            orderInfos = this.orderInfoMapper.selectByCondition(requestVo.getParams());
+            Page<TeaOrderInfo> page = (Page<TeaOrderInfo>)orderInfos;
+            pageResponseVo.setTotal(page.getTotal());
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
@@ -108,10 +124,10 @@ public class OrderServiceImpl implements OrderService {
                             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
                         }
                         if(goodsInfo != null){
-                            if(requestVo.getLang().equals("zh")){
+                            if(requestVo.getParams().getLang().equals("zh")){
                                 detailTarget.setGoodsName(goodsInfo.getCnGoodsName());
                                 detailTarget.setGoodsPictureBig(goodsInfo.getCnGoodsPictureBig());
-                            }else if(requestVo.getLang().equals("en")){
+                            }else if(requestVo.getParams().getLang().equals("en")){
                                 detailTarget.setGoodsName(goodsInfo.getUsGoodsName());
                                 detailTarget.setGoodsPictureBig(goodsInfo.getUsGoodsPictureBig());
                             }
@@ -132,9 +148,9 @@ public class OrderServiceImpl implements OrderService {
                             for (TeaAttributesInfo teaAttributesInfo : attributesInfos) {
                                 TeaAttributesInfoNationVo attrTarget = new TeaAttributesInfoNationVo();
                                 BeanUtils.copyProperties(teaAttributesInfo, attrTarget);
-                                if(requestVo.getLang().equals("zh")){
+                                if(requestVo.getParams().getLang().equals("zh")){
                                     attrTarget.setAttrName(teaAttributesInfo.getCnAttrName());
-                                }else if(requestVo.getLang().equals("en")){
+                                }else if(requestVo.getParams().getLang().equals("en")){
                                     attrTarget.setAttrName(teaAttributesInfo.getUsAttrName());
                                 }
                                 attrsVos.add(attrTarget);
@@ -151,8 +167,8 @@ public class OrderServiceImpl implements OrderService {
             }
             
         }
-        
-        return result;
+        pageResponseVo.setRows(result);
+        return pageResponseVo;
     }
 
     @Override

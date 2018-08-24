@@ -17,7 +17,7 @@ public interface OrderService {
      * @return
      * @throws MilkTeaException
      */
-    public List<OrderNationVo> queryOrdersByUserNo(QueryOrdersRequestVo requestVo) throws MilkTeaException;
+    public PageResponseVo<OrderNationVo> queryOrdersByUserNo(PageRequestVo<QueryOrdersRequestVo> requestVo) throws MilkTeaException;
     
     /**
      * 根据订单编号查询订单详情(支持国际化)

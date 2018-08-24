@@ -1,8 +1,5 @@
 package com.milktea.milkteashop.controller;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.milktea.milkteashop.exception.MilkTeaErrorConstant;
 import com.milktea.milkteashop.exception.MilkTeaException;
 import com.milktea.milkteashop.service.OrderService;
@@ -41,11 +39,9 @@ public class OrderController {
      * @throws MilkTeaException
      */
     @RequestMapping(value="queryOrdersByUserNo", method=RequestMethod.POST)
-    public ResponseBody<List<OrderNationVo>> queryOrdersByUserNo(@RequestBody(required=false) QueryOrdersRequestVo requestVo) throws MilkTeaException{
+    public PageResponseVo<OrderNationVo> queryOrdersByUserNo(@RequestBody(required=false) PageRequestVo<QueryOrdersRequestVo> requestVo) throws MilkTeaException{
         
-        ResponseBody<List<OrderNationVo>> responseBody = new ResponseBody<>();
-        responseBody.setData(this.orderService.queryOrdersByUserNo(requestVo));
-        return responseBody;
+        return this.orderService.queryOrdersByUserNo(requestVo);
     }
     
     /**
@@ -87,7 +83,7 @@ public class OrderController {
         if(nationVo != null){
             nationVo.setMessageType("1");
             try {
-                websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo));
+                websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo,SerializerFeature.WriteMapNullValue));
             } catch (Exception e) {
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION,e);
             }
@@ -118,7 +114,7 @@ public class OrderController {
                 nationVo.setMessageType("3");
             }
             try {
-                websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo));
+                websocketHandler.sendMessage(nationVo.getStoreNo(), JSON.toJSONString(nationVo,SerializerFeature.WriteMapNullValue));
             } catch (Exception e) {
                 throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION,e);
             }

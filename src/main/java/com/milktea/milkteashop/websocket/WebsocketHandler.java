@@ -9,6 +9,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.milktea.milkteashop.service.OrderService;
 import com.milktea.milkteashop.vo.OrderNationVo;
 import com.milktea.milkteashop.vo.QueryOrdersRequestVo;
@@ -65,7 +66,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
                 orderNationVo.setMessageType("0");
                 if(session.isOpen()){
                     try {
-                        session.sendMessage(new TextMessage(JSON.toJSONString(orderNationVo)));
+                        session.sendMessage(new TextMessage(JSON.toJSONString(orderNationVo,SerializerFeature.WriteMapNullValue)));
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
