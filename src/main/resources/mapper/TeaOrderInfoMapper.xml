@@ -366,7 +366,7 @@
         <if test="payStatus != null">
             and PAY_STATUS = #{payStatus,jdbcType=CHAR}
         </if>
-        and ORDER_TIME - sysdate <![CDATA[ <= ]]> 1/48
+        and BOOK_TIME - sysdate <![CDATA[ <= ]]> 1/48
     </where>
     order by ORDER_TIME
   </select>
