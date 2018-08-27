@@ -527,7 +527,7 @@ public class GoodsServiceImpl implements GoodsService {
             throw new MilkTeaException(MilkTeaErrorConstant.GOODS_ID_REQUIRED);
         }
         
-        if(requestVo.getVolume() == null || requestVo.getVolume().compareTo(BigDecimal.ZERO) < 1){
+        if(requestVo.getVolume() == null){
             throw new MilkTeaException(MilkTeaErrorConstant.VOLUME_ILLEGAL);
         }
         
