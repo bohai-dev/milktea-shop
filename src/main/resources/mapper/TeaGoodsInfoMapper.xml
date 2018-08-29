@@ -221,6 +221,9 @@
         <if test="cnGoodsName != null">
             and CN_GOODS_NAME like '%'||#{cnGoodsName,jdbcType=VARCHAR}||'%' 
         </if>
+        <if test="goodsStatus != null">
+            and GOODS_STATUS = #{goodsStatus,jdbcType=CHAR}
+        </if>
         <if test="classId != null">
             and exists (select 1 from TEA_GOODS_CLASS 
                         where TEA_GOODS_INFO.GOODS_ID = TEA_GOODS_CLASS.GOODS_ID

@@ -623,6 +623,8 @@ public class GoodsServiceImpl implements GoodsService {
                 TeaGoodsInfo goodsInfo = new TeaGoodsInfo();
                 goodsInfo.setStoreNo(requestVo.getStoreNo());
                 goodsInfo.setClassId(teaClassInfo.getClassId());
+                //只查询在售商品
+                goodsInfo.setGoodsStatus("1");
                 try {
                     goodsList = this.goodsInfoMapper.selectByCondition(goodsInfo);
                 } catch (Exception e) {
