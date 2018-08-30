@@ -177,30 +177,29 @@ public class StoreServiceImpl implements StoreService {
             throw new MilkTeaException(MilkTeaErrorConstant.IS_DEFAULT_REQUIRED);
         }
         
-        TeaStoreInfo info = null;
+        Long count = null;
         try {
-            info = this.storeInfoMapper.selectOtherByCnStoreName(storeInfo.getStoreNo(), storeInfo.getCnStoreName());
+            count = this.storeInfoMapper.countOtherByCnStoreName(storeInfo.getStoreNo(), storeInfo.getCnStoreName());
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
-        if(info != null){
+        if(count > 0){
             logger.warn(MilkTeaErrorConstant.CN_STORE_NAME_EXISTS.getCnErrorMsg());
             throw new MilkTeaException(MilkTeaErrorConstant.CN_STORE_NAME_EXISTS);
         }
         
         try {
-            info = this.storeInfoMapper.selectOtherByUsStoreName(storeInfo.getStoreNo(), storeInfo.getUsStoreName());
+            count = this.storeInfoMapper.countOtherByUsStoreName(storeInfo.getStoreNo(), storeInfo.getUsStoreName());
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
         }
-        if(info != null){
+        if(count > 0){
             logger.warn(MilkTeaErrorConstant.US_STORE_NAME_EXISTS.getCnErrorMsg());
             throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_EXISTS);
         }
         
-        Long count = null;
         
         try {
             count = this.storeInfoMapper.countByStoreUserName(storeInfo.getStoreUserName());

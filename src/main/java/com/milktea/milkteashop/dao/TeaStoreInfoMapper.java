@@ -45,11 +45,11 @@ public interface TeaStoreInfoMapper {
     @Select(value="select count(1) from TEA_STORE_INFO where STORE_USER_NAME = #{userName}")
     Long countByStoreUserName(String userName);
     
-    @Select(value="select * from TEA_STORE_INFO where CN_STORE_NAME = #{storeName} and DELETE_FLAG = '0' and STORE_NO != #{storeNo}")
-    TeaStoreInfo selectOtherByCnStoreName(@Param("storeNo")String storeNo, @Param("storeName")String storeName);
+    @Select(value="select count(1) from TEA_STORE_INFO where CN_STORE_NAME = #{storeName} and DELETE_FLAG = '0' and STORE_NO != #{storeNo}")
+    Long countOtherByCnStoreName(@Param("storeNo")String storeNo, @Param("storeName")String storeName);
     
-    @Select(value="select * from TEA_STORE_INFO where US_STORE_NAME = #{storeName} and DELETE_FLAG = '0' and STORE_NO != #{storeNo}")
-    TeaStoreInfo selectOtherByUsStoreName(@Param("storeNo")String storeNo, String storeName);
+    @Select(value="select count(1) from TEA_STORE_INFO where US_STORE_NAME = #{storeName} and DELETE_FLAG = '0' and STORE_NO != #{storeNo}")
+    Long countOtherByUsStoreName(@Param("storeNo")String storeNo, String storeName);
     
     @Select(value="select count(1) from TEA_STORE_INFO where STORE_USER_NAME = #{userName} and STORE_NO != #{storeNo}")
     Long countOtherByStoreUserName(String userName);
