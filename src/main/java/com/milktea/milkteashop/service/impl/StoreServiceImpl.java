@@ -149,6 +149,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional
     public void modifyStoreInfo(TeaStoreInfo storeInfo) throws MilkTeaException {
         
         
@@ -174,6 +175,43 @@ public class StoreServiceImpl implements StoreService {
         
         if(StringUtils.isBlank(storeInfo.getIsDefault())){
             throw new MilkTeaException(MilkTeaErrorConstant.IS_DEFAULT_REQUIRED);
+        }
+        
+        TeaStoreInfo info = null;
+        try {
+            info = this.storeInfoMapper.selectOtherByCnStoreName(storeInfo.getStoreNo(), storeInfo.getCnStoreName());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        if(info != null){
+            logger.warn(MilkTeaErrorConstant.CN_STORE_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_STORE_NAME_EXISTS);
+        }
+        
+        try {
+            info = this.storeInfoMapper.selectOtherByUsStoreName(storeInfo.getStoreNo(), storeInfo.getUsStoreName());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        if(info != null){
+            logger.warn(MilkTeaErrorConstant.US_STORE_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.US_STORE_NAME_EXISTS);
+        }
+        
+        Long count = null;
+        
+        try {
+            count = this.storeInfoMapper.countByStoreUserName(storeInfo.getStoreUserName());
+            
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0){
+            throw new MilkTeaException(MilkTeaErrorConstant.STORE_USER_NAME_EXISTS);
         }
         
         if(storeInfo.getIsDefault().equals("1")){
