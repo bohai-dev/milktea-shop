@@ -117,6 +117,32 @@ public class AttributeServiceImpl implements AttributeService {
             throw new MilkTeaException(MilkTeaErrorConstant.ATTR_TYPE_REQUIRED);
         }
         
+      //属性名称校验
+        Long count = null;
+        try {
+            count = this.attributesInfoMapper.countOtherByCnAttrName(attributesInfo.getCnAttrName(),attributesInfo.getAttrId());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0 ){
+            logger.warn(MilkTeaErrorConstant.CN_ATTR_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.CN_ATTR_NAME_EXISTS);
+        }
+        
+        try {
+            count = this.attributesInfoMapper.countOtherByUsAttrName(attributesInfo.getUsAttrName(),attributesInfo.getAttrId());
+        } catch (Exception e) {
+            logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
+        }
+        
+        if(count > 0){
+            logger.warn(MilkTeaErrorConstant.US_ATTR_NAME_EXISTS.getCnErrorMsg());
+            throw new MilkTeaException(MilkTeaErrorConstant.US_ATTR_NAME_EXISTS);
+        }
+        
         try {
             this.attributesInfoMapper.updateByPrimaryKey(attributesInfo);
         } catch (Exception e) {

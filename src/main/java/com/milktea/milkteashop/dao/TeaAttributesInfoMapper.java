@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -40,4 +41,10 @@ public interface TeaAttributesInfoMapper {
     int logicDeleteByPrimaryKey(String attrId);
     
     List<TeaAttributesInfo> selectByOrderDetailId(String orderDetailId);
+    
+    @Select(value="select count(1) from TEA_ATTRIBUTES_INFO where CN_ATTR_NAME = #{attrName} and DELETE_FLAG = '0' and ATTR_ID != #{attrId}")
+    Long countOtherByCnAttrName(@Param("attrName")String attrName, @Param("attrId")String attrId);
+    
+    @Select(value="select count(1) from TEA_ATTRIBUTES_INFO where US_ATTR_NAME = #{attrName} and DELETE_FLAG = '0' and ATTR_ID != #{attrId}")
+    Long countOtherByUsAttrName(@Param("attrName")String attrName, @Param("attrId")String attrId);
 }
