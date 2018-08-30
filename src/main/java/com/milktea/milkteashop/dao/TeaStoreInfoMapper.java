@@ -49,8 +49,8 @@ public interface TeaStoreInfoMapper {
     Long countOtherByCnStoreName(@Param("storeNo")String storeNo, @Param("storeName")String storeName);
     
     @Select(value="select count(1) from TEA_STORE_INFO where US_STORE_NAME = #{storeName} and DELETE_FLAG = '0' and STORE_NO != #{storeNo}")
-    Long countOtherByUsStoreName(@Param("storeNo")String storeNo, String storeName);
+    Long countOtherByUsStoreName(@Param("storeNo")String storeNo, @Param("storeName")String storeName);
     
     @Select(value="select count(1) from TEA_STORE_INFO where STORE_USER_NAME = #{userName} and STORE_NO != #{storeNo}")
-    Long countOtherByStoreUserName(String userName);
+    Long countOtherByStoreUserName(@Param("storeNo")String storeNo, @Param("userName")String userName);
 }

@@ -202,7 +202,7 @@ public class StoreServiceImpl implements StoreService {
         
         
         try {
-            count = this.storeInfoMapper.countByStoreUserName(storeInfo.getStoreUserName());
+            count = this.storeInfoMapper.countOtherByStoreUserName(storeInfo.getStoreNo(),storeInfo.getStoreUserName());
             
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
