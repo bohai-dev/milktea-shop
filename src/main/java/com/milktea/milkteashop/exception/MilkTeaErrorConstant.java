@@ -115,6 +115,12 @@ public enum MilkTeaErrorConstant {
     
     INDEX_NO_EXISTS("00053", "顺序已存在", "Index no already exists"),
     
+    TELEPHONE_REQUIRED("00054", "电话号码不能为空", "Telephone required"),
+    
+    NAME_REQUIRED("00055", "姓名不能为空", "Name required"),
+    
+    CONTEXT_REQUIRED("00056", "内容不能为空", "Context required"),
+    
     UNKNOW_EXCEPTION("10000", "程序内部异常" , "Something wrong with program");
     
     final String errorCode;

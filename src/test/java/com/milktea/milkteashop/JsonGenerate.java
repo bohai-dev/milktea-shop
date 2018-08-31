@@ -6,6 +6,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.milktea.milkteashop.domain.TeaCarouselFigure;
+import com.milktea.milkteashop.domain.TeaContact;
 import com.milktea.milkteashop.vo.DeductGoodsStockRequestVo;
 import com.milktea.milkteashop.vo.OrderDetailsNationVo;
 import com.milktea.milkteashop.vo.OrderNationVo;
@@ -21,22 +22,15 @@ public class JsonGenerate {
     public static void main(String[] args) {
         
         
-        ResponseBody<OrderNationVo> requestVo = new ResponseBody<>();
-        OrderNationVo nationVo = new OrderNationVo();
-        List<OrderDetailsNationVo> orderDetails = new ArrayList<>();
-        OrderDetailsNationVo detailsNationVo = new OrderDetailsNationVo();
-        List<TeaAttributesInfoNationVo> attrs = new ArrayList<>();
-        TeaAttributesInfoNationVo attributesInfoNationVo = new TeaAttributesInfoNationVo();
-        attrs.add(attributesInfoNationVo);
-        detailsNationVo.setAttrs(attrs);
-        orderDetails.add(detailsNationVo);
-        nationVo.setOrderDetails(orderDetails);
-        List<OrderNationVo> l = new ArrayList<>();
-        l.add(nationVo);
-        requestVo.setData(nationVo);
+        ResponseBody<List<TeaContact>> requestVo = new ResponseBody<>();
+        List<TeaContact> list = new ArrayList<>();
+        TeaContact contact = new TeaContact();
+        list.add(contact);
         //TeaCarouselFigure responseBody = new TeaCarouselFigure();
+        requestVo.setData(list);
         
-        System.out.println(JSON.toJSONString(nationVo,SerializerFeature.WriteMapNullValue));
+        TeaContact nationVo = new TeaContact();
+        System.out.println(JSON.toJSONString(requestVo,SerializerFeature.WriteMapNullValue));
     }
 
 }
