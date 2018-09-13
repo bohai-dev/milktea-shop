@@ -3,6 +3,7 @@ package com.milktea.milkteashop.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.milktea.milkteashop.domain.TeaClassInfo;
@@ -32,4 +33,16 @@ public interface TeaClassInfoMapper {
     
     @Select(value="select count(1) from TEA_CLASS_INFO where INDEX_NO = #{indexNo}")
     Long countByIndexNo(Short indexNo);
+    
+    @Select(value="select count(1) from TEA_CLASS_INFO where CN_CLASS_NAME = #{CnName}")
+    Long countByCnName(String CnName);
+
+    @Select(value="select count(1) from TEA_CLASS_INFO where US_CLASS_NAME = #{UsName}")
+    Long countByUsName(String UsName);
+    
+    @Select(value="select count(1) from TEA_CLASS_INFO where CN_CLASS_NAME = #{CnName} and CLASS_ID != #{classId}")
+    Long countOtherByCnName(@Param("classId") String classId, @Param("CnName") String CnName);
+
+    @Select(value="select count(1) from TEA_CLASS_INFO where US_CLASS_NAME = #{UsName} and CLASS_ID != #{classId}")
+    Long countOtherByUsName(@Param("classId") String classId, @Param("UsName") String UsName);
 }
