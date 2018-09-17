@@ -23,7 +23,7 @@ public interface TeaAttributesInfoMapper {
 
     int updateByPrimaryKey(TeaAttributesInfo record);
     
-    @Select(value="select * from TEA_ATTRIBUTES_INFO where DELETE_FLAG = '0'")
+    @Select(value="select * from TEA_ATTRIBUTES_INFO where DELETE_FLAG = '0' order by CREATE_TIME DESC")
     List<TeaAttributesInfo> selectAll();
     
     List<TeaAttributesInfo> selectByGoodsId(String goodsId);

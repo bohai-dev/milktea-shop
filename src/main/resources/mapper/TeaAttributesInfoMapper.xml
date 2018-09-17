@@ -124,6 +124,7 @@
                 from TEA_GOODS_ATTR 
                 where TEA_ATTRIBUTES_INFO.ATTR_ID = TEA_GOODS_ATTR.ATTR_ID
                 and TEA_GOODS_ATTR.GOODS_ID = #{goodsId,jdbcType=VARCHAR})
+    order by CREATE_TIME DESC
   </select>
   
   <select id="selectByOrderDetailId" parameterType="java.lang.String" resultMap="BaseResultMap">

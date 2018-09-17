@@ -148,6 +148,7 @@ public class GoodsClassServiceImpl implements GoodsClassService {
         
         try {
             count = this.classInfoMapper.countOtherByCnName(classInfo.getClassId(),classInfo.getCnClassName());
+            
         } catch (Exception e) {
             logger.error(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE.getCnErrorMsg(), e);
             throw new MilkTeaException(MilkTeaErrorConstant.DATABASE_ACCESS_FAILURE, e);
